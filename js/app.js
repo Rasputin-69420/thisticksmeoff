@@ -238,39 +238,6 @@ loadData().then(() => {
   const yearLabel = document.getElementById('yearLabel');
   const playBtn = document.getElementById('playBtn');
 
-  slider.oninput = () => {
-    currentYear = parseInt(slider.value);
-    yearLabel.innerText = currentYear;
-    updateHeatmap();
-  };
-
-  document.querySelectorAll('input[name="disease"]').forEach(radio => {
-    radio.onchange = () => {
-      currentDisease = radio.value;
-      updateHeatmap();
-    };
-  });
-
-  playBtn.onclick = function() {
-    if (!isPlaying) {
-      isPlaying = true;
-      this.innerHTML = '⏸ Pause';
-      playInterval = setInterval(() => {
-        currentYear++;
-        if (currentYear > 2025) currentYear = 2010;
-        slider.value = currentYear;
-        yearLabel.innerText = currentYear;
-        updateHeatmap();
-      }, 800);
-    } else {
-      isPlaying = false;
-      this.innerHTML = '▶ Play';
-      clearInterval(playInterval);
-    }
-  };
-
-  yearLabel.innerText = currentYear;
-
   // ==================== BIG YEAR DISPLAY (near tick) ====================
   const yearBig = document.getElementById('year-big');
 

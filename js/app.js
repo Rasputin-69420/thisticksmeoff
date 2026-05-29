@@ -223,6 +223,16 @@ function hideModal() {
 
 function toggleTickMenu(e) {
   if (e) e.stopPropagation();
+
+  // Make the legs do the silly wiggle dance on tap (especially important for iPhone)
+  const tickIcon = document.querySelector('.tick-icon');
+  if (tickIcon) {
+    tickIcon.classList.add('tapped');
+    setTimeout(() => {
+      tickIcon.classList.remove('tapped');
+    }, 480);
+  }
+
   const menu = document.getElementById('tickMenu');
   const isOpen = menu.style.display === 'block';
   menu.style.display = isOpen ? 'none' : 'block';

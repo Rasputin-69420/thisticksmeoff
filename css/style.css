@@ -77,6 +77,7 @@ button {
               0 0 0 3px #222,                  /* subtle dark ring */
               0 0 0 6px rgba(124, 58, 237, 0.12);  /* faint purple halo */
   cursor: pointer;
+  touch-action: manipulation;          /* better tap response on iOS */
   transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1), 
               box-shadow 0.2s ease;
 }
@@ -108,7 +109,8 @@ button {
 
 /* Legs do a quick, silly wiggle on hover/tap */
 .tick-icon:hover .leg,
-.tick-icon:active .leg {
+.tick-icon:active .leg,
+.tick-icon.tapped .leg {
   animation: legWiggle 420ms ease-in-out;
 }
 

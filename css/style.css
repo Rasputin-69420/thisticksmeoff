@@ -57,31 +57,41 @@ button {
   font-weight: bold;
 }
 
-/* Tick menu — lower right of the map (anchored inside #map, mobile-friendly size) */
+/* Tick menu — lower right of the map area (fixed so it stays tappable) */
 .tick-container {
-  position: absolute;
-  right: 12px;
-  bottom: 12px;
-  z-index: 1000;
+  position: fixed;
+  right: 14px;
+  bottom: 18px;
+  z-index: 4000;
   text-align: center;
 }
 
 .tick-icon {
-  font-size: 120px;   /* desktop size */
+  font-size: 110px;   /* desktop */
   cursor: pointer;
   line-height: 1;
 }
 
 .tick-label {
-  font-size: 16px;
+  font-size: 15px;
   margin-top: 2px;
-  color: #aaa;
+  color: #ccc;
 }
 
-/* Mobile: much smaller tick + hide the label to avoid overlap */
+/* Mobile: much smaller tick + small visible label + bigger tap area */
 @media (max-width: 600px) {
-  .tick-icon { font-size: 64px; }
-  .tick-label { display: none; }
+  .tick-icon { font-size: 52px; }
+  .tick-label {
+    display: block;
+    font-size: 11px;
+    margin-top: 1px;
+    color: #ddd;
+  }
+  .tick-container {
+    padding: 6px 8px;
+    background: rgba(0,0,0,0.15);
+    border-radius: 8px;
+  }
 }
 
 /* Year box — middle right of the map (anchored inside #map) */
@@ -131,27 +141,32 @@ button {
   .year-big-display .y-total { font-size: 10px; }
 }
 
-/* Dropdown menu from tick */
+/* Dropdown menu — centered popup over the map, ~1/4 map size */
 .dropdown {
   display: none;
   position: fixed;
-  left: 0;
-  right: 0;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   background: #222;
-  border: 1px solid #444;
-  padding: 0;
-  z-index: 1001;
-  font-size: 40px;           /* large on mobile for touch */
-  width: 100%;
+  border: 1px solid #555;
+  padding: 6px 0;
+  z-index: 6000;
+  width: 42vw;
+  max-width: 420px;
+  max-height: 32vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.75);
+  border-radius: 8px;
+  font-size: 15px;
 }
 
 .dropdown a {
   display: block;
-  padding: 16px 20px;
+  padding: 10px 18px;
   color: #ddd;
   text-decoration: none;
-  font-size: 40px;
-  width: 100%;
+  font-size: 15px;
   box-sizing: border-box;
 }
 
@@ -159,14 +174,16 @@ button {
   background: #333;
 }
 
-/* Desktop: much smaller font for easy scanning */
-@media (min-width: 768px) {
+/* Mobile: still centered but larger tap targets and slightly bigger */
+@media (max-width: 600px) {
   .dropdown {
-    font-size: 16px;
+    width: 68vw;
+    max-height: 38vh;
+    font-size: 17px;
   }
   .dropdown a {
-    font-size: 16px;
-    padding: 8px 14px;
+    padding: 14px 16px;
+    font-size: 17px;
   }
 }
 

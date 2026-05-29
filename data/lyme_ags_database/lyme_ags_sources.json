@@ -1,0 +1,120 @@
+{
+  "primary_cdc_lyme": [
+    {
+      "title": "CDC Lyme Disease Surveillance Data",
+      "url": "https://www.cdc.gov/lyme/data-research/facts-stats/surveillance-data-1.html",
+      "description": "National yearly, state, and CSV downloads for cases 1996-2023",
+      "accessed": "2026-05"
+    },
+    {
+      "title": "CDC Lyme Disease Case Maps",
+      "url": "https://www.cdc.gov/lyme/data-research/facts-stats/lyme-disease-case-map.html",
+      "description": "County-level dot maps for 1995, 2010, 2023 and 2023 county CSV with historical columns",
+      "accessed": "2026-05"
+    },
+    {
+      "title": "CDC MMWR: Surveillance for Lyme Disease After Implementation of a Revised Case Definition — United States, 2022",
+      "url": "https://www.cdc.gov/mmwr/volumes/73/wr/mm7306a1.htm",
+      "description": "2022 case counts, incidence changes, high-incidence jurisdictions",
+      "accessed": "2026-05"
+    },
+    {
+      "title": "CDC Lyme Disease Facts and Statistics / Index",
+      "url": "https://www.cdc.gov/lyme/data-research/facts-stats/index.html",
+      "description": "Overview, 89,000+ cases in 2023, links to data",
+      "accessed": "2026-05"
+    }
+  ],
+  "cdc_alpha_gal": [
+    {
+      "title": "Geographic Distribution of Suspected Alpha-gal Syndrome Cases — United States, 2017–2022",
+      "url": "https://www.cdc.gov/mmwr/volumes/72/wr/mm7230a2.htm",
+      "description": "90,018 positive tests 2017-2022, yearly breakdown, geographic (county-level rates), demographics, methodology (Eurofins Viracor lab data)",
+      "accessed": "2026-05"
+    },
+    {
+      "title": "CDC About Alpha-gal Syndrome",
+      "url": "https://www.cdc.gov/alpha-gal-syndrome/about/index.html",
+      "description": ">110,000 suspected cases 2010-2022, estimate up to 450,000 affected",
+      "accessed": "2026-05"
+    }
+  ],
+  "massachusetts_dph": [
+    {
+      "title": "Massachusetts Tick-borne Disease Surveillance Summaries and Data",
+      "url": "https://www.mass.gov/lists/tick-borne-disease-surveillance-summaries-and-data",
+      "description": "10-year morbidity report, yearly Lyme cases 2015-2026 YTD, surveillance changes noted, annual reports 2019-2025",
+      "accessed": "2026-05"
+    },
+    {
+      "title": "Massachusetts Monthly Tick-borne Disease Reports",
+      "url": "https://www.mass.gov/lists/monthly-tickborne-disease-reports",
+      "description": "Seasonal trends and updates",
+      "accessed": "2026-05"
+    }
+  ],
+  "nantucket_and_local": [
+    {
+      "title": "Reports of Lyme disease in Nantucket County, Massachusetts (tickcheck.com / CDC data)",
+      "url": "https://www.tickcheck.com/stats/county/massachusetts/nantucket-county/lyme",
+      "description": "Yearly confirmed cases 2000-2020 (723 total), sourced from CDC surveillance",
+      "accessed": "2026-05"
+    },
+    {
+      "title": "Nantucket Cottage Hospital / Town of Nantucket Ticks Page",
+      "url": "https://www.nantucket-ma.gov/2760/Ticks",
+      "description": "Local context, links to infectious disease reports",
+      "accessed": "2026-05"
+    },
+    {
+      "title": "Phillips et al. (2001) - Lyme disease and preventive behaviors in residents of Nantucket Island",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/11275450/",
+      "description": "15% lifetime prevalence study (2001)",
+      "accessed": "2026-05"
+    }
+  ],
+  "johns_hopkins": [
+    {
+      "title": "Johns Hopkins Lyme and Tickborne Diseases Dashboard / Tracker",
+      "url": "https://www.hopkinslymetracker.org/",
+      "description": "Interactive maps, data explorer, county-level visualizations, references to CDC data",
+      "accessed": "2026-05"
+    },
+    {
+      "title": "Johns Hopkins Lyme Disease Page",
+      "url": "https://www.hopkinslyme.org/lyme-disease/",
+      "description": "~500,000 diagnosed/treated per year estimates, geographic expansion info",
+      "accessed": "2026-05"
+    }
+  ],
+  "literature_and_other": [
+    {
+      "title": "Mead et al. (2024) - Lyme Disease Surveillance and Epidemiology in the United States",
+      "url": "https://academic.oup.com/jid/article/230/Supplement_1/S11/7733440",
+      "description": ">844,000 cases reported 1982-2022, geographic distribution figures",
+      "accessed": "2026-05"
+    },
+    {
+      "title": "Kugeler et al. (2021) - Estimating the Frequency of Lyme Disease Diagnoses, United States, 2010-2018",
+      "url": "https://wwwnc.cdc.gov/eid/article/27/2/20-2728_article",
+      "description": "476,000 estimated annual diagnoses (claims data)",
+      "accessed": "2026-05"
+    },
+    {
+      "title": "ArcGIS Hub - Reported Cases of Lyme Disease by County of Residence Map, United States (2000-2020)",
+      "url": "https://hub.arcgis.com/maps/cdcarcgis::reported-cases-of-lyme-disease-by-county-of-residence-map-united-states/about",
+      "description": "Density map 2000-2020",
+      "accessed": "2026-05"
+    },
+    {
+      "title": "Various MMWR and Statista references for incidence rates and historical summaries",
+      "url": "Multiple (e.g., https://www.cdc.gov/mmwr/, Statista Lyme incidence by state)",
+      "description": "Supplementary state-level and trend data",
+      "accessed": "2026-05"
+    }
+  ],
+  "web_search_and_browse_sources": [
+    "web:31 to web:74 from initial and follow-up searches (CDC pages, MMWR, mass.gov, PubMed, JHU, etc.)",
+    "Specific browsed URLs: surveillance-data-1.html, lyme-disease-case-map.html, mm7230a2.htm, mass.gov tickborne lists, tickcheck.com Nantucket page"
+  ]
+}

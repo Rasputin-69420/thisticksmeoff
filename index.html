@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>This Tics Me Off</title>
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+  <!-- Our styles -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="title">This Tics Me Off — Alpha-gal & Lyme Tracker</div>
+
+  <div class="controls">
+    <div class="disease-toggle">
+      <label class="disease-option">
+        <input type="radio" name="disease" value="lyme">
+        <span class="dot"></span>
+        <span class="label-text">Lyme Disease</span>
+      </label>
+      <label class="disease-option">
+        <input type="radio" name="disease" value="alpha" checked>
+        <span class="dot"></span>
+        <span class="label-text">Alpha-gal Syndrome</span>
+      </label>
+    </div>
+
+    <div style="flex:1; min-width:300px;">
+      <input type="range" id="yearSlider" min="2010" max="2025" value="2025" step="1" style="width:100%">
+      <div class="year-labels">
+        <span>2010</span>
+        <span id="yearLabel">2025</span>
+        <span>2025</span>
+      </div>
+    </div>
+
+    <button id="playBtn">▶ Play</button>
+  </div>
+
+  <div id="map"></div>
+
+  <!-- Big Year Display (left of tick, fixed at ~75% from left) -->
+  <div id="year-big" class="year-big-display">
+    <div class="y-year">2025</div>
+    <div class="y-disease">Alpha-Gal</div>
+    <div class="y-total">0</div>
+  </div>
+
+  <!-- Tick Menu -->
+  <div class="tick-container">
+    <div class="tick-icon" onclick="toggleTickMenu()">🕷️</div>
+    <div class="tick-label">Click the Tick</div>
+    <div class="dropdown" id="tickDropdown">
+      <a href="#" onclick="showModal('ticks')">Tick Species (Alpha vs Lyme)</a>
+      <a href="#" onclick="showModal('bitten')">What To Do If Bitten</a>
+      <a href="#" onclick="showModal('alphagal')">What is Alpha-gal?</a>
+      <a href="#" onclick="showModal('lyme')">What is Lyme Disease?</a>
+      <a href="#" onclick="showModal('sources')">Sources</a>
+    </div>
+  </div>
+
+  <!-- Modals -->
+  <div id="modal" class="modal" onclick="if (event.target.id === 'modal') hideModal()">
+    <div class="modal-content">
+      <span class="close" onclick="hideModal()">&times;</span>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- Our app logic -->
+  <script src="js/app.js"></script>
+
+</body>
+</html>

@@ -41,25 +41,26 @@
     <button id="playBtn">▶ Play</button>
   </div>
 
-  <div id="map"></div>
+  <div id="map">
+    <!-- Overlays anchored to the map (lower-right tick + middle-right year box) -->
+    <!-- Big Year Display -->
+    <div id="year-big" class="year-big-display">
+      <div class="y-year">2025</div>
+      <div class="y-disease">Alpha-Gal</div>
+      <div class="y-total">0</div>
+    </div>
 
-  <!-- Big Year Display (left of tick, fixed at ~75% from left) -->
-  <div id="year-big" class="year-big-display">
-    <div class="y-year">2025</div>
-    <div class="y-disease">Alpha-Gal</div>
-    <div class="y-total">0</div>
-  </div>
-
-  <!-- Tick Menu -->
-  <div class="tick-container">
-    <div class="tick-icon" onclick="toggleTickMenu()">🕷️</div>
-    <div class="tick-label">Click the Tick</div>
-    <div class="dropdown" id="tickDropdown">
-      <a href="#" onclick="showModal('ticks')">Tick Species (Alpha vs Lyme)</a>
-      <a href="#" onclick="showModal('bitten')">What To Do If Bitten</a>
-      <a href="#" onclick="showModal('alphagal')">What is Alpha-gal?</a>
-      <a href="#" onclick="showModal('lyme')">What is Lyme Disease?</a>
-      <a href="#" onclick="showModal('sources')">Sources</a>
+    <!-- Tick Menu (lower right of map) -->
+    <div class="tick-container">
+      <div class="tick-icon" onclick="toggleTickMenu()">🕷️</div>
+      <div class="tick-label">Click the Tick</div>
+      <div class="dropdown" id="tickDropdown">
+        <a href="#" onclick="showModal('ticks')">Tick Species (Alpha vs Lyme)</a>
+        <a href="#" onclick="showModal('bitten')">What To Do If Bitten</a>
+        <a href="#" onclick="showModal('alphagal')">What is Alpha-gal?</a>
+        <a href="#" onclick="showModal('lyme')">What is Lyme Disease?</a>
+        <a href="#" onclick="showModal('sources')">Sources</a>
+      </div>
     </div>
   </div>
 

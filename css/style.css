@@ -13,6 +13,7 @@ body {
 
 /* Map container */
 #map {
+  position: relative;   /* allows absolute overlays inside the map */
   height: 72vh;
   width: 100%;
   background: #222;
@@ -56,35 +57,42 @@ button {
   font-weight: bold;
 }
 
-/* Tick menu (bottom-right floating) */
+/* Tick menu — lower right of the map (anchored inside #map, mobile-friendly size) */
 .tick-container {
   position: absolute;
-  right: 20px;
-  top: 38%;
+  right: 12px;
+  bottom: 12px;
   z-index: 1000;
   text-align: center;
 }
 
 .tick-icon {
-  font-size: 144px;
+  font-size: 120px;   /* desktop size */
   cursor: pointer;
+  line-height: 1;
 }
 
 .tick-label {
-  font-size: 40px;
-  margin-top: 4px;
+  font-size: 16px;
+  margin-top: 2px;
   color: #aaa;
 }
 
-/* Big fixed year display — left of the tick, at ~75% from left edge */
+/* Mobile: much smaller tick + hide the label to avoid overlap */
+@media (max-width: 600px) {
+  .tick-icon { font-size: 64px; }
+  .tick-label { display: none; }
+}
+
+/* Year box — middle right of the map (anchored inside #map) */
 .year-big-display {
-  position: fixed;
-  left: 75vw;
-  top: 42%;
-  transform: translateX(-50%);
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
   color: #aaa;
   background: rgba(26, 26, 26, 0.75);
-  padding: 8px 14px;
+  padding: 6px 10px;
   border-radius: 6px;
   z-index: 1000;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
@@ -97,32 +105,30 @@ button {
 
 /* Inner lines */
 .year-big-display .y-year {
-  font-size: 40px;
+  font-size: 32px;
   font-weight: bold;
 }
 
 .year-big-display .y-disease {
-  font-size: 18px;
+  font-size: 14px;
   margin-top: 2px;
   opacity: 0.9;
 }
 
 .year-big-display .y-total {
-  font-size: 15px;
+  font-size: 12px;
   margin-top: 2px;
   opacity: 0.85;
 }
 
-/* Mobile shrink */
+/* Mobile sizing (middle-right of map) */
 @media (max-width: 600px) {
   .year-big-display {
-    left: 72vw;
-    top: 40%;
-    padding: 6px 10px;
+    padding: 4px 8px;
   }
-  .year-big-display .y-year { font-size: 28px; }
-  .year-big-display .y-disease { font-size: 14px; }
-  .year-big-display .y-total { font-size: 12px; }
+  .year-big-display .y-year { font-size: 22px; }
+  .year-big-display .y-disease { font-size: 11px; }
+  .year-big-display .y-total { font-size: 10px; }
 }
 
 /* Dropdown menu from tick */

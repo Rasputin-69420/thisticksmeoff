@@ -156,14 +156,7 @@ function updateHeatmap() {
   }
 }
 
-// ==================== TICK MENU ====================
-function toggleTickMenu() {
-  const dropdown = document.getElementById('tickDropdown');
-  dropdown.style.display = (dropdown.style.display === 'block') ? 'none' : 'block';
-}
-
 function showModal(type) {
-  document.getElementById('tickDropdown').style.display = 'none';
   const modal = document.getElementById('modal');
   const body = document.getElementById('modal-body');
   modal.style.display = 'flex';
@@ -225,6 +218,38 @@ function showModal(type) {
 function hideModal() {
   document.getElementById('modal').style.display = 'none';
 }
+
+// ==================== CUTE "CLICK THE TICK" MENU (floating lower-right) ====================
+
+function toggleTickMenu(e) {
+  if (e) e.stopPropagation();
+  const menu = document.getElementById('tickMenu');
+  const isOpen = menu.style.display === 'block';
+  menu.style.display = isOpen ? 'none' : 'block';
+}
+
+function selectTickTopic(type, e) {
+  if (e) e.stopPropagation();
+  document.getElementById('tickMenu').style.display = 'none';
+  showModal(type);
+}
+
+// Close the tick menu when clicking outside of it
+document.addEventListener('click', (e) => {
+  const container = document.getElementById('tickContainer');
+  const menu = document.getElementById('tickMenu');
+  if (menu && menu.style.display === 'block' && container && !container.contains(e.target)) {
+    menu.style.display = 'none';
+  }
+});
+
+// Close on Escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    const menu = document.getElementById('tickMenu');
+    if (menu) menu.style.display = 'none';
+  }
+});
 
 // ==================== INITIALIZATION & CONTROLS ====================
 

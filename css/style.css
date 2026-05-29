@@ -62,7 +62,7 @@ button {
   position: fixed;
   right: 14px;
   bottom: 18px;
-  z-index: 4000;
+  z-index: 99999;
   text-align: center;
 }
 
@@ -151,7 +151,7 @@ button {
   background: #222;
   border: 1px solid #555;
   padding: 6px 0;
-  z-index: 6000;
+  z-index: 100000;
   width: 42vw;
   max-width: 420px;
   max-height: 32vh;

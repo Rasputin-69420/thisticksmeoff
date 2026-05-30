@@ -137,14 +137,15 @@ button {
 .tick-menu {
   display: none;
   position: fixed;
-  right: 14px;
-  bottom: 110px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background: #1f1f1f;
   border: 1px solid #4b3f6e;
   border-radius: 12px;
   padding: 6px 0;
-  min-width: 240px;
-  max-width: 280px;
+  min-width: 260px;
+  max-width: 320px;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.75);
   z-index: 10002;
   overflow: hidden;
@@ -187,15 +188,13 @@ button {
   }
 
   .tick-menu {
-    right: 10px;
-    bottom: 92px;
-    min-width: 220px;
-    max-width: 82vw;
+    min-width: 260px;
+    max-width: 88vw;
   }
 
   .tick-menu a {
-    padding: 14px 18px;
-    font-size: 16.5px;
+    padding: 16px 20px;
+    font-size: 17px;
   }
 
 }

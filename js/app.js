@@ -169,6 +169,8 @@ let markers = [];                    // human case circles (red)
 let isPlaying = false;
 let playInterval = null;
 
+let isDraggingBox = false;           // for the draggable year/case info box
+
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
 // Heat map color scale: white (low) → bright red (high)
@@ -638,6 +640,156 @@ function updateRedLegendText() {
   }
 }
 
+// ==================== DRAGGABLE YEAR / CASE INFO BOX ====================
+// Lets users move the info panel anywhere on screen (especially useful on iPhone).
+// Position is remembered in localStorage.
+
+function initDraggableYearBox(box) {
+  // Restore previously saved position (if any)
+  const savedLeft = localStorage.getItem('yearBoxLeft');
+  const savedTop = localStorage.getItem('yearBoxTop');
+
+  if (savedLeft !== null && savedTop !== null) {
+    box.style.position = 'fixed';
+    box.style.left = parseInt(savedLeft, 10) + 'px';
+    box.style.top = parseInt(savedTop, 10) + 'px';
+    box.style.right = 'auto';
+    box.style.transform = 'none';
+    box.dataset.customPosition = 'true';
+    addResetButton(box);
+  }
+
+  let dragStartX = 0;
+  let dragStartY = 0;
+  let boxStartLeft = 0;
+  let boxStartTop = 0;
+
+  function onPointerDown(e) {
+    // Only primary button / touch
+    if (e.button != null && e.button !== 0) return;
+
+    isDraggingBox = true;
+    box.classList.add('dragging');
+
+    // Prevent the map from panning while we drag the box (critical on mobile)
+    if (map && map.dragging) map.dragging.disable();
+
+    const rect = box.getBoundingClientRect();
+    dragStartX = e.clientX;
+    dragStartY = e.clientY;
+    boxStartLeft = rect.left;
+    boxStartTop = rect.top;
+
+    // Switch to fixed positioning so the user can place it anywhere (including over header)
+    if (box.style.position !== 'fixed') {
+      box.style.position = 'fixed';
+      box.style.left = rect.left + 'px';
+      box.style.top = rect.top + 'px';
+      box.style.right = 'auto';
+      box.style.transform = 'none';
+    }
+
+    box.dataset.customPosition = 'true';
+
+    document.addEventListener('pointermove', onPointerMove, { passive: false });
+    document.addEventListener('pointerup', onPointerUp, { once: true });
+    document.addEventListener('pointercancel', onPointerUp, { once: true });
+  }
+
+  function onPointerMove(e) {
+    if (!isDraggingBox) return;
+
+    const dx = e.clientX - dragStartX;
+    const dy = e.clientY - dragStartY;
+
+    let newLeft = boxStartLeft + dx;
+    let newTop = boxStartTop + dy;
+
+    // Clamp to viewport so the box can't be dragged completely off-screen
+    const boxW = box.offsetWidth;
+    const boxH = box.offsetHeight;
+    newLeft = Math.max(4, Math.min(newLeft, window.innerWidth - boxW - 4));
+    newTop = Math.max(4, Math.min(newTop, window.innerHeight - boxH - 4));
+
+    box.style.left = newLeft + 'px';
+    box.style.top = newTop + 'px';
+  }
+
+  function onPointerUp() {
+    isDraggingBox = false;
+    box.classList.remove('dragging');
+
+    // Re-enable normal map panning
+    if (map && map.dragging) map.dragging.enable();
+
+    // Persist the new position
+    localStorage.setItem('yearBoxLeft', parseInt(box.style.left, 10));
+    localStorage.setItem('yearBoxTop', parseInt(box.style.top, 10));
+
+    document.removeEventListener('pointermove', onPointerMove);
+
+    // Make sure a reset button exists now that it's in a custom spot
+    addResetButton(box);
+  }
+
+  box.addEventListener('pointerdown', onPointerDown);
+
+  // Nice title hint for desktop users
+  box.title = 'Drag to reposition • Position is remembered';
+}
+
+function addResetButton(box) {
+  // Only add once
+  if (box.querySelector('.yearbox-reset')) return;
+
+  const reset = document.createElement('div');
+  reset.className = 'yearbox-reset';
+  reset.textContent = '↺';
+  reset.title = 'Reset box to default position';
+  reset.style.cssText = `
+    position: absolute;
+    top: 2px;
+    right: 4px;
+    font-size: 13px;
+    line-height: 1;
+    color: #888;
+    cursor: pointer;
+    padding: 1px 4px;
+    user-select: none;
+    opacity: 0.7;
+  `;
+
+  reset.addEventListener('pointerdown', (e) => {
+    e.stopPropagation(); // don't start a drag
+  });
+
+  reset.addEventListener('click', (e) => {
+    e.stopPropagation();
+
+    // Clear saved position
+    localStorage.removeItem('yearBoxLeft');
+    localStorage.removeItem('yearBoxTop');
+
+    // Reset styles to the original CSS-driven left-side default
+    box.style.position = '';
+    box.style.left = '';
+    box.style.top = '';
+    box.style.right = '';
+    box.style.transform = '';
+    box.dataset.customPosition = '';
+
+    // Remove the reset button
+    reset.remove();
+
+    // Force re-apply the normal CSS rules by triggering a tiny reflow
+    box.style.display = 'none';
+    void box.offsetHeight;
+    box.style.display = '';
+  });
+
+  box.appendChild(reset);
+}
+
 // ==================== CUTE "CLICK THE TICK" MENU (floating lower-right) ====================
 
 function toggleTickMenu(e) {
@@ -698,6 +850,11 @@ loadData().then(async () => {
 
   // ==================== BIG YEAR DISPLAY (near tick) ====================
   const yearBig = document.getElementById('year-big');
+
+  // Make the info box draggable so users can put it anywhere (great on iPhone)
+  if (yearBig) {
+    initDraggableYearBox(yearBig);
+  }
 
   function updateYearDisplay() {
     const yearEl = document.querySelector('#year-big .y-year');

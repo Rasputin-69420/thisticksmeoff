@@ -9,6 +9,7 @@ body {
   font-family: Arial, sans-serif;
   background: #111;
   color: #ddd;
+  overflow-x: hidden; /* prevent accidental horizontal scroll on mobile */
 }
 
 /* Map container */
@@ -839,5 +840,76 @@ button {
   }
   .year-big-display .purple-scale .ps-unit {
     font-size: 7.5px;
+  }
+}
+
+/* ============================================
+   MOBILE HEADER — make everything fit on iPhone without horizontal scroll
+   Two-row approach: title + compact controls on top, full slider below
+   ============================================ */
+@media (max-width: 600px) {
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    padding: 6px 10px 5px;
+  }
+
+  .title {
+    font-size: 17px;
+    line-height: 1.1;
+    text-align: left;
+    padding: 0 2px 2px;
+    flex: none;
+  }
+
+  /* Controls row: Play button + disease toggles, compact */
+  .header-controls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    flex: none;
+    order: 2; /* put controls above slider */
+    padding: 2px 0;
+  }
+
+  .play-btn-header {
+    font-size: 13px;
+    padding: 4px 10px;
+    flex-shrink: 0;
+  }
+
+  .header-controls .disease-option {
+    font-size: 12px;
+    padding: 4px 10px;
+  }
+
+  .header-controls .disease-option .label-text {
+    font-size: 12px;
+  }
+
+  /* Slider gets its own full-width row at the bottom of the header */
+  .header-slider {
+    order: 3;
+    flex: none;
+    width: 100%;
+    padding: 0 2px 2px;
+    align-items: flex-start;
+  }
+
+  .header-slider input[type="range"] {
+    max-width: 100%;
+    height: 6px;
+  }
+
+  .header .year-labels {
+    font-size: 9px;
+    max-width: 100%;
+  }
+
+  /* Give the map a bit more room since header is now taller but clean */
+  #map {
+    height: 82vh;
   }
 }

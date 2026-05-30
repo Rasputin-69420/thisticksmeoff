@@ -753,22 +753,7 @@ button {
   background: #7c3aed;
 }
 
-/* Map disclaimer - persistent note on lower left of map */
-.map-disclaimer {
-  position: fixed;
-  left: 10px;
-  bottom: 130px;
-  font-size: 13px;
-  color: #fff;
-  background: rgba(20, 20, 20, 0.85);
-  padding: 4px 8px;
-  border-radius: 4px;
-  max-width: 220px;
-  line-height: 1.25;
-  z-index: 5000;
-  text-align: center;
-  pointer-events: none; /* don't block map interactions */
-}
+
 
 /* Visual feedback when human case (red) heat map is turned off */
 .disease-toggle.red-off {
@@ -859,13 +844,7 @@ button {
     font-size: 7.5px;
   }
 
-  .map-disclaimer {
-    font-size: 12px;
-    bottom: 105px;
-    left: 8px;
-    max-width: 180px;
-    padding: 3px 6px;
-  }
+
 
 }
 

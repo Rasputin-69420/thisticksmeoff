@@ -28,14 +28,6 @@ Additional context from:
 ## Current Data Structure Used in Visualization
 - State-level yearly snapshots for 10 high-incidence states.
 - Years modeled: 2010, 2014, 2018, 2021, 2023, 2024, 2025.
-
-## May 2026 Data Additions (cdc_direct_downloads_2026)
-New high-value direct downloads tracked:
-- `LD_Case_Counts_by_County_2023_updated.csv` — Exact 2023 county Lyme numbers (ready for future county choropleth/heat layer).
-- Full 2008–2023 state incidence CSV for trend validation.
-- Multi-disease county Excel (2019–2022) covering Lyme + other TBDs.
-
-These are now listed in the Sources modal under "CDC Direct Data Downloads (2025–2026 Updates)". Pipeline work to ingest the county CSV for a real county-level red layer is the next major step.
 - The map shows **cumulative cases from 2010 onward**.
 - Dot size in recent versions is driven by **growth since 2010** (current cumulative minus 2010 baseline), not raw totals.
 

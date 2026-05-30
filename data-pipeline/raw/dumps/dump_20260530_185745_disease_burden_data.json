@@ -1,0 +1,79 @@
+﻿{
+  "disease_burden_data": [
+    {
+      "name": "CDC Tick Bite Data Tracker (ER Visits for Tick Bites)",
+      "description": "National syndromic surveillance of emergency department visits for tick bites — by week, month, region, age, sex. Best real-time proxy for disease burden.",
+      "type": "Interactive Dashboard",
+      "url": "https://www.cdc.gov/ticks/data-research/facts-stats/tick-bite-data-tracker.html",
+      "coverage": "Ongoing (data back to ~2017, detailed 2023–2026)",
+      "category": "Tick Bites / Burden",
+      "notes": "2026 spring data: highest ER visit rates since 2017 in Northeast + Midwest. South Central region lower in spring but still elevated overall. No direct county download, but regional trends fill South gap when combined with AGS data."
+    },
+    {
+      "name": "CDC MMWR: Geographic Distribution of Suspected Alpha-gal Syndrome (2017–2022)",
+      "description": "357k+ lab tests showing suspected AGS cases by county. Highest per-capita rates in South/Midwest: Charlotte County VA (12,273 per 1M PPY), Muhlenberg County KY (6,107), plus heavy clustering in AR, MO, OK, TN, MS.",
+      "type": "MMWR Report + county tables",
+      "url": "https://www.cdc.gov/mmwr/volumes/72/wr/mm7230a2.htm",
+      "coverage": "2017–2022",
+      "category": "Alpha-gal",
+      "notes": "Direct evidence South is NOT empty — contiguous hotspot across southern/midwestern/mid-Atlantic states where Lone Star ticks dominate."
+    },
+    {
+      "name": "Alpha-gal IgE Prevalence in U.S. Military Recruits (2024 study)",
+      "description": "6.0% overall positivity; highest in AR (39%), OK (35%), MO (29%). Closely tracks Lone Star tick range.",
+      "type": "Peer-reviewed seroprevalence study",
+      "url": "https://www.jaci-inpractice.org/article/S2213-2198(23)01201-1/abstract",
+      "coverage": "Recent cohort across all 50 states",
+      "category": "Alpha-gal (seroprevalence)",
+      "notes": "Strong South burden indicator — undercounts clinical cases but shows massive exposure in the South that traditional Lyme surveillance misses."
+    },
+    {
+      "name": "Arkansas Alpha-gal Syndrome Mandatory Reporting (2023–2025)",
+      "description": "First state to make AGS reportable: 304 cases (2023), 2,613 (2024), 3,781 (2025). 5,167 reported through July 2025 across 49/75 counties.",
+      "type": "State Dashboard + study",
+      "url": "https://experience.arcgis.com/experience/8d5f6076b9094fb1853b27726ed6df12/page/Tickborne",
+      "coverage": "Arkansas counties 2023–2025",
+      "category": "Alpha-gal",
+      "notes": "Concrete numbers filling the South 'empty' zone — northern AR is a major hotspot."
+    },
+    {
+      "name": "Missouri Alpha-gal Syndrome Official Estimate",
+      "description": "7,300–34,400 Missourians affected since 2021 (some seroprevalence extrapolations reach ~80k). New 2026 bill makes it reportable.",
+      "type": "State Report",
+      "url": "https://health.mo.gov/living/healthcondiseases/communicable/tickscarrydisease/ags.php",
+      "coverage": "Missouri 2021–present",
+      "category": "Alpha-gal",
+      "notes": "Direct counter to low reported Lyme in MO — real burden is AGS/Ehrlichia, not Lyme."
+    },
+    {
+      "name": "AGS Healthcare Utilization Studies (Anaphylaxis & ER/Hospital Burden)",
+      "description": "Multiple studies show >50% of AGS patients experience anaphylaxis requiring ED visits (some multiple hospitalizations). Delayed diagnosis drives high costs.",
+      "type": "Peer-reviewed papers",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5932728/ + https://alphagalaction.org/research-and-epidemiology/",
+      "coverage": "2016–2025 cohorts",
+      "category": "Alpha-gal Burden",
+      "notes": "Underdiagnosed AGS in South/Midwest leads to repeated ER visits misdiagnosed as idiopathic anaphylaxis."
+    },
+    {
+      "name": "California Lyme Annual Report 2024",
+      "description": "96 reported cases statewide (low incidence, mostly coastal/Sierra foothills).",
+      "type": "State Report",
+      "url": "https://westnile.ca.gov/pdfs/VBDSAnnualReport24.pdf",
+      "coverage": "California 2024",
+      "category": "Lyme",
+      "notes": "West Coast contrast: low overall burden vs. South AGS dominance."
+    },
+    {
+      "name": "Oregon & Washington Lyme Incidence (low)",
+      "description": "Oregon ~61 cases (2023); Washington ~25 cases (2023) — mostly travel-related.",
+      "type": "State Dashboards",
+      "url": "https://www.oregon.gov/oha/ph/diseasesconditions/communicabledisease/pages/ticks.aspx + WA Tick Dashboard",
+      "coverage": "Recent years",
+      "category": "Lyme",
+      "notes": "West Coast stays low on both Lyme and AGS."
+    }
+  ],
+  "last_updated": "2026-05-30",
+  "generated_for": "thisticksmeoff — disease burden (ER visits + AGS/Lyme infections)",
+  "notes_for_pipeline": "Use CDC Tick Bite Tracker for regional ER heat. Overlay AGS reporting + seroprevalence for South (AR/MO/OK/KY) to fill the 'empty' zone. Lyme county CSV for contrast. This shows true burden: South = AGS-heavy, Midwest = mixed, West Coast = low."
+}

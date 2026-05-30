@@ -1,0 +1,24 @@
+Year,Cases_Confirmed_Nantucket_County
+2000,39
+2001,43
+2002,54
+2003,37
+2004,50
+2005,29
+2006,11
+2007,61
+2008,44
+2009,46
+2010,32
+2011,46
+2012,67
+2013,59
+2014,57
+2015,34
+2016,6
+2017,4
+2018,0
+2019,1
+2020,3
+Total_2000_2020,723
+Notes,"Data from CDC via tickcheck.com; confirmed cases only. Nantucket historically one of highest incidence areas in US (epicenter of early recognition). 2001 study: 15% lifetime prevalence among residents (higher in females). True cases likely higher due to underreporting. Part of Dukes & Nantucket combined in some MA reports with low recent numbers due to small population (~14k) and possible reporting."

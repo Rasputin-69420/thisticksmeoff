@@ -1,0 +1,34 @@
+{
+  "data_sources": [
+    {
+      "name": "Arkansas DH Tickborne Disease Interactive Dashboard",
+      "description": "County-level data for Alpha-gal, RMSF, Ehrlichiosis, Tularemia, etc. by year (2021–2025)",
+      "type": "Interactive ArcGIS",
+      "url": "https://experience.arcgis.com/experience/8d5f6076b9094fb1853b27726ed6df12/page/Tickborne",
+      "coverage": "Arkansas counties, 2021–2025",
+      "category": "Multi-disease + Alpha-gal",
+      "notes": "Goldmine — select county for exact numbers. Perfect for popups or layers."
+    },
+    {
+      "name": "Alpha-gal Syndrome Arkansas Surveillance (2023–July 2025)",
+      "description": "5,167 reported cases across 49/75 counties; 403 confirmed",
+      "type": "Peer-reviewed study",
+      "url": "https://www.jacionline.org/article/S0091-6749(25)01398-3/fulltext",
+      "coverage": "Sept 2023–July 2025",
+      "category": "Alpha-gal",
+      "notes": "Northern AR hotspot data; demographics included"
+    },
+    {
+      "name": "Arkansas Alpha-gal Fact Sheet & Reporting",
+      "description": "Official ADH page + data download links",
+      "type": "State Report",
+      "url": "https://healthy.arkansas.gov/programs-services/diseases-conditions/diseases-from-animals-insects/alpha-gal-allergy/",
+      "coverage": "Current",
+      "category": "Alpha-gal",
+      "notes": "Direct from ADH"
+    }
+  ],
+  "last_updated": "2026-05-30",
+  "generated_for": "thisticksmeoff — Arkansas state-specific data",
+  "notes": "One duplicate (2025 Lone Star Excel) was filtered out as it was already added in the previous expanded batch. These three new sources add excellent Arkansas county-level granularity, especially the interactive ArcGIS dashboard."
+}

@@ -1,0 +1,34 @@
+{
+  "data_sources": [
+    {
+      "name": "CDC Tick Bite Data Tracker (ER Visits for Tick Bites)",
+      "description": "National syndromic surveillance of emergency department visits for tick bites — by week, month, region, age, sex. Best real-time proxy for disease burden. 2026 spring data: highest ER visit rates since 2017 in Northeast + Midwest.",
+      "type": "Interactive Dashboard",
+      "url": "https://www.cdc.gov/ticks/data-research/facts-stats/tick-bite-data-tracker.html",
+      "coverage": "Ongoing (data back to ~2017, detailed 2023–2026)",
+      "category": "Tick Bites / Burden",
+      "notes": "Excellent proxy for overall tick exposure/burden, especially where case reporting is low."
+    },
+    {
+      "name": "Alpha-gal IgE Prevalence in U.S. Military Recruits (2024 study)",
+      "description": "6.0% overall positivity; highest in AR (39%), OK (35%), MO (29%). Closely tracks Lone Star tick range. Strong South burden indicator.",
+      "type": "Peer-reviewed seroprevalence study",
+      "url": "https://www.jaci-inpractice.org/article/S2213-2198(23)01201-1/abstract",
+      "coverage": "Recent cohort across all 50 states",
+      "category": "Alpha-gal (seroprevalence)",
+      "notes": "Undercounts clinical cases but shows massive exposure in the South that traditional Lyme surveillance misses."
+    },
+    {
+      "name": "AGS Healthcare Utilization Studies (Anaphylaxis & ER/Hospital Burden)",
+      "description": "Multiple studies show >50% of AGS patients experience anaphylaxis requiring ED visits (some multiple hospitalizations). Delayed diagnosis drives high costs. Underdiagnosed AGS in South/Midwest leads to repeated ER visits.",
+      "type": "Peer-reviewed papers",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5932728/ + https://alphagalaction.org/research-and-epidemiology/",
+      "coverage": "2016–2025 cohorts",
+      "category": "Alpha-gal Burden",
+      "notes": "Direct support for disease burden / healthcare cost layer."
+    }
+  ],
+  "last_updated": "2026-05-30",
+  "generated_for": "thisticksmeoff — disease burden batch",
+  "notes": "Most other items in this dump (Arkansas/Missouri AGS numbers, MMWR, California/Oregon/Washington) were already integrated from prior batches. This batch adds strong burden/proxy data (ER visits + seroprevalence + utilization) that directly supports the red layer and regional storytelling (South = AGS-heavy burden)."
+}

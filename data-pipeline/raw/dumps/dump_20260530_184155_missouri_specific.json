@@ -1,0 +1,51 @@
+﻿{
+  "missouri_specific": [
+    {
+      "name": "Missouri Tickborne Disease Story Map (2009–2023)",
+      "description": "Interactive dashboards with county/jurisdiction case rates for Ehrlichiosis, Spotted Fever Rickettsiosis, Tularemia, Lyme, Anaplasmosis",
+      "type": "Interactive ArcGIS Story Map",
+      "url": "https://storymaps.arcgis.com/stories/298b7a6bf3dc4d079a57332c264c62f3",
+      "coverage": "2009–2023, Missouri counties",
+      "category": "Multi-disease",
+      "notes": "The single best visual source for MO county-level trends — perfect for popups or animated layers"
+    },
+    {
+      "name": "Missouri Alpha-gal Syndrome Official Estimate",
+      "description": "7,300–34,400 Missourians affected since 2021 (DHSS)",
+      "type": "State Report",
+      "url": "https://health.mo.gov/living/healthcondiseases/communicable/tickscarrydisease/ags.php",
+      "coverage": "2021–present",
+      "category": "Alpha-gal",
+      "notes": "Strong counter to Reddit claims — include this number in MO popups"
+    },
+    {
+      "name": "2025 Lone Star Tick Surveillance – Missouri",
+      "description": "County-level established status for Lone Star ticks (Alpha-gal vector)",
+      "type": "Excel",
+      "url": "https://www.cdc.gov/ticks/media/files/2026/05/2025-lone-star-tick-surveillance-map-data.xlsx",
+      "coverage": "Through 2025",
+      "category": "Tick Species",
+      "notes": "Established in virtually every Missouri county — this will light MO up red"
+    },
+    {
+      "name": "Missouri DHSS Tickborne Disease Main Page",
+      "description": "Reportable diseases (RMSF, Ehrlichiosis, Tularemia, Lyme-like) and general surveillance info",
+      "type": "State Page",
+      "url": "https://health.mo.gov/living/healthcondiseases/communicable/tickscarrydisease/index.php",
+      "coverage": "Ongoing",
+      "category": "General",
+      "notes": "Links to reportable disease list and reference manual"
+    },
+    {
+      "name": "Show-Me Ticks Citizen Science Study",
+      "description": "3,811 ticks collected in 33 counties — 89% were Lone Star ticks",
+      "type": "Study / MDC Report",
+      "url": "https://mdc.mo.gov/magazines/missouri-conservationist/2023-02/show-me-ticks",
+      "coverage": "2019–2021",
+      "category": "Tick Species",
+      "notes": "Great baseline abundance data"
+    }
+  ],
+  "last_updated": "2026-05-30",
+  "generated_for": "thisticksmeoff — Missouri expanded dataset"
+}

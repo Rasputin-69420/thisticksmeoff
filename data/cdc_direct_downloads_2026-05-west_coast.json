@@ -1,0 +1,52 @@
+{
+  "data_sources": [
+    {
+      "name": "Ixodes Pathogen County Table 2026",
+      "description": "County-level pathogens found in I. pacificus and I. scapularis (Borrelia, Anaplasma, etc.)",
+      "type": "Excel",
+      "url": "https://www.cdc.gov/ticks/media/files/2026/04/Public_Use_Ixodes_Pathogens_County_Table_2026_04292026.xlsx",
+      "coverage": "Through 2026",
+      "category": "Pathogens",
+      "notes": "Direct infection data for Lyme/anaplasmosis in Western ticks"
+    },
+    {
+      "name": "California Lyme & Tick Surveillance Story Map",
+      "description": "Interactive county-level Lyme incidence (2014–2024) + I. pacificus testing results (positives for Borrelia)",
+      "type": "Interactive ArcGIS Story Map",
+      "url": "https://storymaps.arcgis.com/stories/f64d0c19a3ab42cf90e8ce38397e96e0",
+      "coverage": "California counties 2014–2024",
+      "category": "California",
+      "notes": "Best visual for CA — click counties for exact case counts and tick testing data"
+    },
+    {
+      "name": "Oregon Tickborne Disease Statistics & Maps",
+      "description": "Graphs and maps for Lyme, RMSF, relapsing fever, etc. (low local Lyme)",
+      "type": "State Dashboard",
+      "url": "https://www.oregon.gov/oha/ph/diseasesconditions/communicabledisease/pages/ticks.aspx",
+      "coverage": "Oregon 2022–2025",
+      "category": "Oregon",
+      "notes": "Shows how rare local Lyme is in OR"
+    },
+    {
+      "name": "Washington Tick Submission Dashboard",
+      "description": "Citizen-submitted ticks by species, county, year, host — excellent passive surveillance",
+      "type": "Interactive Dashboard",
+      "url": "https://doh.wa.gov/data-and-statistical-reports/washington-tracking-network-wtn/tick-data/tick-dashboard",
+      "coverage": "Washington 2011–present",
+      "category": "Washington",
+      "notes": "Real-time-ish data from public submissions — great for WA layers"
+    },
+    {
+      "name": "Washington Alpha-gal Case Report (I. pacificus linked)",
+      "description": "2025 documented AGS case from local Western blacklegged tick bite",
+      "type": "Case Report",
+      "url": "https://wwwnc.cdc.gov/eid/article/31/4/24-0577_article",
+      "coverage": "Washington 2025",
+      "category": "Alpha-gal",
+      "notes": "Rare West Coast AGS evidence — good counterpoint data"
+    }
+  ],
+  "last_updated": "2026-05-30",
+  "generated_for": "thisticksmeoff — California / Oregon / Washington deep dive",
+  "notes": "One source in this dump was a duplicate (2026 Ixodes pacificus County Table — same URL as earlier Ixodes surveillance entry) and was filtered. The five sources above were newly integrated. Excellent material for Western US tick species and regional risk visualization."
+}

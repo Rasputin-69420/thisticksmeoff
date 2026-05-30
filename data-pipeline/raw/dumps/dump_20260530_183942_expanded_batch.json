@@ -1,0 +1,106 @@
+﻿{
+  "data_sources": [
+    {
+      "name": "2023 Lyme Disease Cases by County (exact counts)",
+      "description": "County-level reported Lyme cases for 2023 â€” direct drop-in for heatmap",
+      "type": "CSV",
+      "url": "https://www.cdc.gov/lyme/media/files/2025/02/LD_Case_Counts_by_County_2023_updated.csv",
+      "coverage": "2023, all US counties",
+      "category": "Lyme",
+      "notes": "Best single-year county file available"
+    },
+    {
+      "name": "Lyme Cases by State 2008â€“2023 (historical trends)",
+      "description": "State-level counts and incidence over 16 years",
+      "type": "CSV",
+      "url": "https://www.cdc.gov/lyme/media/files/2025/02/2023_CaseIncid-Lyme-Disease-Cases-by-State-or-Locality.csv",
+      "coverage": "2008â€“2023",
+      "category": "Lyme",
+      "notes": "Great for animation fill-in years"
+    },
+    {
+      "name": "All Tickborne Diseases by County 2019â€“2022",
+      "description": "Lyme + Anaplasmosis + Babesiosis + Ehrlichiosis + Spotted Fever + more â€” county level",
+      "type": "Excel",
+      "url": "https://www.cdc.gov/ticks/media/files/2024/05/AllTBD2022_Public.xlsx",
+      "coverage": "2019â€“2022, all US counties",
+      "category": "Multi-disease",
+      "notes": "Broadest county dataset CDC publishes"
+    },
+    {
+      "name": "Tickborne Diseases by County 2016â€“2019 (older baseline)",
+      "description": "Historic county-level for multiple diseases",
+      "type": "Excel",
+      "url": "https://www.cdc.gov/ticks/resources/Reported-Tickborne-Disease-Cases-by-County-of-Residence_2016-2019.xlsx",
+      "coverage": "2016â€“2019",
+      "category": "Multi-disease",
+      "notes": "Fills earlier animation years"
+    },
+    {
+      "name": "2025 Lone Star Tick Surveillance (Alpha-gal vector)",
+      "description": "County-level established/reported status for Lone Star ticks â€” updated through 2025",
+      "type": "Excel",
+      "url": "https://www.cdc.gov/ticks/media/files/2026/05/2025-lone-star-tick-surveillance-map-data.xlsx",
+      "coverage": "Through 2025",
+      "category": "Tick Species",
+      "notes": "MISSOURI GOLD â€” established in nearly every county"
+    },
+    {
+      "name": "Ixodes (Blacklegged) Tick Surveillance 2025â€“2026",
+      "description": "County-level established/reported for Lyme vector",
+      "type": "Excel",
+      "url": "https://www.cdc.gov/ticks/media/files/2026/04/Public_Use_Ixodes_County_Table_2026_03252026.xlsx",
+      "coverage": "Up to 2025",
+      "category": "Tick Species",
+      "notes": "Best for Lyme density layers"
+    },
+    {
+      "name": "Geographic Distribution of Suspected Alpha-gal Cases (MMWR 2023)",
+      "description": "County-level suspected AGS from 357k+ lab tests (2017â€“2022)",
+      "type": "HTML + tables",
+      "url": "https://www.cdc.gov/mmwr/volumes/72/wr/mm7230a2.htm",
+      "coverage": "2017â€“2022",
+      "category": "Alpha-gal",
+      "notes": "Missouri, OK, AR, KY, VA are hotspots â€” raw county tables inside"
+    },
+    {
+      "name": "Missouri Alpha-gal Syndrome Official Estimate",
+      "description": "7,300â€“34,400 Missourians affected since 2021 (DHSS)",
+      "type": "State Report",
+      "url": "https://health.mo.gov/living/healthcondiseases/communicable/tickscarrydisease/ags.php",
+      "coverage": "Missouri 2021â€“present",
+      "category": "Alpha-gal",
+      "notes": "Direct counter to Reddit 'no ticks in Missouri' claims"
+    },
+    {
+      "name": "Missouri Tickborne Disease Story Map",
+      "description": "Interactive DHSS dashboard â€” Ehrlichiosis, Lyme, ticks, etc.",
+      "type": "Interactive + data",
+      "url": "https://storymaps.arcgis.com/stories/298b7a6bf3dc4d079a57332c264c62f3",
+      "coverage": "Missouri 2009â€“2023",
+      "category": "Missouri",
+      "notes": "Visual + case trends for MO-specific layers"
+    },
+    {
+      "name": "NEON Tick Abundance & Pathogen Data (ecological)",
+      "description": "Standardized drag-sampling across US sites â€” abundance + pathogens",
+      "type": "NEON Data Portal",
+      "url": "https://data.neonscience.org/data-products/DP1.10093.001",
+      "coverage": "2014â€“present (ongoing)",
+      "category": "Ecological / Citizen Science",
+      "notes": "High-quality density data, not just cases"
+    },
+    {
+      "name": "NEON Tick Pathogen Status",
+      "description": "Pathogen testing results from NEON ticks",
+      "type": "NEON Data Portal",
+      "url": "https://data.neonscience.org/data-products/DP1.10092.001",
+      "coverage": "2014â€“present",
+      "category": "Ecological / Citizen Science",
+      "notes": "Borrelia, Anaplasma, Babesia, Ehrlichia, etc."
+    }
+  ],
+  "last_updated": "2026-05-30",
+  "generated_for": "thisticksmeoff â€” expanded pipeline with 2025 data + Missouri focus",
+  "notes_for_pipeline": "Prioritize the 2025 Lone Star Excel and 2023 Lyme county CSV for immediate heatmap upgrades. Missouri now has strong AGS + tick presence data to bury the Reddit noise. NEON data excellent for ecological density modeling in purple layer."
+}

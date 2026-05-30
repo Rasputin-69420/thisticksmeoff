@@ -1,4 +1,4 @@
-# This Tics Me Off
+# This Ticks Me Off: Alpha-gal & Lyme Tracker
 
 **Alpha-gal Syndrome & Lyme Disease Tracker** — an interactive map of reported cases across the Northeast United States.
 
@@ -33,7 +33,9 @@ Data is loaded from `data/3state_cases.json` (with a full fallback dataset embed
 ## Future / Notes
 
 - Custom domain `thisticksmeoff.com` planned
-- More states / county-level data possible later
+- **May 2026 Visualization Update (live on testnet)**: Purple blob and recent red data refreshed using the 2025/2026 Lone Star + Ixodes surveillance dumps. Advance the year slider to 2025 to see the significantly expanded tick population (especially Missouri and new Western states).
+- County-level data work continues — the new sources are being used both for visualization improvements and future pipeline ingestion.
+- See `SESSION_2026-05-30_COUNTY_DATA.md` for full dump history.
 - This started as a single-file prototype and was split into a proper small static site for easier hosting and maintenance
 
 ---

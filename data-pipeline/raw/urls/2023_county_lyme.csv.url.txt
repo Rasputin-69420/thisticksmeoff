@@ -1,0 +1,10 @@
+# 2023 Lyme Disease Cases by County (exact counts)
+# Direct CDC download (May 2026 batch)
+# Source: https://www.cdc.gov/lyme/media/files/2025/02/LD_Case_Counts_by_County_2023_updated.csv
+#
+# Local filename to use: LD_Case_Counts_by_County_2023_updated.csv
+# Expected columns (typical): County, State, Cases (or similar)
+# This is the highest priority file for a real county-level red heatmap layer.
+#
+# Download and place in this folder (data-pipeline/raw/lyme_ags_database/ or a new county/ subfolder).
+# Then run the pipeline / county processor.

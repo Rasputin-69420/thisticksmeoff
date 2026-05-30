@@ -137,7 +137,16 @@ const loneStarPresence = {
 
 let currentDisease = "alpha";
 let currentYear = 2025;
-let map = L.map('map').setView([39.8, -93.5], 4.6); // Shifted right (opposite direction) by ~Maine's width so the text box sits better relative to the US/Atlantic
+let initialCenter = [39.8, -93.5];
+let initialZoom = 4.6;
+
+// Much wider view on mobile so the whole US is visible
+if (window.innerWidth < 768) {
+  initialCenter = [39, -95];
+  initialZoom = 3.7;
+}
+
+let map = L.map('map').setView(initialCenter, initialZoom);
 let markers = [];                    // human case circles (red)
 let isPlaying = false;
 let playInterval = null;
@@ -203,12 +212,15 @@ function updateHeatmap() {
       const color = getHeatColor(value);
 
       let radius;
+      const isMobile = window.innerWidth < 768;
+      const sizeMultiplier = isMobile ? 0.7 : 1;
+
       if (currentYear === 2010) {
         // At t0 (2010), show small baseline dots
-        radius = 7;
+        radius = isMobile ? 5 : 7;
       } else {
         // Size dots based on growth since 2010 (final - initial)
-        radius = Math.max(8, Math.min(26, Math.sqrt(growth) / 2.8));
+        radius = Math.max(6, Math.min(22, Math.sqrt(growth) / 2.8 * sizeMultiplier));
       }
 
       const circle = L.circleMarker(stateCoords[state], {
@@ -316,9 +328,10 @@ function updateTickPopulationLayer() {
   console.log(`[Tick Density] Creating purple heatmap with ${heatPoints.length} points`);
 
   // Create purple-themed heatmap - very pronounced and blob-like
+  const isMobile = window.innerWidth < 768;
   purpleHeatLayer = L.heatLayer(heatPoints, {
-    radius: 48,
-    blur: 11,
+    radius: isMobile ? 32 : 48,
+    blur: isMobile ? 9 : 11,
     maxZoom: 10,
     max: 1.0,
     gradient: {
@@ -524,13 +537,17 @@ loadData().then(() => {
     // Purple is static 2025 data — do not update on year change
   };
 
-  // Disease selector using custom buttons (much more reliable on iPhone)
+  // Disease selector using custom buttons - robust on iOS Safari
+  let isTouchHandling = false;
+
   document.querySelectorAll('.disease-option').forEach(option => {
     const value = option.dataset.value;
 
     const toggleDisease = (e) => {
+      if (isTouchHandling && e.type === 'click') return;
+
       if (currentDisease === value) {
-        // Clicked the active one → turn red layer completely off
+        // Tapped the active pill → turn red layer off
         currentDisease = null;
         document.querySelectorAll('.disease-option').forEach(o => o.classList.remove('active'));
       } else {
@@ -545,10 +562,15 @@ loadData().then(() => {
     };
 
     option.addEventListener('click', toggleDisease);
-    option.addEventListener('touchend', toggleDisease, { passive: true });
+
+    option.addEventListener('touchend', (e) => {
+      isTouchHandling = true;
+      toggleDisease(e);
+      setTimeout(() => { isTouchHandling = false; }, 350);
+    }, { passive: true });
   });
 
-  // Set initial active state (Alpha-gal selected by default)
+  // Set initial active state
   const initialAlpha = document.querySelector('.disease-option[data-value="alpha"]');
   if (initialAlpha) initialAlpha.classList.add('active');
   currentDisease = 'alpha';

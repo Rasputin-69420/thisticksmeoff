@@ -51,6 +51,7 @@ async function loadData() {
 }
 
 const stateCoords = {
+  // Original 10 states
   "Massachusetts": [42.41, -71.38],
   "Connecticut": [41.60, -72.74],
   "Pennsylvania": [40.99, -77.73],
@@ -60,7 +61,30 @@ const stateCoords = {
   "New Hampshire": [43.45, -71.60],
   "Vermont": [44.05, -72.70],
   "Rhode Island": [41.68, -71.55],
-  "West Virginia": [38.92, -80.50]
+  "West Virginia": [38.92, -80.50],
+
+  // Expanded states for Verified Tick Population (purple) - predictive habitat
+  "Maryland": [39.05, -76.80],
+  "Delaware": [39.00, -75.50],
+  "Virginia": [37.50, -78.50],
+  "Kentucky": [37.80, -85.00],
+  "Tennessee": [35.80, -86.00],
+  "North Carolina": [35.50, -79.50],
+  "South Carolina": [34.00, -81.00],
+  "Ohio": [40.30, -82.80],
+  "Indiana": [39.80, -86.20],
+  "Illinois": [40.00, -89.00],
+  "Missouri": [38.50, -92.50],
+  "Arkansas": [34.80, -92.20],
+  "Oklahoma": [35.50, -97.50],
+  "Alabama": [32.80, -86.80],
+  "Georgia": [32.80, -83.50],
+  // Additional high-density states for the purple blob
+  "Texas": [31.00, -99.00],
+  "Mississippi": [32.50, -89.50],
+  "Florida": [28.00, -82.00],
+  "Kansas": [38.50, -98.00],
+  "Louisiana": [31.00, -92.00]
 };
 
 const stateSize = {
@@ -76,10 +100,45 @@ const stateSize = {
   "West Virginia": 10
 };
 
+// Verified Lone Star tick population (2025 snapshot)
+// Values = % of counties in the state with established populations
+// Expanded beyond original human case region for predictive value.
+// Source: CDC Lone Star Tick Surveillance data (2025)
+const loneStarPresence = {
+  // Original 10 states (human data region)
+  "Pennsylvania": 52,
+  "New Jersey": 67,
+  "New York": 27,
+  "West Virginia": 41,
+  "Connecticut": 14,
+  "Massachusetts": 7,
+  "Rhode Island": 40,
+  "Maine": 3,
+  "New Hampshire": 4,
+  "Vermont": 2,
+
+  // Expanded states (strong Lone Star presence - predictive of future disease risk)
+  "Maryland": 75,
+  "Delaware": 67,
+  "Virginia": 52,
+  "Kentucky": 72,
+  "Tennessee": 47,
+  "North Carolina": 48,
+  "South Carolina": 54,
+  "Ohio": 53,
+  "Indiana": 53,
+  "Illinois": 67,
+  "Missouri": 55,
+  "Arkansas": 97,
+  "Oklahoma": 90,
+  "Alabama": 63,
+  "Georgia": 38
+};
+
 let currentDisease = "alpha";
 let currentYear = 2025;
 let map = L.map('map').setView([42.2, -74.5], 5.3); // Wider Northeast view for expanded regional data (ME to WV + NY/NJ)
-let markers = [];
+let markers = [];                    // human case circles (red)
 let isPlaying = false;
 let playInterval = null;
 
@@ -94,6 +153,15 @@ function getHeatColor(d) {
   if (d > 200)  return '#ff8080';
   if (d > 80)   return '#ffb3b3';
   return '#ffe6e6';                 // near white / very light pink
+}
+
+// Purple color scale for verified tick population (light → deep purple)
+function getPurpleColor(pct) {
+  if (pct > 50) return '#5b21b6';   // deep purple
+  if (pct > 35) return '#7c3aed';
+  if (pct > 20) return '#a78bfa';
+  if (pct > 8)  return '#c4b5fd';
+  return '#e0d4ff';                 // very light lavender
 }
 
 function getCumulativeData(year) {
@@ -115,14 +183,33 @@ function updateHeatmap() {
   markers.forEach(m => map.removeLayer(m));
   markers = [];
 
+  // If no disease selected (red layer turned off), don't draw human case circles
+  if (!currentDisease) {
+    return;
+  }
+
   const cumulativeData = getCumulativeData(currentYear);
   const diseaseName = currentDisease === 'lyme' ? 'Lyme Disease' : 'Alpha-gal Syndrome';
+
+  // Get 2010 baseline for growth calculation (makes dots show spread rather than just total burden)
+  const baseline2010 = getCumulativeData(2010);
 
   for (let state in cumulativeData) {
     if (stateCoords[state]) {
       const value = cumulativeData[state];
+      const baseline = baseline2010[state] || 0;
+      const growth = Math.max(0, value - baseline);
+
       const color = getHeatColor(value);
-      const radius = Math.max(10, Math.min(22, Math.sqrt(value) / 3)); // responsive radius
+
+      let radius;
+      if (currentYear === 2010) {
+        // At t0 (2010), show small baseline dots
+        radius = 7;
+      } else {
+        // Size dots based on growth since 2010 (final - initial)
+        radius = Math.max(8, Math.min(26, Math.sqrt(growth) / 2.8));
+      }
 
       const circle = L.circleMarker(stateCoords[state], {
         radius: radius,
@@ -132,19 +219,29 @@ function updateHeatmap() {
         fillOpacity: 0.9
       }).addTo(map);
 
-      // Popup on click/tap (works great on both desktop and mobile)
-      const popupHtml = `
-        <strong>${currentYear} • ${diseaseName}</strong><br>
-        <strong>${state}</strong>: ${value.toLocaleString()} cases<br>
-        <small>(cumulative since 2010)</small>
-      `;
+      // Popup on click/tap
+      let popupHtml;
+      if (currentYear === 2010) {
+        popupHtml = `
+          <strong>2010 Baseline • ${diseaseName}</strong><br>
+          <strong>${state}</strong>: ${value.toLocaleString()} cases<br>
+          <small>(starting point - small dots represent initial presence)</small>
+        `;
+      } else {
+        popupHtml = `
+          <strong>${currentYear} • ${diseaseName}</strong><br>
+          <strong>${state}</strong>: ${value.toLocaleString()} cumulative cases<br>
+          <small>Growth since 2010: +${growth.toLocaleString()} cases</small>
+        `;
+      }
       circle.bindPopup(popupHtml, {
         closeButton: true,
         offset: [0, -4]
       });
 
-      // Nice hover tooltip on desktop (no action needed on phone)
-      circle.bindTooltip(`${value.toLocaleString()}`, {
+      // Tooltip shows the growth value for better "spread" storytelling
+      const tooltipValue = currentYear === 2010 ? value : growth;
+      circle.bindTooltip(`${tooltipValue.toLocaleString()}`, {
         permanent: false,
         direction: 'top',
         offset: [0, -8],
@@ -154,6 +251,84 @@ function updateHeatmap() {
       markers.push(circle);
     }
   }
+}
+
+// Update the purple "Verified Tick Population" layer as a density "blob" / heatmap
+let purpleHeatLayer = null;
+
+function updateTickPopulationLayer() {
+  console.log('[Tick Density] updateTickPopulationLayer() called');
+
+  // Remove previous heatmap if it exists
+  if (purpleHeatLayer) {
+    map.removeLayer(purpleHeatLayer);
+    purpleHeatLayer = null;
+  }
+
+  const toggle = document.getElementById('tickPopulationToggle');
+  if (!toggle || !toggle.checked) {
+    console.log('[Tick Density] Toggle is off or not found');
+    return;
+  }
+
+  // Build points for the heatmap: [lat, lng, intensity]
+  // Using established county counts per state + jitter to create a natural density blob
+  const heatPoints = [];
+
+  // Approximate intensity weights based on established county counts (2025 CDC data)
+  const establishedCounts = {
+    "Texas": 118, "Kentucky": 86, "Arkansas": 73, "Virginia": 70, "Oklahoma": 69,
+    "Illinois": 68, "Missouri": 63, "Georgia": 60, "Mississippi": 58, "Indiana": 49,
+    "Florida": 48, "North Carolina": 48, "Tennessee": 45, "Alabama": 42,
+    "Pennsylvania": 8, "New Jersey": 14, "New York": 19, "West Virginia": 13,
+    "Maryland": 18, "Delaware": 2, "South Carolina": 25, "Ohio": 19,
+    "Connecticut": 5, "Massachusetts": 3, "Rhode Island": 2,
+    "Kansas": 32, "Louisiana": 19
+  };
+
+  // Use existing stateCoords where available, with added jitter for blob effect
+  Object.keys(establishedCounts).forEach(state => {
+    const count = establishedCounts[state];
+    if (!stateCoords[state] || count < 1) return;
+
+    const [baseLat, baseLng] = stateCoords[state];
+    const intensity = Math.min(1.0, count / 80); // Normalize intensity
+
+    // Create multiple points with jitter to simulate density blob
+    const numPoints = Math.max(5, Math.floor(count / 5));
+    for (let i = 0; i < numPoints; i++) {
+      const latJitter = (Math.random() - 0.5) * 2.1;
+      const lngJitter = (Math.random() - 0.5) * 2.5;
+      // Even stronger intensity for more pronounced blobs
+      heatPoints.push([
+        baseLat + latJitter,
+        baseLng + lngJitter,
+        Math.min(1.0, intensity * 2.1 + Math.random() * 0.4)
+      ]);
+    }
+  });
+
+  if (heatPoints.length === 0) {
+    console.warn('[Tick Density] No heat points generated. Check establishedCounts and stateCoords keys.');
+    return;
+  }
+
+  console.log(`[Tick Density] Creating purple heatmap with ${heatPoints.length} points`);
+
+  // Create purple-themed heatmap - very pronounced and blob-like
+  purpleHeatLayer = L.heatLayer(heatPoints, {
+    radius: 48,
+    blur: 11,
+    maxZoom: 10,
+    max: 1.0,
+    gradient: {
+      0.0: '#c084fc',   // vivid purple
+      0.3: '#a855f7',
+      0.6: '#9333ea',
+      0.85: '#7e22ce',
+      1.0: '#581c87'    // deep, rich purple
+    }
+  }).addTo(map);
 }
 
 function showModal(type) {
@@ -208,6 +383,10 @@ function showModal(type) {
       <strong>Massachusetts DPH:</strong> Annual tick-borne disease surveillance reports (2015–2026 YTD).<br>
       <strong>Johns Hopkins Lyme Tracker:</strong> County-level interactive maps and data explorer.<br>
       <strong>Other:</strong> Nantucket historical studies, literature (e.g. Phillips 2001, Mead 2024), ArcGIS county maps.<br><br>
+
+      <strong>Verified Tick Population (Purple Density Layer):</strong><br>
+      <strong>CDC Lone Star Tick Surveillance (2025):</strong> County-level data on established populations of <em>Amblyomma americanum</em> (Lone Star tick). Used to generate the purple density "blob" showing current tick habitat intensity and spread (1,139+ counties with established populations). File archived as <code>2025_lone_star_tick_established_counties.xlsx</code>.<br><br>
+
       <strong>Regional case data (expanded):</strong> 10 high-incidence states (NY, PA, MA, NJ, CT, WV, ME, RI, NH, VT) using real 2023 CDC state counts (lyme_2023_state_cases.csv) as anchors. Historical years generalized from national trends + known surveillance artifacts (2022 case definition change, MA reporting changes). See README in <code>data/lyme_ags_database/</code> for full notes and limitations.
     </div>`;
   }
@@ -267,6 +446,7 @@ document.addEventListener('keydown', (e) => {
 loadData().then(() => {
   // Initial render
   updateHeatmap();
+  updateTickPopulationLayer();
 
   // Controls
   const slider = document.getElementById('yearSlider');
@@ -283,13 +463,24 @@ loadData().then(() => {
 
     if (yearEl) yearEl.textContent = currentYear;
 
-    const diseaseName = currentDisease === 'alpha' ? 'Alpha-Gal' : 'Lyme Disease';
-    if (diseaseEl) diseaseEl.textContent = diseaseName;
+    const diseaseToggleContainer = document.querySelector('.disease-toggle');
+    if (diseaseToggleContainer) {
+      diseaseToggleContainer.classList.toggle('red-off', !currentDisease);
+    }
 
-    // Sum all states for the current cumulative year + disease
-    const cumulative = getCumulativeData(currentYear);
-    const total = Object.values(cumulative).reduce((sum, val) => sum + val, 0);
-    if (totalEl) totalEl.textContent = total.toLocaleString();
+    if (!currentDisease) {
+      // Red human case layer is turned off
+      if (diseaseEl) diseaseEl.textContent = 'Tick Data Only';
+      if (totalEl) totalEl.textContent = '—';
+    } else {
+      const diseaseName = currentDisease === 'alpha' ? 'Alpha-Gal' : 'Lyme Disease';
+      if (diseaseEl) diseaseEl.textContent = diseaseName;
+
+      // Sum all states for the current cumulative year + disease
+      const cumulative = getCumulativeData(currentYear);
+      const total = Object.values(cumulative).reduce((sum, val) => sum + val, 0);
+      if (totalEl) totalEl.textContent = total.toLocaleString();
+    }
   }
 
   // Initial sync for the big year box
@@ -300,17 +491,51 @@ loadData().then(() => {
     currentYear = parseInt(slider.value);
     updateYearDisplay();
     updateHeatmap();
+    updateTickPopulationLayer();
   };
 
-  // Disease toggle
+  // Disease toggle logic - clicking a red option toggles the human case heatmap on/off
+  // - Click active red option → turn red heatmap completely OFF
+  // - Click red option when red is off → turn red heatmap back ON with that disease
   document.querySelectorAll('input[name="disease"]').forEach(radio => {
-    radio.onchange = () => {
-      currentDisease = radio.value;
+    const label = radio.closest('.disease-option');
+
+    label.addEventListener('click', (e) => {
+      e.preventDefault(); // take full control
+
+      if (currentDisease === radio.value) {
+        // Currently selected → turn the entire red layer OFF
+        currentDisease = null;
+        radio.checked = false;
+      } else {
+        // Either off or different disease → turn red layer ON with this disease
+        currentDisease = radio.value;
+        radio.checked = true;
+      }
+
       updateHeatmap();
-      // year doesn't change on disease switch, but keep in sync just in case
+      updateTickPopulationLayer();
       updateYearDisplay();
+    });
+
+    // Fallback for direct radio interaction (accessibility)
+    radio.onchange = () => {
+      if (radio.checked) {
+        currentDisease = radio.value;
+        updateHeatmap();
+        updateTickPopulationLayer();
+        updateYearDisplay();
+      }
     };
   });
+
+  // Verified Tick Population overlay toggle (purple, independent of disease)
+  const tickToggle = document.getElementById('tickPopulationToggle');
+  if (tickToggle) {
+    tickToggle.onchange = () => {
+      updateTickPopulationLayer();
+    };
+  }
 
   // Play / Pause
   playBtn.onclick = function() {
@@ -322,6 +547,7 @@ loadData().then(() => {
         if (currentYear > 2025) currentYear = 2010;
         updateYearDisplay();
         updateHeatmap();
+        updateTickPopulationLayer();
       }, 800);
     } else {
       isPlaying = false;

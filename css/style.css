@@ -204,6 +204,17 @@ button {
     padding: 14px 18px;
     font-size: 16.5px;
   }
+
+  .layer-legend {
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 12px;
+    gap: 4px;
+  }
+
+  .layer-legend .legend-note {
+    margin-left: 0;
+  }
 }
 
 /* Page title */
@@ -460,4 +471,98 @@ button {
 .disease-option input[type="radio"]:checked + .dot:hover {
   background: #ff1a1a;
   border-color: #ff1a1a;
+}
+
+/* Overlay toggle for Verified Tick Population (purple) */
+.overlay-control {
+  display: flex;
+  align-items: center;
+}
+
+.overlay-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  user-select: none;
+  font-size: inherit;
+}
+
+.overlay-toggle input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.overlay-toggle .dot {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #c4b5fd;           /* light purple default */
+  border: 2px solid #7c3aed;
+  flex-shrink: 0;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.overlay-toggle input[type="checkbox"]:checked + .dot {
+  background: #7c3aed;           /* vivid purple when on */
+  border-color: #5b21b6;
+}
+
+.overlay-toggle:hover .dot {
+  border-color: #a78bfa;
+}
+
+/* Layer legend explaining red vs purple */
+.layer-legend {
+  max-width: 1400px;
+  margin: 6px auto 0;
+  padding: 4px 16px;
+  font-size: 13px;
+  color: #aaa;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  line-height: 1.3;
+}
+
+.layer-legend .legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.layer-legend .legend-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.layer-legend .legend-dot.red {
+  background: #e60000;
+  border: 1px solid #ff8080;
+}
+
+.layer-legend .legend-dot.purple {
+  background: #7c3aed;
+  border: 1px solid #c4b5fd;
+}
+
+.layer-legend .legend-note {
+  font-size: 12px;
+  color: #888;
+  font-style: italic;
+  margin-left: 8px;
+}
+
+/* Visual feedback when human case (red) heat map is turned off */
+.disease-toggle.red-off {
+  opacity: 0.45;
+  filter: grayscale(0.6);
 }

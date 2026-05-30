@@ -29,6 +29,15 @@
       </label>
     </div>
 
+    <!-- Separate overlay for direct tick habitat data (not human cases) -->
+    <div class="overlay-control">
+      <label class="overlay-toggle">
+        <input type="checkbox" id="tickPopulationToggle">
+        <span class="dot purple"></span>
+        <span class="label-text">Verified Tick Population</span>
+      </label>
+    </div>
+
     <div style="flex:1; min-width:300px;">
       <input type="range" id="yearSlider" min="2010" max="2025" value="2025" step="1" style="width:100%">
       <div class="year-labels">
@@ -39,6 +48,13 @@
     </div>
 
     <button id="playBtn">▶ Play</button>
+  </div>
+
+  <!-- Layer explanation / legend -->
+  <div class="layer-legend">
+    <span class="legend-item"><span class="legend-dot red"></span> Red = Human cases (lagging indicator of spread)</span>
+    <span class="legend-item"><span class="legend-dot purple"></span> Purple = Current Lone Star tick habitat density (2025) — predictive</span>
+    <span class="legend-note">Purple without red = emerging risk zones (ticks present, disease not yet widely reported)</span>
   </div>
 
   <div id="map"></div>
@@ -114,6 +130,8 @@
 
   <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- Leaflet.heat for smooth density "blob" visualization (local copy for file:// compatibility) -->
+  <script src="js/leaflet-heat.js"></script>
 
   <!-- Our app logic -->
   <script src="js/app.js"></script>

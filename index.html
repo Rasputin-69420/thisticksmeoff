@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>This Tics Me Off</title>
+  <title>This Ticks Me Off: Alpha-gal &amp; Lyme Tracker</title>
 
   <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
@@ -13,63 +13,70 @@
 </head>
 <body>
 
-  <div class="title">This Tics Me Off — Alpha-gal & Lyme Tracker</div>
+  <!-- Compact header: title | short slider | play + toggles (all in the black title space) -->
+  <div class="header">
+    <div class="title">This Ticks Me Off: Alpha-gal & Lyme Tracker</div>
 
-  <div class="controls">
-    <!-- Disease selection (red layer) - custom buttons for reliable mobile toggle -->
-    <div class="disease-toggle">
-      <div class="disease-option" data-value="lyme">
-        <span class="dot"></span>
-        <span class="label-text">Lyme</span>
-      </div>
-      <div class="disease-option" data-value="alpha">
-        <span class="dot"></span>
-        <span class="label-text">Alpha-gal</span>
-      </div>
-    </div>
-
-    <!-- Purple tick density overlay -->
-    <div class="overlay-control">
-      <label class="overlay-toggle">
-        <input type="checkbox" id="tickPopulationToggle">
-        <span class="dot purple"></span>
-        <span class="label-text">Tick Density</span>
-      </label>
-    </div>
-
-    <div style="flex:1; min-width:260px;">
-      <input type="range" id="yearSlider" min="2010" max="2025" value="2025" step="1" style="width:100%">
+    <!-- Date slider moved up here, narrowed to fit between title and play button -->
+    <div class="header-slider">
+      <input type="range" id="yearSlider" min="2010" max="2025" value="2010" step="1" style="width:100%">
       <div class="year-labels">
         <span>2010</span>
-        <span id="yearLabel">2025</span>
         <span>2025</span>
       </div>
     </div>
-  </div>
 
-  <!-- Compact layer legend -->
-  <div class="layer-legend">
-    <span class="legend-item">
-      <span class="legend-dot red"></span>
-      <span id="redLegendText">Cases of Alpha-gal</span>
-    </span>
-    <span class="legend-item">
-      <span class="legend-dot purple"></span>
-      Known Tick Population Density
-    </span>
+    <div class="header-controls">
+      <!-- Play button -->
+      <button id="playBtn" class="play-btn-header">▶</button>
+
+      <!-- Disease toggles -->
+      <div class="disease-toggle">
+        <div class="disease-option" data-value="lyme">
+          <span class="dot"></span>
+          <span class="label-text">Lyme</span>
+        </div>
+        <div class="disease-option" data-value="alpha">
+          <span class="dot"></span>
+          <span class="label-text">Alpha-gal</span>
+        </div>
+      </div>
+
+
+    </div>
   </div>
 
   <div id="map"></div>
 
   <!-- Big Year Display (middle right of map area) -->
   <div id="year-big" class="year-big-display">
-    <div class="y-year">2025</div>
-    <div class="y-disease">Alpha-Gal</div>
+    <div class="y-year">2010</div>
+
+    <!-- Scale bar + purple legend directly under the date -->
+    <div class="purple-scale">
+      <div class="ps-gradient" title="Purple = density of counties with established Lone Star ticks (CDC criteria)"></div>
+      <div class="ps-labels">
+        <span>Low</span>
+        <span class="ps-unit">Established counties</span>
+        <span>High</span>
+      </div>
+    </div>
+
+    <!-- Purple legend item below the scale bar (separates datasets) -->
+    <span class="legend-item">
+      <span class="legend-dot purple"></span>
+      Known Tick Population Density
+    </span>
+
     <div class="y-total">
       <span class="y-total-number">0</span>
-      <span class="y-total-label">cases</span>
     </div>
-    <button id="playBtn" class="play-btn-small">▶</button>
+
+    <!-- Red legend item below the cases readout for visual consistency -->
+    <span class="legend-item">
+      <span class="legend-dot red"></span>
+      <span id="redLegendText">Cases of Alpha-gal</span>
+    </span>
   </div>
 
   <!-- Cute "Click the Tick" floating control (lower right of map) -->

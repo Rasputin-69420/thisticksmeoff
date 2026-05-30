@@ -153,14 +153,15 @@ function getPurpleHistoricalFactor(year) {
 
 let selectedDisease = "alpha";   // which disease's number is shown in the text box
 let currentDisease = "alpha";    // which disease's red dots are currently drawn on the map (can be null)
-let currentYear = 2025;
-let initialCenter = [42.2, -74.5];
-let initialZoom = 5.3;
+let currentYear = 2010;
+// More centered continental US view at t0 (2010)
+let initialCenter = [39.0, -98.0];
+let initialZoom = 4.0;
 
-// Slightly wider view on mobile so the Northeast + surrounding area is visible
+// Slightly wider view on mobile for continental US
 if (window.innerWidth < 768) {
-  initialCenter = [41.5, -75.0];
-  initialZoom = 4.8;
+  initialCenter = [39.5, -98.0];
+  initialZoom = 3.6;
 }
 
 let map = L.map('map').setView(initialCenter, initialZoom);
@@ -284,28 +285,27 @@ function updateHeatmap() {
 
 // Update the purple "Verified Tick Population" layer as a density "blob" / heatmap
 let purpleHeatLayer = null;
+let purpleEstablishedData = null;
 
-function updateTickPopulationLayer() {
-  console.log('[Tick Density] updateTickPopulationLayer() called');
+// Loads purple data from generated file if available, otherwise uses embedded fallback.
+// This makes the purple layer fully independent of the red disease toggles.
+async function loadPurpleData() {
+  if (purpleEstablishedData) return purpleEstablishedData;
 
-  // Remove previous heatmap if it exists
-  if (purpleHeatLayer) {
-    map.removeLayer(purpleHeatLayer);
-    purpleHeatLayer = null;
+  try {
+    const res = await fetch('data/purple_data.json');
+    if (res.ok) {
+      const data = await res.json();
+      purpleEstablishedData = data.established_counts || data.current_established_counts || {};
+      console.log('%c[Pipeline] Loaded generated purple data', 'color:#0f0');
+      return purpleEstablishedData;
+    }
+  } catch (e) {
+    // silent fallback
   }
 
-  const toggle = document.getElementById('tickPopulationToggle');
-  if (!toggle || !toggle.checked) {
-    console.log('[Tick Density] Toggle is off or not found');
-    return;
-  }
-
-  // Build points for the heatmap: [lat, lng, intensity]
-  // Using established county counts per state + jitter to create a natural density blob
-  const heatPoints = [];
-
-  // Approximate intensity weights based on established county counts (2025 CDC data)
-  const establishedCounts = {
+  // Embedded fallback (original data) - always works even without pipeline
+  purpleEstablishedData = {
     "Texas": 118, "Kentucky": 86, "Arkansas": 73, "Virginia": 70, "Oklahoma": 69,
     "Illinois": 68, "Missouri": 63, "Georgia": 60, "Mississippi": 58, "Indiana": 49,
     "Florida": 48, "North Carolina": 48, "Tennessee": 45, "Alabama": 42,
@@ -314,6 +314,23 @@ function updateTickPopulationLayer() {
     "Connecticut": 5, "Massachusetts": 3, "Rhode Island": 2,
     "Kansas": 32, "Louisiana": 19
   };
+  return purpleEstablishedData;
+}
+
+async function updateTickPopulationLayer() {
+  console.log('[Tick Density] updateTickPopulationLayer() called');
+
+  // Remove previous heatmap if it exists
+  if (purpleHeatLayer) {
+    map.removeLayer(purpleHeatLayer);
+    purpleHeatLayer = null;
+  }
+
+  const establishedCounts = await loadPurpleData();
+
+  // Build points for the heatmap: [lat, lng, intensity]
+  // Using established county counts per state + jitter to create a natural density blob
+  const heatPoints = [];
 
   // Use existing stateCoords where available, with added jitter for blob effect
   Object.keys(establishedCounts).forEach(state => {
@@ -349,9 +366,22 @@ function updateTickPopulationLayer() {
 
   // Create purple-themed heatmap - very pronounced and blob-like
   const isMobile = window.innerWidth < 768;
+
+  // Reduce radius + blur for earlier years so the purple blob visibly contracts (user request)
+  // Size scale gives clear visual expansion from 2010 (contracted) → 2025 (full extent)
+  const sizeScale = (currentYear >= 2025) ? 1.0 :
+                    (currentYear >= 2022) ? 0.90 :
+                    (currentYear >= 2018) ? 0.78 :
+                    (currentYear >= 2014) ? 0.68 :
+                    0.58;  // 2010 — noticeably smaller/tighter blobs
+  const baseR = isMobile ? 32 : 48;
+  const baseB = isMobile ? 9 : 11;
+  const radius = Math.max(isMobile ? 14 : 18, Math.round(baseR * sizeScale));
+  const blur = Math.max(isMobile ? 5 : 6, Math.round(baseB * sizeScale));
+
   purpleHeatLayer = L.heatLayer(heatPoints, {
-    radius: isMobile ? 32 : 48,
-    blur: isMobile ? 9 : 11,
+    radius: radius,
+    blur: blur,
     maxZoom: 10,
     max: 1.0,
     gradient: {
@@ -363,9 +393,12 @@ function updateTickPopulationLayer() {
     }
   }).addTo(map);
 
-  // Mobile Safari fix: force map to recalculate size after adding canvas layer
+  // Force the heat canvas to actually paint, especially when it's the only layer
   setTimeout(() => {
-    if (map) map.invalidateSize();
+    if (map) {
+      map.invalidateSize();
+      map.fire('moveend');
+    }
   }, 50);
 }
 
@@ -413,27 +446,178 @@ function showModal(type) {
   }
 
   if (type === 'sources') {
-    html = `<h3>Data Sources</h3>
-    <div style="font-size: 15px; line-height: 1.45;">
-      <strong>Primary sources (from lyme_ags_sources.json):</strong><br><br>
-      <strong>CDC Lyme:</strong> NNDSS surveillance data, case maps, MMWR reports (2022 revision).<br>
-      <strong>CDC Alpha-gal:</strong> MMWR 2023 (Eurofins Viracor lab data 2017-2022), national estimates.<br>
-      <strong>Massachusetts DPH:</strong> Annual tick-borne disease surveillance reports (2015–2026 YTD).<br>
-      <strong>Johns Hopkins Lyme Tracker:</strong> County-level interactive maps and data explorer.<br>
-      <strong>Other:</strong> Nantucket historical studies, literature (e.g. Phillips 2001, Mead 2024), ArcGIS county maps.<br><br>
+    html = `<h3>Data Sources & Documentation</h3>
+    <div style="font-size: 15px; line-height: 1.5;">
+      <p><strong>Primary Data Sources</strong> (click any title to visit the original source):</p>
+      <div id="sources-list">Loading sources...</div>
 
-      <strong>Verified Tick Population (Purple Density Layer):</strong><br>
-      <strong>CDC Lone Star Tick Surveillance (2025):</strong> County-level data on established populations of <em>Amblyomma americanum</em> (Lone Star tick). Used to generate the purple density "blob" showing current tick habitat intensity and spread (1,139+ counties with established populations). File archived as <code>2025_lone_star_tick_established_counties.xlsx</code>.<br><br>
+      <hr style="margin: 20px 0; border-color: #444;">
 
-      <strong>Regional case data (expanded):</strong> 10 high-incidence states (NY, PA, MA, NJ, CT, WV, ME, RI, NH, VT) using real 2023 CDC state counts (lyme_2023_state_cases.csv) as anchors. Historical years generalized from national trends + known surveillance artifacts (2022 case definition change, MA reporting changes). See README in <code>data/lyme_ags_database/</code> for full notes and limitations.
+      <p><strong>Full Documentation & Methodology</strong> (click to read on this site):</p>
+      <ul style="margin: 8px 0 0 20px; padding: 0;">
+        <li><a href="#" onclick="showReadme('red'); return false;">README: Human Cases (Red Layer)</a> — How the case data was assembled, strengths, and major limitations (underreporting, surveillance artifacts, etc.)</li>
+        <li><a href="#" onclick="showReadme('purple'); return false;">README: Tick Habitat / Purple Density Layer</a> — CDC + Springer et al. (2014) data for the Lone Star tick blob, strengths, limitations, and why it's the best available leading indicator.</li>
+      </ul>
+
+      <p style="margin-top: 16px; font-size: 13px; color: #aaa;">
+        All data is drawn from the sources listed in <code>data/lyme_ags_database/lyme_ags_sources.json</code> and the files in that folder. We prioritize primary government surveillance data and peer-reviewed work.
+      </p>
     </div>`;
   }
 
   body.innerHTML = html;
+
+  // After rendering, load dynamic sources if this is the sources modal
+  if (type === 'sources') {
+    loadSourcesList();
+  }
+}
+
+async function loadSourcesList() {
+  const container = document.getElementById('sources-list');
+  if (!container) return;
+
+  try {
+    const res = await fetch('data/lyme_ags_database/lyme_ags_sources.json');
+    if (!res.ok) throw new Error('Failed to load sources');
+
+    const data = await res.json();
+    let html = '';
+
+    const sections = [
+      { key: 'primary_cdc_lyme', title: 'CDC Lyme Disease Data' },
+      { key: 'cdc_alpha_gal', title: 'CDC Alpha-gal Syndrome Data' },
+      { key: 'massachusetts_dph', title: 'Massachusetts DPH Surveillance' },
+      { key: 'johns_hopkins', title: 'Johns Hopkins Lyme Tracker' },
+      { key: 'nantucket_and_local', title: 'Nantucket & Local Studies' },
+      { key: 'literature_and_other', title: 'Literature & Other Sources' },
+      { key: 'historical_tick_distribution', title: 'Historical Tick Distribution (Springer et al. 2014)' }
+    ];
+
+    sections.forEach(section => {
+      const items = data[section.key];
+      if (!items || items.length === 0) return;
+
+      html += `<div style="margin-bottom: 14px;"><strong>${section.title}</strong><ul style="margin: 4px 0 0 16px; padding: 0;">`;
+
+      items.forEach(item => {
+        const url = item.url || item.free_pdf;
+        if (url) {
+          html += `<li><a href="${url}" target="_blank" rel="noopener">${item.title}</a>`;
+          if (item.description) html += ` — ${item.description}`;
+          if (item.year) html += ` (${item.year})`;
+          html += `</li>`;
+        } else if (item.title) {
+          html += `<li>${item.title}${item.description ? ' — ' + item.description : ''}</li>`;
+        }
+      });
+
+      html += `</ul></div>`;
+    });
+
+    // Handle any web_search notes if present
+    if (data.web_search_and_browse_sources) {
+      html += `<div style="margin-top: 8px;"><strong>Additional Web Sources</strong><ul style="margin: 4px 0 0 16px; padding: 0; font-size: 13px;">`;
+      data.web_search_and_browse_sources.forEach(item => {
+        html += `<li>${item}</li>`;
+      });
+      html += `</ul></div>`;
+    }
+
+    container.innerHTML = html;
+  } catch (err) {
+    container.innerHTML = `See <a href="data/lyme_ags_database/lyme_ags_sources.json" target="_blank">lyme_ags_sources.json</a> for the full list of sources.`;
+  }
 }
 
 function hideModal() {
   document.getElementById('modal').style.display = 'none';
+}
+
+async function showReadme(type) {
+  const body = document.getElementById('modal-body');
+  if (!body) return;
+
+  let title = '';
+  let path = '';
+
+  if (type === 'red') {
+    title = 'Human Cases Data (Red Layer)';
+    path = 'data/lyme_ags_database/README_red_human_cases.md';
+  } else if (type === 'purple') {
+    title = 'Tick Habitat Data (Purple Density Layer)';
+    path = 'data/lyme_ags_database/README_purple_tick_habitat.md';
+  } else {
+    body.innerHTML = '<p>Unknown documentation.</p>';
+    return;
+  }
+
+  body.innerHTML = `<h3>${title}</h3><p style="color:#888;">Loading full documentation...</p>`;
+
+  try {
+    const res = await fetch(path);
+    if (!res.ok) throw new Error('File not found');
+    const md = await res.text();
+
+    const html = mdToHtml(md);
+
+    body.innerHTML = `
+      <h3>${title}</h3>
+      <div style="max-height: 65vh; overflow-y: auto; padding-right: 8px; font-size: 14.5px; line-height: 1.55;">
+        ${html}
+      </div>
+      <p style="margin-top: 16px; font-size: 12px;">
+        <a href="#" onclick="showModal('sources'); return false;">← Back to Sources & Documentation</a>
+        &nbsp;|&nbsp;
+        <a href="${path}" target="_blank">View raw Markdown on GitHub</a>
+      </p>
+    `;
+  } catch (e) {
+    body.innerHTML = `
+      <h3>${title}</h3>
+      <p>Could not load the documentation file.</p>
+      <p><a href="${path}" target="_blank">Click here to open the raw file</a></p>
+      <p><a href="#" onclick="showModal('sources'); return false;">Back to sources</a></p>
+    `;
+  }
+}
+
+// Very lightweight Markdown → HTML converter (supports the needs of our READMEs)
+function mdToHtml(md) {
+  let html = md
+    // Escape basic HTML
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+  // Headings
+  html = html.replace(/^### (.*$)/gim, '<h4>$1</h4>');
+  html = html.replace(/^## (.*$)/gim, '<h3>$1</h3>');
+  html = html.replace(/^# (.*$)/gim, '<h2>$1</h2>');
+
+  // Bold
+  html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+  // Italic
+  html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+
+  // Unordered lists
+  html = html.replace(/^\- (.*$)/gim, '<li>$1</li>');
+  html = html.replace(/(<li>.*<\/li>\n?)+/g, match => `<ul>${match}</ul>`);
+
+  // Links [text](url)
+  html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+
+  // Paragraphs (simple)
+  html = html.replace(/\n\n/g, '</p><p>');
+  html = '<p>' + html + '</p>';
+
+  // Clean up empty paragraphs and fix lists
+  html = html.replace(/<p><\/p>/g, '');
+  html = html.replace(/<\/ul>\s*<p>/g, '</ul>');
+  html = html.replace(/<\/p>\s*<ul>/g, '<ul>');
+
+  return html;
 }
 
 function updateRedLegendText() {
@@ -499,10 +683,13 @@ document.addEventListener('keydown', (e) => {
 // ==================== INITIALIZATION & CONTROLS ====================
 
 // Load external data (or use fallback), then initialize everything
-loadData().then(() => {
+loadData().then(async () => {
   // Initial render
   updateHeatmap();
-  updateTickPopulationLayer();
+  await updateTickPopulationLayer();  // always active, driven by year
+
+  if (map) map.invalidateSize();
+
 
   // Controls
   const slider = document.getElementById('yearSlider');
@@ -514,7 +701,6 @@ loadData().then(() => {
 
   function updateYearDisplay() {
     const yearEl = document.querySelector('#year-big .y-year');
-    const diseaseEl = document.querySelector('#year-big .y-disease');
     const totalEl = document.querySelector('#year-big .y-total');
 
     if (yearEl) yearEl.textContent = currentYear;
@@ -524,12 +710,9 @@ loadData().then(() => {
       diseaseToggleContainer.classList.toggle('red-off', !currentDisease);
     }
 
-    // Always show the number for the selected disease in the text box
+    // Show the cumulative case number for the selected disease
     const diseaseForBox = selectedDisease || currentDisease;
     if (diseaseForBox) {
-      const diseaseName = diseaseForBox === 'alpha' ? 'Alpha-Gal' : 'Lyme Disease';
-      if (diseaseEl) diseaseEl.textContent = diseaseName;
-
       const cumulative = getCumulativeData(currentYear);
       const total = Object.values(cumulative).reduce((sum, val) => sum + val, 0);
 
@@ -539,7 +722,6 @@ loadData().then(() => {
       if (numberEl) numberEl.textContent = total.toLocaleString();
       if (labelEl) labelEl.textContent = 'cases';
     } else {
-      if (diseaseEl) diseaseEl.textContent = 'Tick Data Only';
       const numberEl = totalEl ? totalEl.querySelector('.y-total-number') : null;
       const labelEl = totalEl ? totalEl.querySelector('.y-total-label') : null;
       if (numberEl) numberEl.textContent = '—';
@@ -547,16 +729,36 @@ loadData().then(() => {
     }
   }
 
-  // Initial sync for the big year box
-  updateYearDisplay();
+  // Year + red only. Purple blob is driven separately (see play/slider below).
+  function setCurrentYear(year) {
+    currentYear = year;
+
+    if (slider) slider.value = currentYear;
+    if (yearLabel) yearLabel.textContent = currentYear;
+
+    updateYearDisplay();
+    updateHeatmap();
+  }
+
+  // Note: Purple (tick density) is now always active and driven exclusively
+  // by year changes via direct calls to updateTickPopulationLayer().
+
+
+  // Initial sync
+  setCurrentYear(currentYear);
+
   updateRedLegendText();
 
   // Slider
   slider.oninput = () => {
-    currentYear = parseInt(slider.value);
-    updateYearDisplay();
-    updateHeatmap();
-    // Purple is static 2025 data — do not update on year change
+    const newYear = parseInt(slider.value);
+    setCurrentYear(newYear);
+
+    // Extra map wake-up when only purple is active
+    if (map && !currentDisease) map.invalidateSize();
+
+    // Purple blob is driven ONLY by the year — completely independent of disease toggles.
+    updateTickPopulationLayer(); // async, fire-and-forget is fine
   };
 
   // Disease selector using custom buttons - robust on iOS Safari
@@ -588,6 +790,8 @@ loadData().then(() => {
       updateHeatmap();
       updateYearDisplay();
       updateRedLegendText();
+      // Purple blob has ZERO connection to disease toggles.
+      // It is driven exclusively by year changes (slider + play).
     };
 
     option.addEventListener('click', toggleDisease);
@@ -605,32 +809,27 @@ loadData().then(() => {
   selectedDisease = 'alpha';
   currentDisease = 'alpha';
 
-  // Verified Tick Population overlay toggle (purple, independent of disease)
-  const tickToggle = document.getElementById('tickPopulationToggle');
-  if (tickToggle) {
-    tickToggle.onchange = () => {
-      updateTickPopulationLayer();
-      updateRedLegendText();
-      // Extra mobile safety
-      setTimeout(() => { if (map) map.invalidateSize(); }, 100);
-    };
-  }
+  // Tick Density layer is now always visible and updates with the year slider/play (no toggle)
 
   // Play / Pause
   playBtn.onclick = function() {
     if (!isPlaying) {
       isPlaying = true;
-      this.innerHTML = '⏸ Pause';
+      this.innerHTML = '⏸';
       playInterval = setInterval(() => {
-        currentYear++;
-        if (currentYear > 2025) currentYear = 2010;
-        updateYearDisplay();
-        updateHeatmap();
-        // Purple layer is static (2025 data only)
+        let nextYear = currentYear + 1;
+        if (nextYear > 2025) nextYear = 2010;
+        setCurrentYear(nextYear);
+
+        // Extra map wake-up when only purple is active (helps heat canvas repaint)
+        if (map && !currentDisease) map.invalidateSize();
+
+        // Purple blob is driven ONLY by the year — completely independent of disease toggles.
+        updateTickPopulationLayer(); // async, non-blocking
       }, 800);
     } else {
       isPlaying = false;
-      this.innerHTML = '▶ Play';
+      this.innerHTML = '▶';
       clearInterval(playInterval);
     }
   };

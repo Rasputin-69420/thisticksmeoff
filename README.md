@@ -1,4 +1,4 @@
-# This Tics Me Off
+# This Ticks Me Off: Alpha-gal & Lyme Tracker
 
 **Alpha-gal Syndrome & Lyme Disease Tracker** — an interactive map of reported cases across the Northeast United States.
 

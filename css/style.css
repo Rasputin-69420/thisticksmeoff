@@ -14,34 +14,26 @@ body {
 /* Map container */
 #map {
   position: relative;   /* allows absolute overlays inside the map */
-  height: 78vh;
+  height: 80vh;
   width: 100%;
   background: #222;
 }
 
-/* Give the map much more space on desktop */
+/* Give the map much more space on desktop (we removed the top legend row) */
 @media (min-width: 1024px) {
   #map {
-    height: 85vh;
+    height: 87vh;
   }
 }
 
-/* Top controls bar - more compact */
-.controls {
-  padding: 6px 12px;
-  background: #1a1a1a;
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  flex-wrap: wrap;
-  font-size: 14px;
-}
+/* (Old .controls bar removed — slider now lives inside .header) */
 
-/* Year labels under the slider */
+/* Year labels under the slider (base) */
 .year-labels {
   display: flex;
   justify-content: space-between;
-  font-size: clamp(12px, 4.35vw, 18px);
+  font-size: 10px;
+  color: #888;
 }
 
 button {
@@ -59,7 +51,7 @@ button {
 .tick-container {
   position: fixed;
   right: 14px;
-  bottom: 14px;
+  bottom: 110px;  /* moved up 2x more from the previous position */
   z-index: 10001;
   text-align: center;
   user-select: none;
@@ -205,29 +197,141 @@ button {
     font-size: 16.5px;
   }
 
-  .layer-legend {
-    font-size: 10px;
-    padding: 1px 8px;
-    gap: 8px;
-  }
 }
 
-/* Page title */
+/* Page title + header area (reusing the large black space) */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  background: #1a1a1a;
+  padding: 8px 15px 6px;
+}
+
 .title {
-  padding: 12px 15px;
+  padding: 0;
   font-size: clamp(20px, 5vw, 32px);
   font-weight: bold;
+  flex-shrink: 0;
+}
+
+/* Controls placed in the header black space, to the right of the title */
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  flex: 1;
+  justify-content: flex-end;
+  min-width: 0;
+}
+
+/* Play button in the header (above the slider, in title black space) */
+.play-btn-header {
+  font-size: 16px;
+  padding: 3px 9px;
+  line-height: 1;
+  background: #222;
+  border: 1px solid #555;
+  color: #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  touch-action: manipulation;
+  flex-shrink: 0;
+}
+
+.play-btn-header:hover {
+  background: #333;
+  border-color: #777;
+}
+
+/* Make toggles more compact when living in the header next to the title */
+.header-controls .disease-toggle {
+  gap: 8px;
+}
+
+.header-controls .disease-option {
+  padding: 2px 6px;
+  font-size: 13px;
+}
+
+.header-controls .overlay-toggle {
+  font-size: 13px;
+}
+
+.header-controls .overlay-toggle .dot {
+  width: 14px;
+  height: 14px;
+}
+
+/* Date slider centered in the header space between title and play button */
+.header-slider {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  padding: 0 10px;
+}
+
+.header-slider input[type="range"] {
+  width: 100%;
+  max-width: 240px;
+  height: 5px;
+  background: #ddd;           /* light / near-white track */
+  border-radius: 3px;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Solid red thumb */
+.header-slider input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 14px;
+  width: 14px;
+  background: #e60000;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 1px solid #b30000;
+  margin-top: -4.5px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+
+.header-slider input[type="range"]::-moz-range-thumb {
+  height: 14px;
+  width: 14px;
+  background: #e60000;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 1px solid #b30000;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+
+.header .year-labels {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 240px;
+  font-size: 9.5px;
+  color: #888;
+  margin-top: 1px;
+  line-height: 1;
 }
 
 /* Year box — middle right of the map (anchored inside #map) */
 .year-big-display {
   position: absolute;
   right: 10px;
-  top: 50%;
+  top: 38%;                     /* shifted up a bit because the box is now taller (scale + legend) */
   transform: translateY(-50%);
   color: #aaa;
   background: rgba(26, 26, 26, 0.8);
-  padding: 4px 8px;
+  padding: 5px 9px;
   border-radius: 5px;
   z-index: 1000;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
@@ -245,15 +349,9 @@ button {
   font-weight: bold;
 }
 
-.year-big-display .y-disease {
-  font-size: 18px;
-  margin-top: 2px;
-  opacity: 0.9;
-}
-
 .year-big-display .y-total {
   font-size: 18px;
-  margin-top: 3px;
+  margin-top: 10px;   /* more space after the legend + scale */
   opacity: 0.85;
   display: flex;
   align-items: baseline;
@@ -261,25 +359,33 @@ button {
 }
 
 .year-big-display .y-total-number {
-  font-size: inherit;
-  font-weight: 700;
+  font-size: 24px;
+  font-weight: 800;
+  color: #e60000;   /* match the bright red from the legend dot */
+  line-height: 1;
 }
 
 .year-big-display .y-total-label {
-  font-size: 21px;   /* noticeably bigger for "cases" */
-  opacity: 0.85;
+  font-size: 18px;
+  color: #fff;
+  opacity: 1;
 }
 
 /* Mobile sizing (middle-right of map) */
 @media (max-width: 600px) {
   .year-big-display {
-    padding: 4px 8px;
+    top: 36%;
+    padding: 4px 7px;
     font-size: 13px;
   }
   .year-big-display .y-year { font-size: 20px; }
-  .year-big-display .y-disease { font-size: 14px; }
   .year-big-display .y-total { font-size: 14px; }
-  .year-big-display .y-total-label { font-size: 16px; }
+  .year-big-display .y-total-number { font-size: 17px; }
+  .year-big-display .y-total-label {
+    font-size: 17px;
+    color: #fff;
+    opacity: 1;
+  }
 }
 
 /* Modal for educational content */
@@ -334,15 +440,8 @@ button {
    ============================================ */
 
 @media (min-width: 768px) {
-  /* Controls become more compact and readable on desktop */
-  .controls {
-    padding: 10px 20px;
-    font-size: 15px;
-    gap: 16px;
-  }
-
-  .year-labels {
-    font-size: 14px;
+  .header .year-labels {
+    font-size: 10px;
   }
 
   /* Title stays prominent but not tiny */
@@ -359,8 +458,7 @@ button {
 
   /* Keep the top UI from stretching ridiculously wide on big monitors
      while the map stays full-bleed (smartphone-first but desktop-friendly) */
-  .title,
-  .controls {
+  .header {
     max-width: 1400px;
     margin-left: auto;
     margin-right: auto;
@@ -369,8 +467,9 @@ button {
 
 @media (min-width: 1200px) {
   /* Extra breathing room on very wide screens */
-  .controls {
-    padding: 12px 30px;
+  .header {
+    padding-left: 20px;
+    padding-right: 20px;
   }
 }
 
@@ -533,17 +632,17 @@ button {
   border-color: #7c3aed;
 }
 
-/* Very compact single-line legend */
+/* Legend (red + purple dots) — now moved inside the right-side year box, under the scale bar */
 .layer-legend {
-  max-width: 1400px;
-  margin: 1px auto 0;
-  padding: 1px 12px;
-  font-size: 11px;
-  color: #aaa;
   display: flex;
-  gap: 18px;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 13.5px;
+  color: #999;
+  margin-top: 5px;
   align-items: center;
-  line-height: 1.15;
+  line-height: 1.1;
+  padding: 0 2px;
 }
 
 .layer-legend .legend-item {
@@ -555,8 +654,8 @@ button {
 
 .layer-legend .legend-dot {
   display: inline-block;
-  width: 7px;
-  height: 7px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   flex-shrink: 0;
 }
@@ -569,24 +668,137 @@ button {
   background: #7c3aed;
 }
 
+/* Scoped version inside the year box (the one you actually see) — increased ~50% */
+.year-big-display .layer-legend {
+  font-size: 13px;
+  margin-top: 7px;
+  padding-top: 5px;
+  border-top: 1px solid rgba(120, 120, 120, 0.35);
+  color: #999;
+}
+
+.year-big-display .layer-legend .legend-item {
+  gap: 4px;
+}
+
+.year-big-display .layer-legend .legend-dot {
+  width: 7.5px;
+  height: 7.5px;
+}
+
+/* Standalone legend items now used inside year-big-display (after splitting for visual grouping) */
+.year-big-display .legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: #aaa;
+  margin-top: 3px;
+  white-space: nowrap;
+}
+
+.year-big-display .legend-item .legend-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.year-big-display .legend-item .legend-dot.red {
+  background: #e60000;
+}
+
+.year-big-display .legend-item .legend-dot.purple {
+  background: #7c3aed;
+}
+
 /* Visual feedback when human case (red) heat map is turned off */
 .disease-toggle.red-off {
   opacity: 0.45;
   filter: grayscale(0.6);
 }
 
-/* Play button inside the year display box */
-.play-btn-small {
+/* (Old play-btn-small styles removed — play button now uses .play-btn-header in the title area) */
+
+/* Purple scale bar — now right under the big year number */
+.year-big-display .purple-scale {
   margin-top: 5px;
-  padding: 4px 14px;
-  font-size: 26px;
-  line-height: 1;
-  background: #222;
-  border: 1px solid #555;
-  color: #ddd;
+  padding: 0 4px;
+  font-size: 13px;
+  color: #aaa;
+  text-align: center;
+  line-height: 1.1;
+  width: 100%;
+}
+.year-big-display .purple-scale .ps-gradient {
+  height: 11px;
+  width: 100%;
+  max-width: 130px;
+  margin: 2px auto 3px;
   border-radius: 4px;
+  border: 1px solid #555;
+  background: linear-gradient(to right, #e0d4ff, #c4b5fd, #a78bfa, #7c3aed, #5b21b6);
+  box-shadow: inset 0 0 2px rgba(0,0,0,0.4);
+}
+.year-big-display .purple-scale .ps-labels {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 130px;
+  margin: 0 auto;
+  font-size: 11px;
+  color: #999;
+  gap: 3px;
+}
+.year-big-display .purple-scale .ps-labels span {
+  flex: 1;
+  text-align: center;
+  white-space: nowrap;
+}
+.year-big-display .purple-scale .ps-labels span:first-child { text-align: left; }
+.year-big-display .purple-scale .ps-labels span:last-child { text-align: right; }
+.year-big-display .purple-scale .ps-unit {
+  font-size: 9.5px;
+  color: #888;
+  opacity: 0.85;
+  flex: 1.8;
+  letter-spacing: 0.2px;
 }
 
-#year-big .play-btn-small {
-  align-self: center;
+/* Desktop: larger scale bar fonts to match the bigger legend */
+@media (min-width: 1024px) {
+  .year-big-display .purple-scale {
+    font-size: 14px;
+  }
+  .year-big-display .purple-scale .ps-gradient {
+    height: 12px;
+    max-width: 138px;
+  }
+  .year-big-display .purple-scale .ps-labels {
+    font-size: 12px;
+    max-width: 138px;
+  }
+  .year-big-display .purple-scale .ps-unit {
+    font-size: 10.5px;
+  }
+}
+
+/* Mobile adjustments (year box is smaller) */
+@media (max-width: 600px) {
+  .year-big-display .purple-scale {
+    font-size: 10px;
+    margin-top: 5px;
+  }
+  .year-big-display .purple-scale .ps-gradient {
+    height: 8px;
+    max-width: 108px;
+  }
+  .year-big-display .purple-scale .ps-labels {
+    font-size: 8.5px;
+    max-width: 108px;
+  }
+  .year-big-display .purple-scale .ps-unit {
+    font-size: 7.5px;
+  }
 }

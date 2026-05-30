@@ -1,0 +1,35 @@
+﻿{
+  "established_counts": {
+    "Texas": 118,
+    "Kentucky": 86,
+    "Arkansas": 73,
+    "Virginia": 70,
+    "Oklahoma": 69,
+    "Illinois": 68,
+    "Missouri": 63,
+    "Georgia": 60,
+    "Mississippi": 58,
+    "Indiana": 49,
+    "Florida": 48,
+    "North Carolina": 48,
+    "Tennessee": 45,
+    "Alabama": 42,
+    "Pennsylvania": 8,
+    "New Jersey": 14,
+    "New York": 19,
+    "West Virginia": 13,
+    "Maryland": 18,
+    "Delaware": 2,
+    "South Carolina": 25,
+    "Ohio": 19,
+    "Connecticut": 5,
+    "Massachusetts": 3,
+    "Rhode Island": 2,
+    "Kansas": 32,
+    "Louisiana": 19
+  },
+  "metadata": {
+    "last_updated": "2026-05",
+    "source": "Fallback data for testnet"
+  }
+}

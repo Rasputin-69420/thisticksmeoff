@@ -562,6 +562,24 @@
       "priority": "High"
     },
     {
+      "title": "Texas DSHS Zoonotic Cases 2020–2026 (Detailed)",
+      "url": "https://www.dshs.texas.gov/disease-surveillance-epidemiology-section/zoonosis-control/zoonotic-disease-cases/human-cases-2020-2024",
+      "description": "Lyme: 19–21 cases/year (mostly imported). Ehrlichiosis: 13–14/year. Spotted Fever Rickettsiosis: 15–18/year. Useful for a broader 'tickborne illness' red dot layer beyond just Lyme.",
+      "category": "Infections (non-AGS)",
+      "type": "State Table",
+      "accessed": "2026-05",
+      "priority": "High"
+    },
+    {
+      "title": "Texas Alpha-gal Syndrome – Growing Incidence 2026",
+      "url": "https://txnaturalpediatrics.com/2026/04/02/news-alert-growing-incidence-of-alpha-gal/",
+      "description": "Lone Star ticks widespread across Texas. AGS cases increasing, but no mandatory reporting yet → no county-level numbers available. Good for Texas-wide purple blob popup notes.",
+      "category": "Alpha-gal",
+      "type": "Health Alert + News",
+      "accessed": "2026-05",
+      "priority": "High"
+    },
+    {
       "title": "Alpha-gal IgE Prevalence in U.S. Military Recruits (2024 study)",
       "url": "https://www.jaci-inpractice.org/article/S2213-2198(23)01201-1/abstract",
       "description": "6.0% overall positivity; highest in AR (39%), OK (35%), MO (29%). Closely tracks Lone Star tick range. Strong South burden indicator.",

@@ -467,6 +467,30 @@
       "recommended_for": "Texas red layer contrast: low Lyme vs expected high AGS/Ehrlichia; supports 'South is AGS-heavy' narrative",
       "data_format": "State surveillance table",
       "priority": "High"
+    },
+    {
+      "id": "texas_dshs_zoonotic_detailed",
+      "category": "Infections (non-AGS)",
+      "title": "Texas DSHS Zoonotic Cases 2020–2026 (Detailed)",
+      "authors": "Texas DSHS",
+      "year": 2026,
+      "url": "https://www.dshs.texas.gov/disease-surveillance-epidemiology-section/zoonosis-control/zoonotic-disease-cases/human-cases-2020-2024",
+      "description": "Lyme: 19–21 cases/year (mostly imported). Ehrlichiosis: 13–14/year. Spotted Fever Rickettsiosis: 15–18/year. Good for a broader 'tickborne illness' red dot layer.",
+      "recommended_for": "Expanding red layer beyond Lyme to include Ehrlichia/RMSF for Texas and South",
+      "data_format": "State Table",
+      "priority": "High"
+    },
+    {
+      "id": "texas_ags_growing_2026",
+      "category": "Alpha-gal",
+      "title": "Texas Alpha-gal Syndrome – Growing Incidence 2026",
+      "authors": "Texas Natural Pediatrics / Health Alert",
+      "year": 2026,
+      "url": "https://txnaturalpediatrics.com/2026/04/02/news-alert-growing-incidence-of-alpha-gal/",
+      "description": "Lone Star ticks widespread. AGS cases increasing but no mandatory reporting yet. Useful for Texas purple blob popup notes about high density + rising concern.",
+      "recommended_for": "Texas-specific purple blob notes and future AGS layer context",
+      "data_format": "Health Alert + News",
+      "priority": "High"
     }
   ],
   "notes": "These sources were selected to fill gaps in historical coverage (especially pre-2017), provide more recent data (2023–2025), and strengthen the Ixodes scapularis layer. All are primary or highly cited government/academic sources suitable for a public-facing interactive map. Merge into your existing lyme_ags_sources.json as needed. May 2026 batch added: direct CSV/Excel downloads for county-level Lyme, multi-TBD, and Ixodes surveillance. Late May expanded batch: 2025 Lone Star (Missouri focus), older TBD baseline, official Missouri AGS, and NEON ecological abundance/pathogen data for purple layer modeling. Arkansas-specific batch added: strong county-level multi-disease dashboard + recent peer-reviewed AGS surveillance. Missouri expanded batch: DHSS main page + citizen science abundance study. West Coast batch added: Ixodes pacificus pathogen data, California Story Map, Oregon & Washington dashboards, and rare West Coast AGS case. Disease burden batch added: CDC Tick Bite ER Tracker, military seroprevalence, and AGS healthcare utilization studies. Texas/Oklahoma/Missouri burden batch: 2026 ER surge numbers, OK mandatory reporting law + estimates, Texas DSHS low Lyme vs expected AGS."

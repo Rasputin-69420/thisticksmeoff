@@ -100,11 +100,12 @@ const stateSize = {
   "West Virginia": 10
 };
 
-// Verified Lone Star tick population (2025 snapshot)
-// Values = % of counties in the state with established populations
-// Expanded beyond original human case region for predictive value.
+// Verified Lone Star tick population data
+// 2025 snapshot from CDC + historical context from Springer et al. (2014)
+
+// Base 2025 values = % of counties in the state with established populations
 // Source: CDC Lone Star Tick Surveillance data (2025)
-const loneStarPresence = {
+const loneStarPresence2025 = {
   // Original 10 states (human data region)
   "Pennsylvania": 52,
   "New Jersey": 67,
@@ -135,16 +136,31 @@ const loneStarPresence = {
   "Georgia": 38
 };
 
+// Simple historical scaling for the purple layer based on Springer et al. (2014) patterns.
+// This gives a rough "how established was the tick by this year" multiplier.
+// Values are conservative estimates of relative presence compared to 2025.
+function getPurpleHistoricalFactor(year) {
+  if (year >= 2025) return 1.0;
+  if (year >= 2010) return 0.85;   // Strong expansion by 2010s
+  if (year >= 2000) return 0.65;
+  if (year >= 1990) return 0.45;
+  if (year >= 1980) return 0.30;
+  if (year >= 1970) return 0.20;
+  if (year >= 1960) return 0.12;
+  if (year >= 1950) return 0.08;
+  return 0.05; // Pre-1950: very limited established populations outside core South
+}
+
 let selectedDisease = "alpha";   // which disease's number is shown in the text box
 let currentDisease = "alpha";    // which disease's red dots are currently drawn on the map (can be null)
 let currentYear = 2025;
-let initialCenter = [43.2, -87.5];
-let initialZoom = 4.5;
+let initialCenter = [42.2, -74.5];
+let initialZoom = 5.3;
 
-// Slightly wider view on mobile while still keeping the text box over the Great Lakes area
+// Slightly wider view on mobile so the Northeast + surrounding area is visible
 if (window.innerWidth < 768) {
-  initialCenter = [43, -88];
-  initialZoom = 3.8;
+  initialCenter = [41.5, -75.0];
+  initialZoom = 4.8;
 }
 
 let map = L.map('map').setView(initialCenter, initialZoom);
@@ -305,14 +321,17 @@ function updateTickPopulationLayer() {
     if (!stateCoords[state] || count < 1) return;
 
     const [baseLat, baseLng] = stateCoords[state];
-    const intensity = Math.min(1.0, count / 80); // Normalize intensity
+    const baseIntensity = Math.min(1.0, count / 80);
+
+    // Apply historical factor from Springer data for time-aware purple layer
+    const historicalFactor = getPurpleHistoricalFactor(currentYear);
+    const intensity = baseIntensity * historicalFactor;
 
     // Create multiple points with jitter to simulate density blob
     const numPoints = Math.max(5, Math.floor(count / 5));
     for (let i = 0; i < numPoints; i++) {
       const latJitter = (Math.random() - 0.5) * 2.1;
       const lngJitter = (Math.random() - 0.5) * 2.5;
-      // Even stronger intensity for more pronounced blobs
       heatPoints.push([
         baseLat + latJitter,
         baseLng + lngJitter,

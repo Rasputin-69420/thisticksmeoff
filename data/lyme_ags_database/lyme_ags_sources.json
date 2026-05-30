@@ -116,5 +116,18 @@
   "web_search_and_browse_sources": [
     "web:31 to web:74 from initial and follow-up searches (CDC pages, MMWR, mass.gov, PubMed, JHU, etc.)",
     "Specific browsed URLs: surveillance-data-1.html, lyme-disease-case-map.html, mm7230a2.htm, mass.gov tickborne lists, tickcheck.com Nantucket page"
+  ],
+
+  "historical_tick_distribution": [
+    {
+      "title": "Spatial Distribution of Counties in the Continental United States With Records of Occurrence of Amblyomma americanum (Ixodida: Ixodidae)",
+      "authors": "Yuri P. Springer, Lars Eisen, Lorenza Beati, Angela M. James, Rebecca J. Eisen",
+      "year": 2014,
+      "journal": "Journal of Medical Entomology",
+      "url": "https://academic.oup.com/jme/article/51/2/342/882013",
+      "free_pdf": "https://stacks.cdc.gov/view/cdc/36293/cdc_36293_DS1.pdf",
+      "description": "Compilation of 18,121 collection records (1898–2012) with county-level classifications as 'established' or 'reported'. Includes decadal and cumulative maps. Best publicly available historical county-level data for Lone Star tick distribution. Used for future time-dynamic versions of the purple Verified Tick Population layer.",
+      "accessed": "2026-05"
+    }
   ]
 }

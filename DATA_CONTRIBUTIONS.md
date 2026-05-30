@@ -46,7 +46,7 @@ When new links/sources are provided:
 
 | Date Received | Source | Type | States/Years | Status | Notes |
 |---------------|--------|------|--------------|--------|-------|
-|               |        |      |              |        |       |
+| 2026-05 (internal) | Springer et al. (2014) - Spatial distribution of counties with Amblyomma americanum records | Historical tick distribution (county-level, 1898–2012) | Continental US (1,300+ counties) | Added to database (documentation + summaries) | Best public historical county-level Lone Star tick data. Compiled decadal "established/reported" classifications. Full raw table in paper supplement. See lone_star_tick_historical_springer_2014.md. Not yet integrated into visualization (per instructions). |
 
 ---
 

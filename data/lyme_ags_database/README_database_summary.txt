@@ -20,6 +20,8 @@ DATA FILES IN THIS DATABASE (singular compiled resource):
 4. nantucket_lyme_cases_2000_2020.csv : Granular county-level historical for epicenter.
 5. alpha_gal_syndrome_suspected_cases.csv : Yearly positives 2017-2022 + totals, demo/geo summary, estimates.
 
+6. Historical Lone Star tick (Amblyomma americanum) county-level data: See README_purple_tick_habitat.md and the dedicated files listed there (including Springer et al. 2014 compilation).
+
 ADDITIONAL RESOURCES (user should download for full granularity):
 - CDC Lyme county 2023 (and historical columns): https://www.cdc.gov/lyme/media/files/2025/02/LD_Case_Counts_by_County_2023_updated.csv (has 2001-2023 per county!)
 - CDC state/year tables and maps: https://www.cdc.gov/lyme/data-research/facts-stats/surveillance-data-1.html and case-map.html (dot maps 1995/2010/2023 showing spread).
@@ -39,6 +41,17 @@ VISUALIZATIONS & MAPS:
 - For cumulative growth: See national yearly CSV (steady rise with jumps post-changes); geographical: expansion from CT/MA/NY core outward.
 - Suggested: Use CDC county CSV + GIS software (QGIS/ArcGIS) or JHU explorer for custom cumulative/animated maps. Python (pandas here) for analysis.
 - Example plots generated if possible (see artifacts for any PNGs).
+
+This folder contains the raw and processed data for the project.
+
+**See the two focused READMEs for detailed documentation:**
+
+- `README_red_human_cases.md` — Human Lyme and Alpha-gal disease data (used for the red layer)
+- `README_purple_tick_habitat.md` — Tick distribution and habitat data, including the 2025 CDC Lone Star file and historical Springer et al. (2014) compilation (used for the purple layer)
+
+The old combined summary below is retained for reference but is no longer the primary documentation.
+
+---
 
 This singular database aggregates max publicly extractable data from searches/browses. For full raw, download linked CSVs. Actual infections >> reported. Prevention key: tick checks, repellents, especially in endemic/expanding areas like New England, WV, etc.
 

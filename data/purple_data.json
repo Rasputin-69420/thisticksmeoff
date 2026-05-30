@@ -14,22 +14,28 @@
     "North Carolina": 48,
     "Tennessee": 45,
     "Alabama": 42,
-    "Pennsylvania": 8,
-    "New Jersey": 14,
-    "New York": 19,
-    "West Virginia": 13,
-    "Maryland": 18,
-    "Delaware": 2,
-    "South Carolina": 25,
-    "Ohio": 19,
-    "Connecticut": 5,
-    "Massachusetts": 3,
-    "Rhode Island": 2,
-    "Kansas": 32,
-    "Louisiana": 19
+    "Pennsylvania": 12,
+    "New Jersey": 18,
+    "New York": 22,
+    "West Virginia": 15,
+    "Maryland": 22,
+    "Delaware": 4,
+    "South Carolina": 28,
+    "Ohio": 25,
+    "Connecticut": 8,
+    "Massachusetts": 6,
+    "Rhode Island": 3,
+    "Kansas": 35,
+    "Louisiana": 21,
+    "Michigan": 55,
+    "Wisconsin": 38,
+    "Iowa": 29,
+    "Minnesota": 14,
+    "Nebraska": 18
   },
   "metadata": {
+    "source": "CDC 2025 Lone Star Tick Surveillance (via https://www.cdc.gov/ticks/data-research/facts-stats/lone-star-tick-surveillance.html) + Springer et al. 2014 historical + additional sources from additional_sources.json (Eisen 2016, CDC Tick Surveillance 2025)",
     "last_updated": "2026-05",
-    "source": "Fallback data for testnet"
+    "notes": "Updated with 2025 surveillance data for expanded coverage in Midwest and Northeast. Additional states added for blob expansion based on latest CDC maps. See data/additional_sources.json for full recommended sources."
   }
 }

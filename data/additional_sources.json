@@ -1,0 +1,101 @@
+{
+  "additional_recommended_sources": [
+    {
+      "id": "eisen_2016_ixodes",
+      "category": "Tick Distribution",
+      "title": "County-Level Distribution of Ixodes scapularis and Ixodes pacificus (Blacklegged and Western Blacklegged Ticks) — United States, 2015",
+      "authors": "Eisen et al.",
+      "year": 2016,
+      "url": "https://www.cdc.gov/mmwr/volumes/65/wr/mm6511a1.htm",
+      "description": "Updated national county-level maps showing established and reported populations of blacklegged ticks. Excellent baseline for time-lapse comparison with 2010 data.",
+      "recommended_for": "Purple Tick Density Layer (Ixodes species)",
+      "data_format": "Maps + supplementary tables",
+      "priority": "High"
+    },
+    {
+      "id": "cdc_tick_surveillance_2025",
+      "category": "Tick Distribution",
+      "title": "CDC Tick Surveillance Data and Maps",
+      "authors": "CDC Division of Vector-Borne Diseases",
+      "year": 2025,
+      "url": "https://www.cdc.gov/ticks/data-research/facts-stats/index.html",
+      "description": "Latest county-level presence data for multiple tick species including Ixodes scapularis and Amblyomma americanum. Includes interactive maps and downloadable data.",
+      "recommended_for": "Updating 2025 tick density layer and future years",
+      "data_format": "Interactive maps + CSV downloads",
+      "priority": "High"
+    },
+    {
+      "id": "cdc_lyme_county_2023",
+      "category": "Lyme Disease Cases",
+      "title": "Lyme Disease Cases by County of Residence — United States, 2023",
+      "authors": "CDC",
+      "year": 2025,
+      "url": "https://www.cdc.gov/lyme/data-research/facts-stats/lyme-disease-case-map.html",
+      "description": "Latest county-level Lyme case data with downloadable CSV. Use to extend the time-lapse animation beyond 2023.",
+      "recommended_for": "Lyme cases red layer / time-lapse update",
+      "data_format": "CSV (county-level)",
+      "priority": "High"
+    },
+    {
+      "id": "kugeler_2021_estimates",
+      "category": "Lyme Disease Estimates",
+      "title": "Estimating the Frequency of Lyme Disease Diagnoses, United States, 2010–2018",
+      "authors": "Kugeler et al.",
+      "year": 2021,
+      "url": "https://wwwnc.cdc.gov/eid/article/27/2/20-2728_article",
+      "description": "Key paper estimating ~476,000 annual Lyme diagnoses using insurance claims data. Important for context and disclaimers.",
+      "recommended_for": "Methodology README and disclaimers",
+      "data_format": "PDF paper",
+      "priority": "Medium"
+    },
+    {
+      "id": "epa_lyme_climate_indicator",
+      "category": "Lyme Disease Trends",
+      "title": "Climate Change Indicators: Lyme Disease",
+      "authors": "U.S. Environmental Protection Agency",
+      "year": 2021,
+      "url": "https://www.epa.gov/climate-indicators/climate-change-indicators-lyme-disease",
+      "description": "Long-term trend analysis of Lyme disease incidence linked to climate factors. Useful for explanatory text or future modeling.",
+      "recommended_for": "Context / explanatory layer",
+      "data_format": "Charts + data tables",
+      "priority": "Medium"
+    },
+    {
+      "id": "johns_hopkins_lyme_tracker",
+      "category": "Interactive Reference",
+      "title": "Johns Hopkins Lyme and Tickborne Diseases Dashboard",
+      "authors": "Johns Hopkins Bloomberg School of Public Health",
+      "year": 2025,
+      "url": "https://www.jhsph.edu/research/centers-and-institutes/lyme-and-tickborne-diseases/dashboard/",
+      "description": "High-quality interactive county-level visualizations and data explorer. Good secondary validation source.",
+      "recommended_for": "Cross-checking and additional visualizations",
+      "data_format": "Interactive dashboard",
+      "priority": "Medium"
+    },
+    {
+      "id": "cdc_alpha_gal_mmwr_2023",
+      "category": "Alpha-gal Syndrome",
+      "title": "Geographic Distribution of Suspected Alpha-gal Syndrome Cases — United States, 2017–2022",
+      "authors": "Thompson et al. (CDC MMWR)",
+      "year": 2023,
+      "url": "https://www.cdc.gov/mmwr/volumes/72/wr/mm7230a2.htm",
+      "description": "Primary source for Alpha-gal positive test data. Currently your main Alpha-gal reference — keep and consider adding newer updates when available.",
+      "recommended_for": "Alpha-gal red dots layer",
+      "data_format": "Report + tables",
+      "priority": "High (already in use)"
+    },
+    {
+      "id": "springer_2014_lone_star_update",
+      "category": "Tick Distribution",
+      "title": "Spatial Distribution of Counties in the Continental United States With Records of Occurrence of Amblyomma americanum (2014 update references)",
+      "authors": "Springer et al.",
+      "year": 2014,
+      "url": "https://academic.oup.com/jme/article/51/2/342/905922",
+      "description": "Your current source for historical Lone Star tick data. Look for post-2014 updates or extensions for better 2020s coverage.",
+      "recommended_for": "Purple Tick Density Layer (Lone Star tick)",
+      "data_format": "Paper + maps",
+      "priority": "Medium"
+    }
+  ],
+  "notes": "These sources were selected to fill gaps in historical coverage (especially pre-2017), provide more recent data (2023–2025), and strengthen the Ixodes scapularis layer. All are primary or highly cited government/academic sources suitable for a public-facing interactive map. Merge into your existing lyme_ags_sources.json as needed."
+}

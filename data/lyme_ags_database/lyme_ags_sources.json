@@ -129,5 +129,119 @@
       "description": "Compilation of 18,121 collection records (1898–2012) with county-level classifications as 'established' or 'reported'. Includes decadal and cumulative maps. Best publicly available historical county-level data for Lone Star tick distribution. Used for future time-dynamic versions of the purple Verified Tick Population layer.",
       "accessed": "2026-05"
     }
+  ],
+
+  "expanded_surveillance_2015_2025": [
+    {
+      "title": "County-Level Distribution of Ixodes scapularis and Ixodes pacificus — United States, 2015",
+      "authors": "Eisen et al.",
+      "year": 2016,
+      "url": "https://www.cdc.gov/mmwr/volumes/65/wr/mm6511a1.htm",
+      "description": "National county-level maps of established and reported blacklegged tick populations. Strong candidate for expanding the Ixodes portion of the purple density layer.",
+      "accessed": "2026-05",
+      "priority": "High"
+    },
+    {
+      "title": "CDC Tick Surveillance Data and Maps (2025)",
+      "authors": "CDC Division of Vector-Borne Diseases",
+      "year": 2025,
+      "url": "https://www.cdc.gov/ticks/data-research/facts-stats/index.html",
+      "description": "Latest multi-species county-level presence data (including Ixodes and Amblyomma americanum). Excellent source for updating 2025 purple tick layers.",
+      "accessed": "2026-05",
+      "priority": "High"
+    },
+    {
+      "title": "Lyme Disease Cases by County of Residence — United States, 2023",
+      "authors": "CDC",
+      "year": 2023,
+      "url": "https://www.cdc.gov/lyme/data-research/facts-stats/lyme-disease-case-map.html",
+      "description": "County-level Lyme case data with downloadable CSV. Useful for extending the red layer time series and county-level detail.",
+      "accessed": "2026-05",
+      "priority": "High"
+    },
+    {
+      "title": "Climate Change Indicators: Lyme Disease (EPA)",
+      "authors": "U.S. Environmental Protection Agency",
+      "year": 2021,
+      "url": "https://www.epa.gov/climate-indicators/climate-change-indicators-lyme-disease",
+      "description": "Long-term national and regional Lyme incidence trends tied to climate variables. Good supporting context.",
+      "accessed": "2026-05",
+      "priority": "Medium"
+    }
+  ],
+
+  "new_recommended_sources_for_expansion": [
+    {
+      "title": "County-Level Distribution of Ixodes scapularis and Ixodes pacificus (Blacklegged and Western Blacklegged Ticks) — United States, 2015",
+      "authors": "Eisen et al.",
+      "year": 2016,
+      "url": "https://www.cdc.gov/mmwr/volumes/65/wr/mm6511a1.htm",
+      "description": "Updated national county-level maps for blacklegged ticks. Key for future Ixodes-focused purple layer expansion.",
+      "accessed": "2026-05",
+      "priority": "High"
+    },
+    {
+      "title": "CDC Tick Surveillance Data and Maps",
+      "authors": "CDC Division of Vector-Borne Diseases",
+      "year": 2025,
+      "url": "https://www.cdc.gov/ticks/data-research/facts-stats/index.html",
+      "description": "Latest 2025 county-level data for multiple tick species including Lone Star and blacklegged. Primary source for current purple blob updates.",
+      "accessed": "2026-05",
+      "priority": "High"
+    },
+    {
+      "title": "Lyme Disease Cases by County of Residence — United States, 2023",
+      "authors": "CDC",
+      "year": 2023,
+      "url": "https://www.cdc.gov/lyme/data-research/facts-stats/lyme-disease-case-map.html",
+      "description": "County-level Lyme data. Used to expand red dots to many more states in testnet.",
+      "accessed": "2026-05",
+      "priority": "High"
+    },
+    {
+      "title": "Estimating the Frequency of Lyme Disease Diagnoses, United States, 2010–2018",
+      "authors": "Kugeler et al.",
+      "year": 2021,
+      "url": "https://wwwnc.cdc.gov/eid/article/27/2/20-2728_article",
+      "description": "~476,000 annual diagnoses estimate. Important context for underreporting disclaimers.",
+      "accessed": "2026-05",
+      "priority": "Medium"
+    },
+    {
+      "title": "Climate Change Indicators: Lyme Disease",
+      "authors": "U.S. Environmental Protection Agency",
+      "year": 2021,
+      "url": "https://www.epa.gov/climate-indicators/climate-change-indicators-lyme-disease",
+      "description": "Long-term Lyme trends linked to climate. Useful for explanatory text.",
+      "accessed": "2026-05",
+      "priority": "Medium"
+    },
+    {
+      "title": "Johns Hopkins Lyme and Tickborne Diseases Dashboard",
+      "authors": "Johns Hopkins Bloomberg School of Public Health",
+      "year": 2025,
+      "url": "https://www.jhsph.edu/research/centers-and-institutes/lyme-and-tickborne-diseases/dashboard/",
+      "description": "Interactive county-level visualizations for validation and future features.",
+      "accessed": "2026-05",
+      "priority": "Medium"
+    },
+    {
+      "title": "Geographic Distribution of Suspected Alpha-gal Syndrome Cases — United States, 2017–2022",
+      "authors": "Thompson et al. (CDC MMWR)",
+      "year": 2023,
+      "url": "https://www.cdc.gov/mmwr/volumes/72/wr/mm7230a2.htm",
+      "description": "Core Alpha-gal data source (already in use).",
+      "accessed": "2026-05",
+      "priority": "High (already in use)"
+    },
+    {
+      "title": "Spatial Distribution of Counties With Records of Amblyomma americanum (Springer et al. 2014 references)",
+      "authors": "Springer et al.",
+      "year": 2014,
+      "url": "https://academic.oup.com/jme/article/51/2/342/905922",
+      "description": "Foundational historical Lone Star tick data for the purple layer.",
+      "accessed": "2026-05",
+      "priority": "Medium"
+    }
   ]
 }

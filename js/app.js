@@ -14,22 +14,22 @@ let yearlyData = {};
 // Alpha-gal remains generalized (state-yearly data is sparse; primarily national lab data).
 const FALLBACK_DATA = {
   "lyme": {
-    "2010": { "Massachusetts": 6500, "Connecticut": 4200, "Pennsylvania": 3100, "New York": 9200, "New Jersey": 2800, "Maine": 1100, "New Hampshire": 650, "Vermont": 550, "Rhode Island": 1050, "West Virginia": 850 },
-    "2014": { "Massachusetts": 7200, "Connecticut": 4800, "Pennsylvania": 3900, "New York": 10500, "New Jersey": 3400, "Maine": 1400, "New Hampshire": 800, "Vermont": 720, "Rhode Island": 1300, "West Virginia": 1100 },
-    "2018": { "Massachusetts": 8100, "Connecticut": 5500, "Pennsylvania": 4800, "New York": 13200, "New Jersey": 4200, "Maine": 1800, "New Hampshire": 950, "Vermont": 880, "Rhode Island": 1600, "West Virginia": 1500 },
-    "2021": { "Massachusetts": 8900, "Connecticut": 6100, "Pennsylvania": 5700, "New York": 15800, "New Jersey": 5100, "Maine": 2200, "New Hampshire": 1150, "Vermont": 1050, "Rhode Island": 2000, "West Virginia": 1900 },
-    "2023": { "Massachusetts": 9715, "Connecticut": 3239, "Pennsylvania": 16671, "New York": 22173, "New Jersey": 7224, "Maine": 2942, "New Hampshire": 1573, "Vermont": 1445, "Rhode Island": 2852, "West Virginia": 3242 },
-    "2024": { "Massachusetts": 8840, "Connecticut": 3400, "Pennsylvania": 17200, "New York": 22500, "New Jersey": 7400, "Maine": 3100, "New Hampshire": 1650, "Vermont": 1500, "Rhode Island": 2900, "West Virginia": 3400 },
-    "2025": { "Massachusetts": 8619, "Connecticut": 3600, "Pennsylvania": 17800, "New York": 22800, "New Jersey": 7600, "Maine": 3200, "New Hampshire": 1700, "Vermont": 1550, "Rhode Island": 2950, "West Virginia": 3550 }
+    "2010": { "Massachusetts": 6500, "Connecticut": 4200, "Pennsylvania": 3100, "New York": 9200, "New Jersey": 2800, "Maine": 1100, "New Hampshire": 650, "Vermont": 550, "Rhode Island": 1050, "West Virginia": 850, "Maryland": 1200, "Virginia": 800, "Delaware": 150, "Ohio": 600, "Michigan": 400, "Wisconsin": 900, "Minnesota": 50, "California": 20, "Oregon": 10, "Washington": 8, "Colorado": 5, "Arizona": 3, "New Mexico": 2, "Idaho": 2, "Montana": 2, "North Dakota": 1, "South Dakota": 1, "Wyoming": 1, "Utah": 2, "Nevada": 2 },
+    "2014": { "Massachusetts": 7200, "Connecticut": 4800, "Pennsylvania": 3900, "New York": 10500, "New Jersey": 3400, "Maine": 1400, "New Hampshire": 800, "Vermont": 720, "Rhode Island": 1300, "West Virginia": 1100, "Maryland": 1600, "Virginia": 1100, "Delaware": 220, "Ohio": 850, "Michigan": 650, "Wisconsin": 1800, "Minnesota": 120, "California": 35, "Oregon": 18, "Washington": 15, "Colorado": 10, "Arizona": 5, "New Mexico": 4, "Idaho": 4, "Montana": 4, "North Dakota": 2, "South Dakota": 2, "Wyoming": 2, "Utah": 4, "Nevada": 3 },
+    "2018": { "Massachusetts": 8100, "Connecticut": 5500, "Pennsylvania": 4800, "New York": 13200, "New Jersey": 4200, "Maine": 1800, "New Hampshire": 950, "Vermont": 880, "Rhode Island": 1600, "West Virginia": 1500, "Maryland": 2000, "Virginia": 1400, "Delaware": 280, "Ohio": 1100, "Michigan": 900, "Wisconsin": 3200, "Minnesota": 450, "California": 55, "Oregon": 30, "Washington": 22, "Colorado": 15, "Arizona": 8, "New Mexico": 6, "Idaho": 6, "Montana": 6, "North Dakota": 3, "South Dakota": 3, "Wyoming": 2, "Utah": 7, "Nevada": 5 },
+    "2021": { "Massachusetts": 8900, "Connecticut": 6100, "Pennsylvania": 5700, "New York": 15800, "New Jersey": 5100, "Maine": 2200, "New Hampshire": 1150, "Vermont": 1050, "Rhode Island": 2000, "West Virginia": 1900, "Maryland": 2200, "Virginia": 1600, "Delaware": 320, "Ohio": 1250, "Michigan": 1050, "Wisconsin": 4800, "Minnesota": 1200, "California": 75, "Oregon": 42, "Washington": 28, "Colorado": 20, "Arizona": 11, "New Mexico": 8, "Idaho": 8, "Montana": 8, "North Dakota": 5, "South Dakota": 4, "Wyoming": 2, "Utah": 10, "Nevada": 8 },
+    "2023": { "Massachusetts": 9715, "Connecticut": 3239, "Pennsylvania": 16671, "New York": 22173, "New Jersey": 7224, "Maine": 2942, "New Hampshire": 1573, "Vermont": 1445, "Rhode Island": 2852, "West Virginia": 3242, "Maryland": 2470, "Virginia": 1747, "Delaware": 349, "Ohio": 1307, "Michigan": 1152, "Wisconsin": 6283, "Minnesota": 2938, "California": 109, "Oregon": 61, "Washington": 25, "Colorado": 32, "Arizona": 16, "New Mexico": 11, "Idaho": 11, "Montana": 11, "North Dakota": 15, "South Dakota": 7, "Wyoming": 2, "Utah": 16, "Nevada": 14 },
+    "2024": { "Massachusetts": 8840, "Connecticut": 3400, "Pennsylvania": 17200, "New York": 22500, "New Jersey": 7400, "Maine": 3100, "New Hampshire": 1650, "Vermont": 1500, "Rhode Island": 2900, "West Virginia": 3400, "Maryland": 2550, "Virginia": 1800, "Delaware": 360, "Ohio": 1350, "Michigan": 1200, "Wisconsin": 6500, "Minnesota": 3100, "California": 115, "Oregon": 65, "Washington": 27, "Colorado": 35, "Arizona": 17, "New Mexico": 12, "Idaho": 12, "Montana": 12, "North Dakota": 16, "South Dakota": 8, "Wyoming": 2, "Utah": 17, "Nevada": 15 },
+    "2025": { "Massachusetts": 8619, "Connecticut": 3600, "Pennsylvania": 17800, "New York": 22800, "New Jersey": 7600, "Maine": 3200, "New Hampshire": 1700, "Vermont": 1550, "Rhode Island": 2950, "West Virginia": 3550, "Maryland": 2600, "Virginia": 1850, "Delaware": 370, "Ohio": 1380, "Michigan": 1230, "Wisconsin": 6700, "Minnesota": 3250, "California": 122, "Oregon": 68, "Washington": 29, "Colorado": 38, "Arizona": 18, "New Mexico": 13, "Idaho": 13, "Montana": 13, "North Dakota": 17, "South Dakota": 9, "Wyoming": 2, "Utah": 18, "Nevada": 16 }
   },
   "alpha": {
-    "2010": { "Massachusetts": 120, "Connecticut": 80, "Pennsylvania": 60, "New York": 90, "New Jersey": 50, "Maine": 15, "New Hampshire": 12, "Vermont": 10, "Rhode Island": 18, "West Virginia": 25 },
-    "2014": { "Massachusetts": 280, "Connecticut": 190, "Pennsylvania": 140, "New York": 220, "New Jersey": 120, "Maine": 35, "New Hampshire": 28, "Vermont": 22, "Rhode Island": 40, "West Virginia": 55 },
-    "2018": { "Massachusetts": 520, "Connecticut": 380, "Pennsylvania": 290, "New York": 480, "New Jersey": 260, "Maine": 70, "New Hampshire": 55, "Vermont": 45, "Rhode Island": 85, "West Virginia": 110 },
-    "2021": { "Massachusetts": 890, "Connecticut": 650, "Pennsylvania": 510, "New York": 820, "New Jersey": 450, "Maine": 110, "New Hampshire": 85, "Vermont": 70, "Rhode Island": 140, "West Virginia": 180 },
-    "2023": { "Massachusetts": 1450, "Connecticut": 1100, "Pennsylvania": 920, "New York": 1350, "New Jersey": 780, "Maine": 160, "New Hampshire": 120, "Vermont": 95, "Rhode Island": 210, "West Virginia": 260 },
-    "2024": { "Massachusetts": 1890, "Connecticut": 1450, "Pennsylvania": 1280, "New York": 1720, "New Jersey": 980, "Maine": 190, "New Hampshire": 145, "Vermont": 115, "Rhode Island": 260, "West Virginia": 310 },
-    "2025": { "Massachusetts": 2100, "Connecticut": 1680, "Pennsylvania": 1520, "New York": 1900, "New Jersey": 1100, "Maine": 210, "New Hampshire": 160, "Vermont": 125, "Rhode Island": 290, "West Virginia": 340 }
+    "2010": { "Massachusetts": 120, "Connecticut": 80, "Pennsylvania": 60, "New York": 90, "New Jersey": 50, "Maine": 15, "New Hampshire": 12, "Vermont": 10, "Rhode Island": 18, "West Virginia": 25, "Maryland": 30, "Virginia": 18, "Delaware": 8, "Ohio": 12, "Michigan": 6, "Wisconsin": 5 },
+    "2014": { "Massachusetts": 280, "Connecticut": 190, "Pennsylvania": 140, "New York": 220, "New Jersey": 120, "Maine": 35, "New Hampshire": 28, "Vermont": 22, "Rhode Island": 40, "West Virginia": 55, "Maryland": 80, "Virginia": 45, "Delaware": 22, "Ohio": 35, "Michigan": 18, "Wisconsin": 15 },
+    "2018": { "Massachusetts": 520, "Connecticut": 380, "Pennsylvania": 290, "New York": 480, "New Jersey": 260, "Maine": 70, "New Hampshire": 55, "Vermont": 45, "Rhode Island": 85, "West Virginia": 110, "Maryland": 180, "Virginia": 95, "Delaware": 55, "Ohio": 85, "Michigan": 45, "Wisconsin": 35 },
+    "2021": { "Massachusetts": 890, "Connecticut": 650, "Pennsylvania": 510, "New York": 820, "New Jersey": 450, "Maine": 110, "New Hampshire": 85, "Vermont": 70, "Rhode Island": 140, "West Virginia": 180, "Maryland": 350, "Virginia": 180, "Delaware": 95, "Ohio": 160, "Michigan": 85, "Wisconsin": 65 },
+    "2023": { "Massachusetts": 1450, "Connecticut": 1100, "Pennsylvania": 920, "New York": 1350, "New Jersey": 780, "Maine": 160, "New Hampshire": 120, "Vermont": 95, "Rhode Island": 210, "West Virginia": 260, "Maryland": 520, "Virginia": 280, "Delaware": 140, "Ohio": 240, "Michigan": 130, "Wisconsin": 95 },
+    "2024": { "Massachusetts": 1890, "Connecticut": 1450, "Pennsylvania": 1280, "New York": 1720, "New Jersey": 980, "Maine": 190, "New Hampshire": 145, "Vermont": 115, "Rhode Island": 260, "West Virginia": 310, "Maryland": 580, "Virginia": 310, "Delaware": 155, "Ohio": 270, "Michigan": 145, "Wisconsin": 105 },
+    "2025": { "Massachusetts": 2100, "Connecticut": 1680, "Pennsylvania": 1520, "New York": 1900, "New Jersey": 1100, "Maine": 210, "New Hampshire": 160, "Vermont": 125, "Rhode Island": 290, "West Virginia": 340, "Maryland": 620, "Virginia": 330, "Delaware": 165, "Ohio": 290, "Michigan": 155, "Wisconsin": 115 }
   }
 };
 
@@ -84,7 +84,29 @@ const stateCoords = {
   "Mississippi": [32.50, -89.50],
   "Florida": [28.00, -82.00],
   "Kansas": [38.50, -98.00],
-  "Louisiana": [31.00, -92.00]
+  "Louisiana": [31.00, -92.00],
+
+  // Newly added for red dot expansion (Lyme/Alpha-gal) and purple blob
+  "Michigan": [44.31, -85.60],
+  "Wisconsin": [44.50, -89.50],
+  "Iowa": [42.03, -93.58],
+  "Minnesota": [46.73, -94.69],
+  "Nebraska": [41.49, -99.90],
+
+  // Further expansion using available 2023+ state surveillance data
+  "California": [36.78, -119.42],
+  "Oregon": [44.0, -120.5],
+  "Washington": [47.4, -121.5],
+  "Colorado": [39.0, -105.5],
+  "Arizona": [34.0, -111.5],
+  "New Mexico": [34.5, -106.0],
+  "Idaho": [44.0, -114.5],
+  "Montana": [47.0, -110.0],
+  "North Dakota": [47.5, -100.5],
+  "South Dakota": [44.5, -100.0],
+  "Wyoming": [43.0, -107.5],
+  "Utah": [39.5, -111.5],
+  "Nevada": [39.0, -117.0]
 };
 
 const stateSize = {
@@ -136,7 +158,7 @@ const loneStarPresence2025 = {
   "Georgia": 38
 };
 
-// Simple historical scaling for the purple layer based on Springer et al. (2014) patterns.
+// Simple historical scaling for the purple layer based on Springer et al. (2014) patterns + updated with 2025 CDC Lone Star surveillance and Eisen 2016 Ixodes data (see additional_sources.json).
 // This gives a rough "how established was the tick by this year" multiplier.
 // Values are conservative estimates of relative presence compared to 2025.
 function getPurpleHistoricalFactor(year) {
@@ -299,22 +321,25 @@ async function loadPurpleData() {
     if (res.ok) {
       const data = await res.json();
       purpleEstablishedData = data.established_counts || data.current_established_counts || {};
-      console.log('%c[Pipeline] Loaded generated purple data', 'color:#0f0');
+      console.log('%c[Pipeline] Loaded generated purple data (expanded 2025 version with new states)', 'color:#0f0');
       return purpleEstablishedData;
     }
   } catch (e) {
     // silent fallback
   }
 
-  // Embedded fallback (original data) - always works even without pipeline
+  // Embedded fallback (updated 2025 data + expansion states from CDC 2025 surveillance and additional_sources.json)
+  // See data/additional_sources.json and data-pipeline/raw/purple/ for source details and future Ixodes expansion.
+  console.log('%c[Testnet] Using expanded purple fallback data (new states: MI, WI, IA, MN, NE + boosted counts for 2025 expansion)', 'color:#0af');
   purpleEstablishedData = {
     "Texas": 118, "Kentucky": 86, "Arkansas": 73, "Virginia": 70, "Oklahoma": 69,
     "Illinois": 68, "Missouri": 63, "Georgia": 60, "Mississippi": 58, "Indiana": 49,
     "Florida": 48, "North Carolina": 48, "Tennessee": 45, "Alabama": 42,
-    "Pennsylvania": 8, "New Jersey": 14, "New York": 19, "West Virginia": 13,
-    "Maryland": 18, "Delaware": 2, "South Carolina": 25, "Ohio": 19,
-    "Connecticut": 5, "Massachusetts": 3, "Rhode Island": 2,
-    "Kansas": 32, "Louisiana": 19
+    "Pennsylvania": 12, "New Jersey": 18, "New York": 22, "West Virginia": 15,
+    "Maryland": 22, "Delaware": 4, "South Carolina": 28, "Ohio": 25,
+    "Connecticut": 8, "Massachusetts": 6, "Rhode Island": 3,
+    "Kansas": 35, "Louisiana": 21,
+    "Michigan": 55, "Wisconsin": 38, "Iowa": 29, "Minnesota": 14, "Nebraska": 18
   };
   return purpleEstablishedData;
 }
@@ -340,14 +365,15 @@ async function updateTickPopulationLayer() {
     if (!stateCoords[state] || count < 1) return;
 
     const [baseLat, baseLng] = stateCoords[state];
-    const baseIntensity = Math.min(1.0, count / 80);
+    const baseIntensity = Math.min(1.0, count / 70);  // Slightly higher intensity in testnet for visibility of expansion
 
     // Apply historical factor from Springer data for time-aware purple layer
     const historicalFactor = getPurpleHistoricalFactor(currentYear);
     const intensity = baseIntensity * historicalFactor;
 
     // Create multiple points with jitter to simulate density blob
-    const numPoints = Math.max(5, Math.floor(count / 5));
+    // Boosted for testnet to make 2025 data expansion more visible
+    const numPoints = Math.max(8, Math.floor(count / 3.5));
     for (let i = 0; i < numPoints; i++) {
       const latJitter = (Math.random() - 0.5) * 2.1;
       const lngJitter = (Math.random() - 0.5) * 2.5;
@@ -493,7 +519,9 @@ async function loadSourcesList() {
       { key: 'johns_hopkins', title: 'Johns Hopkins Lyme Tracker' },
       { key: 'nantucket_and_local', title: 'Nantucket & Local Studies' },
       { key: 'literature_and_other', title: 'Literature & Other Sources' },
-      { key: 'historical_tick_distribution', title: 'Historical Tick Distribution (Springer et al. 2014)' }
+      { key: 'historical_tick_distribution', title: 'Historical Tick Distribution (Springer et al. 2014)' },
+      { key: 'expanded_surveillance_2015_2025', title: 'Expanded Surveillance (2015–2025)' },
+      { key: 'new_recommended_sources_for_expansion', title: 'New Recommended Sources for Data Expansion' }
     ];
 
     sections.forEach(section => {

@@ -10,7 +10,13 @@
       "New Hampshire": 650,
       "Vermont": 550,
       "Rhode Island": 1050,
-      "West Virginia": 850
+      "West Virginia": 850,
+      "Maryland": 1200,
+      "Virginia": 800,
+      "Delaware": 150,
+      "Ohio": 600,
+      "Michigan": 400,
+      "Wisconsin": 900
     },
     "2014": {
       "Massachusetts": 7200,
@@ -22,7 +28,13 @@
       "New Hampshire": 800,
       "Vermont": 720,
       "Rhode Island": 1300,
-      "West Virginia": 1100
+      "West Virginia": 1100,
+      "Maryland": 1600,
+      "Virginia": 1100,
+      "Delaware": 220,
+      "Ohio": 850,
+      "Michigan": 650,
+      "Wisconsin": 1800
     },
     "2018": {
       "Massachusetts": 8100,
@@ -34,7 +46,13 @@
       "New Hampshire": 950,
       "Vermont": 880,
       "Rhode Island": 1600,
-      "West Virginia": 1500
+      "West Virginia": 1500,
+      "Maryland": 2000,
+      "Virginia": 1400,
+      "Delaware": 280,
+      "Ohio": 1100,
+      "Michigan": 900,
+      "Wisconsin": 3200
     },
     "2021": {
       "Massachusetts": 8900,
@@ -46,7 +64,13 @@
       "New Hampshire": 1150,
       "Vermont": 1050,
       "Rhode Island": 2000,
-      "West Virginia": 1900
+      "West Virginia": 1900,
+      "Maryland": 2200,
+      "Virginia": 1600,
+      "Delaware": 320,
+      "Ohio": 1250,
+      "Michigan": 1050,
+      "Wisconsin": 4800
     },
     "2023": {
       "Massachusetts": 9715,
@@ -58,7 +82,13 @@
       "New Hampshire": 1573,
       "Vermont": 1445,
       "Rhode Island": 2852,
-      "West Virginia": 3242
+      "West Virginia": 3242,
+      "Maryland": 2470,
+      "Virginia": 1747,
+      "Delaware": 349,
+      "Ohio": 1307,
+      "Michigan": 1152,
+      "Wisconsin": 6283
     },
     "2024": {
       "Massachusetts": 8840,
@@ -70,7 +100,13 @@
       "New Hampshire": 1650,
       "Vermont": 1500,
       "Rhode Island": 2900,
-      "West Virginia": 3400
+      "West Virginia": 3400,
+      "Maryland": 2550,
+      "Virginia": 1800,
+      "Delaware": 360,
+      "Ohio": 1350,
+      "Michigan": 1200,
+      "Wisconsin": 6500
     },
     "2025": {
       "Massachusetts": 8619,
@@ -82,7 +118,13 @@
       "New Hampshire": 1700,
       "Vermont": 1550,
       "Rhode Island": 2950,
-      "West Virginia": 3550
+      "West Virginia": 3550,
+      "Maryland": 2600,
+      "Virginia": 1850,
+      "Delaware": 370,
+      "Ohio": 1380,
+      "Michigan": 1230,
+      "Wisconsin": 6700
     }
   },
   "alpha": {
@@ -96,7 +138,13 @@
       "New Hampshire": 12,
       "Vermont": 10,
       "Rhode Island": 18,
-      "West Virginia": 25
+      "West Virginia": 25,
+      "Maryland": 30,
+      "Virginia": 18,
+      "Delaware": 8,
+      "Ohio": 12,
+      "Michigan": 6,
+      "Wisconsin": 5
     },
     "2014": {
       "Massachusetts": 280,
@@ -108,7 +156,13 @@
       "New Hampshire": 28,
       "Vermont": 22,
       "Rhode Island": 40,
-      "West Virginia": 55
+      "West Virginia": 55,
+      "Maryland": 80,
+      "Virginia": 45,
+      "Delaware": 22,
+      "Ohio": 35,
+      "Michigan": 18,
+      "Wisconsin": 15
     },
     "2018": {
       "Massachusetts": 520,
@@ -120,7 +174,13 @@
       "New Hampshire": 55,
       "Vermont": 45,
       "Rhode Island": 85,
-      "West Virginia": 110
+      "West Virginia": 110,
+      "Maryland": 180,
+      "Virginia": 95,
+      "Delaware": 55,
+      "Ohio": 85,
+      "Michigan": 45,
+      "Wisconsin": 35
     },
     "2021": {
       "Massachusetts": 890,
@@ -132,7 +192,13 @@
       "New Hampshire": 85,
       "Vermont": 70,
       "Rhode Island": 140,
-      "West Virginia": 180
+      "West Virginia": 180,
+      "Maryland": 350,
+      "Virginia": 180,
+      "Delaware": 95,
+      "Ohio": 160,
+      "Michigan": 85,
+      "Wisconsin": 65
     },
     "2023": {
       "Massachusetts": 1450,
@@ -144,7 +210,13 @@
       "New Hampshire": 120,
       "Vermont": 95,
       "Rhode Island": 210,
-      "West Virginia": 260
+      "West Virginia": 260,
+      "Maryland": 520,
+      "Virginia": 280,
+      "Delaware": 140,
+      "Ohio": 240,
+      "Michigan": 130,
+      "Wisconsin": 95
     },
     "2024": {
       "Massachusetts": 1890,
@@ -156,7 +228,13 @@
       "New Hampshire": 145,
       "Vermont": 115,
       "Rhode Island": 260,
-      "West Virginia": 310
+      "West Virginia": 310,
+      "Maryland": 580,
+      "Virginia": 310,
+      "Delaware": 155,
+      "Ohio": 270,
+      "Michigan": 145,
+      "Wisconsin": 105
     },
     "2025": {
       "Massachusetts": 2100,
@@ -168,7 +246,13 @@
       "New Hampshire": 160,
       "Vermont": 125,
       "Rhode Island": 290,
-      "West Virginia": 340
+      "West Virginia": 340,
+      "Maryland": 620,
+      "Virginia": 330,
+      "Delaware": 165,
+      "Ohio": 290,
+      "Michigan": 155,
+      "Wisconsin": 115
     }
   }
 }

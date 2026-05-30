@@ -137,7 +137,7 @@ const loneStarPresence = {
 
 let currentDisease = "alpha";
 let currentYear = 2025;
-let map = L.map('map').setView([42.2, -74.5], 5.3); // Wider Northeast view for expanded regional data (ME to WV + NY/NJ)
+let map = L.map('map').setView([39.8, -93.5], 4.6); // Shifted right (opposite direction) by ~Maine's width so the text box sits better relative to the US/Atlantic
 let markers = [];                    // human case circles (red)
 let isPlaying = false;
 let playInterval = null;
@@ -183,9 +183,8 @@ function updateHeatmap() {
   markers.forEach(m => map.removeLayer(m));
   markers = [];
 
-  // Respect the "Show Cases" toggle (much more reliable on mobile than clicking radios)
-  const showCasesToggle = document.getElementById('showCasesToggle');
-  if (!showCasesToggle || !showCasesToggle.checked || !currentDisease) {
+  // If red layer is turned off (no disease selected), don't draw human case circles
+  if (!currentDisease) {
     return;
   }
 
@@ -408,10 +407,7 @@ function updateRedLegendText() {
   const legendText = document.getElementById('redLegendText');
   if (!legendText) return;
 
-  const showCasesToggle = document.getElementById('showCasesToggle');
-  const casesVisible = showCasesToggle && showCasesToggle.checked && currentDisease;
-
-  if (!casesVisible) {
+  if (!currentDisease) {
     legendText.textContent = 'Cases (off)';
     return;
   }
@@ -488,18 +484,18 @@ loadData().then(() => {
 
     if (yearEl) yearEl.textContent = currentYear;
 
-    const showCasesToggleEl = document.getElementById('showCasesToggle');
-    const casesVisible = showCasesToggleEl && showCasesToggleEl.checked && currentDisease;
-
     const diseaseToggleContainer = document.querySelector('.disease-toggle');
     if (diseaseToggleContainer) {
-      diseaseToggleContainer.classList.toggle('red-off', !casesVisible);
+      diseaseToggleContainer.classList.toggle('red-off', !currentDisease);
     }
 
-    if (!casesVisible) {
+    if (!currentDisease) {
       // Red human case layer is turned off
       if (diseaseEl) diseaseEl.textContent = 'Tick Data Only';
-      if (totalEl) totalEl.textContent = '—';
+      const numberEl = totalEl ? totalEl.querySelector('.y-total-number') : null;
+      const labelEl = totalEl ? totalEl.querySelector('.y-total-label') : null;
+      if (numberEl) numberEl.textContent = '—';
+      if (labelEl) labelEl.textContent = '';
     } else {
       const diseaseName = currentDisease === 'alpha' ? 'Alpha-Gal' : 'Lyme Disease';
       if (diseaseEl) diseaseEl.textContent = diseaseName;
@@ -507,7 +503,12 @@ loadData().then(() => {
       // Sum all states for the current cumulative year + disease
       const cumulative = getCumulativeData(currentYear);
       const total = Object.values(cumulative).reduce((sum, val) => sum + val, 0);
-      if (totalEl) totalEl.textContent = total.toLocaleString();
+
+      const numberEl = totalEl ? totalEl.querySelector('.y-total-number') : null;
+      const labelEl = totalEl ? totalEl.querySelector('.y-total-label') : null;
+
+      if (numberEl) numberEl.textContent = total.toLocaleString();
+      if (labelEl) labelEl.textContent = 'cases';
     }
   }
 
@@ -520,32 +521,37 @@ loadData().then(() => {
     currentYear = parseInt(slider.value);
     updateYearDisplay();
     updateHeatmap();
-    updateTickPopulationLayer();
+    // Purple is static 2025 data — do not update on year change
   };
 
-  // Reliable "Show Cases" toggle (works well on iOS)
-  const showCasesToggle = document.getElementById('showCasesToggle');
-  if (showCasesToggle) {
-    showCasesToggle.onchange = () => {
+  // Disease selector using custom buttons (much more reliable on iPhone)
+  document.querySelectorAll('.disease-option').forEach(option => {
+    const value = option.dataset.value;
+
+    const toggleDisease = (e) => {
+      if (currentDisease === value) {
+        // Clicked the active one → turn red layer completely off
+        currentDisease = null;
+        document.querySelectorAll('.disease-option').forEach(o => o.classList.remove('active'));
+      } else {
+        currentDisease = value;
+        document.querySelectorAll('.disease-option').forEach(o => o.classList.remove('active'));
+        option.classList.add('active');
+      }
+
       updateHeatmap();
-      updateTickPopulationLayer();
       updateYearDisplay();
       updateRedLegendText();
     };
-  }
 
-  // Disease type selector (Lyme vs Alpha-gal) - only matters when Show Cases is on
-  document.querySelectorAll('input[name="disease"]').forEach(radio => {
-    radio.onchange = () => {
-      if (radio.checked) {
-        currentDisease = radio.value;
-        updateHeatmap();
-        updateTickPopulationLayer();
-        updateYearDisplay();
-        updateRedLegendText();
-      }
-    };
+    option.addEventListener('click', toggleDisease);
+    option.addEventListener('touchend', toggleDisease, { passive: true });
   });
+
+  // Set initial active state (Alpha-gal selected by default)
+  const initialAlpha = document.querySelector('.disease-option[data-value="alpha"]');
+  if (initialAlpha) initialAlpha.classList.add('active');
+  currentDisease = 'alpha';
 
   // Verified Tick Population overlay toggle (purple, independent of disease)
   const tickToggle = document.getElementById('tickPopulationToggle');
@@ -568,7 +574,7 @@ loadData().then(() => {
         if (currentYear > 2025) currentYear = 2010;
         updateYearDisplay();
         updateHeatmap();
-        updateTickPopulationLayer();
+        // Purple layer is static (2025 data only)
       }, 800);
     } else {
       isPlaying = false;

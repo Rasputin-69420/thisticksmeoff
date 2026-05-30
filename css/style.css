@@ -14,27 +14,27 @@ body {
 /* Map container */
 #map {
   position: relative;   /* allows absolute overlays inside the map */
-  height: 72vh;
+  height: 78vh;
   width: 100%;
   background: #222;
 }
 
-/* Light desktop nicety: slightly taller map on wide screens for better immersion */
+/* Give the map much more space on desktop */
 @media (min-width: 1024px) {
   #map {
-    height: 75vh;
+    height: 85vh;
   }
 }
 
-/* Top controls bar */
+/* Top controls bar - more compact */
 .controls {
-  padding: 12px 15px;
+  padding: 6px 12px;
   background: #1a1a1a;
   display: flex;
-  gap: 20px;
+  gap: 12px;
   align-items: center;
   flex-wrap: wrap;
-  font-size: clamp(14px, 4.35vw, 20px);
+  font-size: 14px;
 }
 
 /* Year labels under the slider */
@@ -45,8 +45,8 @@ body {
 }
 
 button {
-  padding: 10px 18px;
-  font-size: 16px;
+  padding: 6px 12px;
+  font-size: 14px;
   cursor: pointer;
 }
 
@@ -222,13 +222,13 @@ button {
 /* Year box — middle right of the map (anchored inside #map) */
 .year-big-display {
   position: absolute;
-  right: 12px;
+  right: 10px;
   top: 50%;
   transform: translateY(-50%);
   color: #aaa;
-  background: rgba(26, 26, 26, 0.75);
-  padding: 6px 10px;
-  border-radius: 6px;
+  background: rgba(26, 26, 26, 0.8);
+  padding: 4px 8px;
+  border-radius: 5px;
   z-index: 1000;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
   display: flex;
@@ -236,23 +236,37 @@ button {
   align-items: center;
   text-align: center;
   line-height: 1.05;
+  font-size: 13px;
 }
 
 /* Inner lines */
 .year-big-display .y-year {
-  font-size: 32px;
+  font-size: 30px;
   font-weight: bold;
 }
 
 .year-big-display .y-disease {
-  font-size: 14px;
+  font-size: 18px;
   margin-top: 2px;
   opacity: 0.9;
 }
 
 .year-big-display .y-total {
-  font-size: 12px;
-  margin-top: 2px;
+  font-size: 18px;
+  margin-top: 3px;
+  opacity: 0.85;
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+}
+
+.year-big-display .y-total-number {
+  font-size: inherit;
+  font-weight: 700;
+}
+
+.year-big-display .y-total-label {
+  font-size: 21px;   /* noticeably bigger for "cases" */
   opacity: 0.85;
 }
 
@@ -260,10 +274,12 @@ button {
 @media (max-width: 600px) {
   .year-big-display {
     padding: 4px 8px;
+    font-size: 13px;
   }
-  .year-big-display .y-year { font-size: 22px; }
-  .year-big-display .y-disease { font-size: 11px; }
-  .year-big-display .y-total { font-size: 10px; }
+  .year-big-display .y-year { font-size: 20px; }
+  .year-big-display .y-disease { font-size: 14px; }
+  .year-big-display .y-total { font-size: 14px; }
+  .year-big-display .y-total-label { font-size: 16px; }
 }
 
 /* Modal for educational content */
@@ -432,38 +448,33 @@ button {
   gap: 6px;
   cursor: pointer;
   user-select: none;
-}
-
-.disease-option input[type="radio"] {
-  position: absolute;
-  opacity: 0;
-  width: 0;
-  height: 0;
-  pointer-events: none;
+  padding: 4px 8px;
+  border-radius: 999px;
+  transition: background-color 0.15s ease;
 }
 
 .disease-option .dot {
   display: inline-block;
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
-  background: #fff;           /* unselected = white */
+  background: #fff;
   border: 2px solid #777;
   flex-shrink: 0;
   transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
-.disease-option input[type="radio"]:checked + .dot {
-  background: #e60000;        /* selected = bright red (matches heat map) */
+/* Active/selected state for custom buttons */
+.disease-option.active .dot {
+  background: #e60000;
   border-color: #e60000;
 }
 
-/* Optional subtle hover for the whole option */
-.disease-option:hover .dot {
-  border-color: #aaa;
+.disease-option:hover {
+  background: rgba(255,255,255,0.06);
 }
 
-.disease-option input[type="radio"]:checked + .dot:hover {
+.disease-option.active:hover .dot {
   background: #ff1a1a;
   border-color: #ff1a1a;
 }
@@ -496,33 +507,43 @@ button {
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background: #c4b5fd;           /* light purple default */
-  border: 2px solid #7c3aed;
+  background: #fff;
+  border: 2px solid #777;
   flex-shrink: 0;
   transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
-.overlay-toggle input[type="checkbox"]:checked + .dot {
+/* Purple toggle specific - only purple when checked */
+.overlay-toggle .dot.purple {
+  background: #fff;
+  border: 2px solid #777;
+}
+
+.overlay-toggle input[type="checkbox"]:checked + .dot.purple {
   background: #7c3aed;           /* vivid purple when on */
   border-color: #5b21b6;
 }
 
-.overlay-toggle:hover .dot {
-  border-color: #a78bfa;
+.overlay-toggle:hover .dot.purple {
+  border-color: #aaa;
 }
 
-/* Layer legend - very compact */
+.overlay-toggle input[type="checkbox"]:checked + .dot.purple:hover {
+  background: #9f7aea;
+  border-color: #7c3aed;
+}
+
+/* Very compact single-line legend */
 .layer-legend {
   max-width: 1400px;
-  margin: 2px auto 0;
-  padding: 2px 12px;
+  margin: 1px auto 0;
+  padding: 1px 12px;
   font-size: 11px;
   color: #aaa;
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  gap: 18px;
   align-items: center;
-  line-height: 1.2;
+  line-height: 1.15;
 }
 
 .layer-legend .legend-item {
@@ -534,8 +555,8 @@ button {
 
 .layer-legend .legend-dot {
   display: inline-block;
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   flex-shrink: 0;
 }
@@ -552,4 +573,20 @@ button {
 .disease-toggle.red-off {
   opacity: 0.45;
   filter: grayscale(0.6);
+}
+
+/* Play button inside the year display box */
+.play-btn-small {
+  margin-top: 5px;
+  padding: 4px 14px;
+  font-size: 26px;
+  line-height: 1;
+  background: #222;
+  border: 1px solid #555;
+  color: #ddd;
+  border-radius: 4px;
+}
+
+#year-big .play-btn-small {
+  align-self: center;
 }

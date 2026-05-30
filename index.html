@@ -16,25 +16,15 @@
   <div class="title">This Tics Me Off — Alpha-gal & Lyme Tracker</div>
 
   <div class="controls">
-    <!-- Human cases visibility + disease choice (reliable on mobile) -->
-    <div class="overlay-control red-cases-control">
-      <label class="overlay-toggle">
-        <input type="checkbox" id="showCasesToggle" checked>
-        <span class="dot red"></span>
-        <span class="label-text">Show Cases</span>
-      </label>
-
-      <div class="disease-toggle">
-        <label class="disease-option">
-          <input type="radio" name="disease" value="lyme">
-          <span class="dot"></span>
-          <span class="label-text">Lyme</span>
-        </label>
-        <label class="disease-option">
-          <input type="radio" name="disease" value="alpha" checked>
-          <span class="dot"></span>
-          <span class="label-text">Alpha-gal</span>
-        </label>
+    <!-- Disease selection (red layer) - custom buttons for reliable mobile toggle -->
+    <div class="disease-toggle">
+      <div class="disease-option" data-value="lyme">
+        <span class="dot"></span>
+        <span class="label-text">Lyme</span>
+      </div>
+      <div class="disease-option" data-value="alpha">
+        <span class="dot"></span>
+        <span class="label-text">Alpha-gal</span>
       </div>
     </div>
 
@@ -47,7 +37,7 @@
       </label>
     </div>
 
-    <div style="flex:1; min-width:300px;">
+    <div style="flex:1; min-width:260px;">
       <input type="range" id="yearSlider" min="2010" max="2025" value="2025" step="1" style="width:100%">
       <div class="year-labels">
         <span>2010</span>
@@ -55,8 +45,6 @@
         <span>2025</span>
       </div>
     </div>
-
-    <button id="playBtn">▶ Play</button>
   </div>
 
   <!-- Compact layer legend -->
@@ -77,7 +65,11 @@
   <div id="year-big" class="year-big-display">
     <div class="y-year">2025</div>
     <div class="y-disease">Alpha-Gal</div>
-    <div class="y-total">0</div>
+    <div class="y-total">
+      <span class="y-total-number">0</span>
+      <span class="y-total-label">cases</span>
+    </div>
+    <button id="playBtn" class="play-btn-small">▶</button>
   </div>
 
   <!-- Cute "Click the Tick" floating control (lower right of map) -->

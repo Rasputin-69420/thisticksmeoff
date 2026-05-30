@@ -759,7 +759,9 @@ button {
   color: #888;
   margin-top: 6px;
   line-height: 1.25;
-  max-width: 165px;
+  width: 100%;
+  max-width: 100%;
+  text-align: center;
   opacity: 0.85;
 }
 
@@ -854,7 +856,6 @@ button {
 
   .year-big-display .case-note {
     font-size: 8px;
-    max-width: 140px;
     margin-top: 4px;
   }
 }

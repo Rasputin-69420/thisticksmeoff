@@ -759,14 +759,15 @@ button {
   left: 10px;
   bottom: 12px;
   font-size: 10px;
-  color: #888;
-  background: rgba(26, 26, 26, 0.75);
-  padding: 3px 6px;
-  border-radius: 3px;
+  color: #ccc;
+  background: rgba(20, 20, 20, 0.85);
+  padding: 4px 8px;
+  border-radius: 4px;
   max-width: 220px;
-  line-height: 1.2;
-  z-index: 999;
+  line-height: 1.25;
+  z-index: 5000;
   text-align: center;
+  pointer-events: none; /* don't block map interactions */
 }
 
 /* Visual feedback when human case (red) heat map is turned off */
@@ -863,7 +864,7 @@ button {
     bottom: 10px;
     left: 8px;
     max-width: 180px;
-    padding: 2px 5px;
+    padding: 3px 6px;
   }
 
 }

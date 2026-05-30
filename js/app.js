@@ -135,15 +135,16 @@ const loneStarPresence = {
   "Georgia": 38
 };
 
-let currentDisease = "alpha";
+let selectedDisease = "alpha";   // which disease's number is shown in the text box
+let currentDisease = "alpha";    // which disease's red dots are currently drawn on the map (can be null)
 let currentYear = 2025;
-let initialCenter = [39.8, -93.5];
-let initialZoom = 4.6;
+let initialCenter = [43.2, -87.5];
+let initialZoom = 4.5;
 
-// Much wider view on mobile so the whole US is visible
+// Slightly wider view on mobile while still keeping the text box over the Great Lakes area
 if (window.innerWidth < 768) {
-  initialCenter = [39, -95];
-  initialZoom = 3.7;
+  initialCenter = [43, -88];
+  initialZoom = 3.8;
 }
 
 let map = L.map('map').setView(initialCenter, initialZoom);
@@ -420,12 +421,14 @@ function updateRedLegendText() {
   const legendText = document.getElementById('redLegendText');
   if (!legendText) return;
 
-  if (!currentDisease) {
+  const diseaseToShow = selectedDisease || currentDisease;
+
+  if (!diseaseToShow) {
     legendText.textContent = 'Cases (off)';
     return;
   }
 
-  if (currentDisease === 'lyme') {
+  if (diseaseToShow === 'lyme') {
     legendText.textContent = 'Cases of Lyme';
   } else {
     legendText.textContent = 'Cases of Alpha-gal';
@@ -502,18 +505,12 @@ loadData().then(() => {
       diseaseToggleContainer.classList.toggle('red-off', !currentDisease);
     }
 
-    if (!currentDisease) {
-      // Red human case layer is turned off
-      if (diseaseEl) diseaseEl.textContent = 'Tick Data Only';
-      const numberEl = totalEl ? totalEl.querySelector('.y-total-number') : null;
-      const labelEl = totalEl ? totalEl.querySelector('.y-total-label') : null;
-      if (numberEl) numberEl.textContent = '—';
-      if (labelEl) labelEl.textContent = '';
-    } else {
-      const diseaseName = currentDisease === 'alpha' ? 'Alpha-Gal' : 'Lyme Disease';
+    // Always show the number for the selected disease in the text box
+    const diseaseForBox = selectedDisease || currentDisease;
+    if (diseaseForBox) {
+      const diseaseName = diseaseForBox === 'alpha' ? 'Alpha-Gal' : 'Lyme Disease';
       if (diseaseEl) diseaseEl.textContent = diseaseName;
 
-      // Sum all states for the current cumulative year + disease
       const cumulative = getCumulativeData(currentYear);
       const total = Object.values(cumulative).reduce((sum, val) => sum + val, 0);
 
@@ -522,6 +519,12 @@ loadData().then(() => {
 
       if (numberEl) numberEl.textContent = total.toLocaleString();
       if (labelEl) labelEl.textContent = 'cases';
+    } else {
+      if (diseaseEl) diseaseEl.textContent = 'Tick Data Only';
+      const numberEl = totalEl ? totalEl.querySelector('.y-total-number') : null;
+      const labelEl = totalEl ? totalEl.querySelector('.y-total-label') : null;
+      if (numberEl) numberEl.textContent = '—';
+      if (labelEl) labelEl.textContent = '';
     }
   }
 
@@ -546,11 +549,18 @@ loadData().then(() => {
     const toggleDisease = (e) => {
       if (isTouchHandling && e.type === 'click') return;
 
-      if (currentDisease === value) {
-        // Tapped the active pill → turn red layer off
-        currentDisease = null;
-        document.querySelectorAll('.disease-option').forEach(o => o.classList.remove('active'));
+      if (selectedDisease === value) {
+        // Tapped the already selected pill → toggle only the red dots (keep the number in the box)
+        if (currentDisease === value) {
+          currentDisease = null;
+          option.classList.remove('active');
+        } else {
+          currentDisease = value;
+          option.classList.add('active');
+        }
       } else {
+        // Switched to the other disease
+        selectedDisease = value;
         currentDisease = value;
         document.querySelectorAll('.disease-option').forEach(o => o.classList.remove('active'));
         option.classList.add('active');
@@ -573,6 +583,7 @@ loadData().then(() => {
   // Set initial active state
   const initialAlpha = document.querySelector('.disease-option[data-value="alpha"]');
   if (initialAlpha) initialAlpha.classList.add('active');
+  selectedDisease = 'alpha';
   currentDisease = 'alpha';
 
   // Verified Tick Population overlay toggle (purple, independent of disease)

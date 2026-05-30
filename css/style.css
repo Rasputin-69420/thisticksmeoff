@@ -323,10 +323,11 @@ button {
   line-height: 1;
 }
 
-/* Year box — middle right of the map (anchored inside #map) */
+/* Year box — middle left of the map (anchored inside #map).
+   Moved to left side for better iPhone screen real estate. */
 .year-big-display {
   position: absolute;
-  right: 10px;
+  left: 10px;
   top: 38%;                     /* shifted up a bit because the box is now taller (scale + legend) */
   transform: translateY(-50%);
   color: #aaa;
@@ -371,10 +372,11 @@ button {
   opacity: 1;
 }
 
-/* Mobile sizing (middle-right of map) */
+/* Mobile sizing (now on left side for iPhone) */
 @media (max-width: 600px) {
   .year-big-display {
-    top: 36%;
+    top: 34%;   /* a bit higher on small screens to preserve map space */
+    left: 8px;
     padding: 4px 7px;
     font-size: 13px;
   }

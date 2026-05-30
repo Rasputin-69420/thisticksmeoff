@@ -753,16 +753,20 @@ button {
   background: #7c3aed;
 }
 
-/* Persistent disclaimer note under the case count */
-.year-big-display .case-note {
-  font-size: 9px;
+/* Map disclaimer - persistent note on lower left of map */
+.map-disclaimer {
+  position: absolute;
+  left: 10px;
+  bottom: 12px;
+  font-size: 10px;
   color: #888;
-  margin-top: 6px;
-  line-height: 1.25;
-  width: 100%;
-  max-width: 100%;
+  background: rgba(26, 26, 26, 0.75);
+  padding: 3px 6px;
+  border-radius: 3px;
+  max-width: 220px;
+  line-height: 1.2;
+  z-index: 999;
   text-align: center;
-  opacity: 0.85;
 }
 
 /* Visual feedback when human case (red) heat map is turned off */
@@ -854,10 +858,14 @@ button {
     font-size: 7.5px;
   }
 
-  .year-big-display .case-note {
-    font-size: 8px;
-    margin-top: 4px;
+  .map-disclaimer {
+    font-size: 9px;
+    bottom: 10px;
+    left: 8px;
+    max-width: 180px;
+    padding: 2px 5px;
   }
+
 }
 
 /* ============================================

@@ -183,8 +183,9 @@ function updateHeatmap() {
   markers.forEach(m => map.removeLayer(m));
   markers = [];
 
-  // If no disease selected (red layer turned off), don't draw human case circles
-  if (!currentDisease) {
+  // Respect the "Show Cases" toggle (much more reliable on mobile than clicking radios)
+  const showCasesToggle = document.getElementById('showCasesToggle');
+  if (!showCasesToggle || !showCasesToggle.checked || !currentDisease) {
     return;
   }
 
@@ -329,6 +330,11 @@ function updateTickPopulationLayer() {
       1.0: '#581c87'    // deep, rich purple
     }
   }).addTo(map);
+
+  // Mobile Safari fix: force map to recalculate size after adding canvas layer
+  setTimeout(() => {
+    if (map) map.invalidateSize();
+  }, 50);
 }
 
 function showModal(type) {
@@ -398,6 +404,25 @@ function hideModal() {
   document.getElementById('modal').style.display = 'none';
 }
 
+function updateRedLegendText() {
+  const legendText = document.getElementById('redLegendText');
+  if (!legendText) return;
+
+  const showCasesToggle = document.getElementById('showCasesToggle');
+  const casesVisible = showCasesToggle && showCasesToggle.checked && currentDisease;
+
+  if (!casesVisible) {
+    legendText.textContent = 'Cases (off)';
+    return;
+  }
+
+  if (currentDisease === 'lyme') {
+    legendText.textContent = 'Cases of Lyme';
+  } else {
+    legendText.textContent = 'Cases of Alpha-gal';
+  }
+}
+
 // ==================== CUTE "CLICK THE TICK" MENU (floating lower-right) ====================
 
 function toggleTickMenu(e) {
@@ -463,12 +488,15 @@ loadData().then(() => {
 
     if (yearEl) yearEl.textContent = currentYear;
 
+    const showCasesToggleEl = document.getElementById('showCasesToggle');
+    const casesVisible = showCasesToggleEl && showCasesToggleEl.checked && currentDisease;
+
     const diseaseToggleContainer = document.querySelector('.disease-toggle');
     if (diseaseToggleContainer) {
-      diseaseToggleContainer.classList.toggle('red-off', !currentDisease);
+      diseaseToggleContainer.classList.toggle('red-off', !casesVisible);
     }
 
-    if (!currentDisease) {
+    if (!casesVisible) {
       // Red human case layer is turned off
       if (diseaseEl) diseaseEl.textContent = 'Tick Data Only';
       if (totalEl) totalEl.textContent = '—';
@@ -485,6 +513,7 @@ loadData().then(() => {
 
   // Initial sync for the big year box
   updateYearDisplay();
+  updateRedLegendText();
 
   // Slider
   slider.oninput = () => {
@@ -494,37 +523,26 @@ loadData().then(() => {
     updateTickPopulationLayer();
   };
 
-  // Disease toggle logic - clicking a red option toggles the human case heatmap on/off
-  // - Click active red option → turn red heatmap completely OFF
-  // - Click red option when red is off → turn red heatmap back ON with that disease
-  document.querySelectorAll('input[name="disease"]').forEach(radio => {
-    const label = radio.closest('.disease-option');
-
-    label.addEventListener('click', (e) => {
-      e.preventDefault(); // take full control
-
-      if (currentDisease === radio.value) {
-        // Currently selected → turn the entire red layer OFF
-        currentDisease = null;
-        radio.checked = false;
-      } else {
-        // Either off or different disease → turn red layer ON with this disease
-        currentDisease = radio.value;
-        radio.checked = true;
-      }
-
+  // Reliable "Show Cases" toggle (works well on iOS)
+  const showCasesToggle = document.getElementById('showCasesToggle');
+  if (showCasesToggle) {
+    showCasesToggle.onchange = () => {
       updateHeatmap();
       updateTickPopulationLayer();
       updateYearDisplay();
-    });
+      updateRedLegendText();
+    };
+  }
 
-    // Fallback for direct radio interaction (accessibility)
+  // Disease type selector (Lyme vs Alpha-gal) - only matters when Show Cases is on
+  document.querySelectorAll('input[name="disease"]').forEach(radio => {
     radio.onchange = () => {
       if (radio.checked) {
         currentDisease = radio.value;
         updateHeatmap();
         updateTickPopulationLayer();
         updateYearDisplay();
+        updateRedLegendText();
       }
     };
   });
@@ -534,6 +552,9 @@ loadData().then(() => {
   if (tickToggle) {
     tickToggle.onchange = () => {
       updateTickPopulationLayer();
+      updateRedLegendText();
+      // Extra mobile safety
+      setTimeout(() => { if (map) map.invalidateSize(); }, 100);
     };
   }
 

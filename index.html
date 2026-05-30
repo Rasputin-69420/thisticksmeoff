@@ -16,25 +16,34 @@
   <div class="title">This Tics Me Off — Alpha-gal & Lyme Tracker</div>
 
   <div class="controls">
-    <div class="disease-toggle">
-      <label class="disease-option">
-        <input type="radio" name="disease" value="lyme">
-        <span class="dot"></span>
-        <span class="label-text">Lyme Disease</span>
+    <!-- Human cases visibility + disease choice (reliable on mobile) -->
+    <div class="overlay-control red-cases-control">
+      <label class="overlay-toggle">
+        <input type="checkbox" id="showCasesToggle" checked>
+        <span class="dot red"></span>
+        <span class="label-text">Show Cases</span>
       </label>
-      <label class="disease-option">
-        <input type="radio" name="disease" value="alpha" checked>
-        <span class="dot"></span>
-        <span class="label-text">Alpha-gal Syndrome</span>
-      </label>
+
+      <div class="disease-toggle">
+        <label class="disease-option">
+          <input type="radio" name="disease" value="lyme">
+          <span class="dot"></span>
+          <span class="label-text">Lyme</span>
+        </label>
+        <label class="disease-option">
+          <input type="radio" name="disease" value="alpha" checked>
+          <span class="dot"></span>
+          <span class="label-text">Alpha-gal</span>
+        </label>
+      </div>
     </div>
 
-    <!-- Separate overlay for direct tick habitat data (not human cases) -->
+    <!-- Purple tick density overlay -->
     <div class="overlay-control">
       <label class="overlay-toggle">
         <input type="checkbox" id="tickPopulationToggle">
         <span class="dot purple"></span>
-        <span class="label-text">Verified Tick Population</span>
+        <span class="label-text">Tick Density</span>
       </label>
     </div>
 
@@ -50,11 +59,16 @@
     <button id="playBtn">▶ Play</button>
   </div>
 
-  <!-- Layer explanation / legend -->
+  <!-- Compact layer legend -->
   <div class="layer-legend">
-    <span class="legend-item"><span class="legend-dot red"></span> Red = Human cases (lagging indicator of spread)</span>
-    <span class="legend-item"><span class="legend-dot purple"></span> Purple = Current Lone Star tick habitat density (2025) — predictive</span>
-    <span class="legend-note">Purple without red = emerging risk zones (ticks present, disease not yet widely reported)</span>
+    <span class="legend-item">
+      <span class="legend-dot red"></span>
+      <span id="redLegendText">Cases of Alpha-gal</span>
+    </span>
+    <span class="legend-item">
+      <span class="legend-dot purple"></span>
+      Known Tick Population Density
+    </span>
   </div>
 
   <div id="map"></div>

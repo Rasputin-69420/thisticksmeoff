@@ -206,14 +206,9 @@ button {
   }
 
   .layer-legend {
-    flex-direction: column;
-    align-items: flex-start;
-    font-size: 12px;
-    gap: 4px;
-  }
-
-  .layer-legend .legend-note {
-    margin-left: 0;
+    font-size: 10px;
+    padding: 1px 8px;
+    gap: 8px;
   }
 }
 
@@ -516,49 +511,41 @@ button {
   border-color: #a78bfa;
 }
 
-/* Layer legend explaining red vs purple */
+/* Layer legend - very compact */
 .layer-legend {
   max-width: 1400px;
-  margin: 6px auto 0;
-  padding: 4px 16px;
-  font-size: 13px;
+  margin: 2px auto 0;
+  padding: 2px 12px;
+  font-size: 11px;
   color: #aaa;
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 10px;
   align-items: center;
-  line-height: 1.3;
+  line-height: 1.2;
 }
 
 .layer-legend .legend-item {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
+  white-space: nowrap;
 }
 
 .layer-legend .legend-dot {
   display: inline-block;
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   flex-shrink: 0;
 }
 
 .layer-legend .legend-dot.red {
   background: #e60000;
-  border: 1px solid #ff8080;
 }
 
 .layer-legend .legend-dot.purple {
   background: #7c3aed;
-  border: 1px solid #c4b5fd;
-}
-
-.layer-legend .legend-note {
-  font-size: 12px;
-  color: #888;
-  font-style: italic;
-  margin-left: 8px;
 }
 
 /* Visual feedback when human case (red) heat map is turned off */

@@ -753,6 +753,16 @@ button {
   background: #7c3aed;
 }
 
+/* Persistent disclaimer note under the case count */
+.year-big-display .case-note {
+  font-size: 9px;
+  color: #888;
+  margin-top: 6px;
+  line-height: 1.25;
+  max-width: 165px;
+  opacity: 0.85;
+}
+
 /* Visual feedback when human case (red) heat map is turned off */
 .disease-toggle.red-off {
   opacity: 0.45;
@@ -840,6 +850,12 @@ button {
   }
   .year-big-display .purple-scale .ps-unit {
     font-size: 7.5px;
+  }
+
+  .year-big-display .case-note {
+    font-size: 8px;
+    max-width: 140px;
+    margin-top: 4px;
   }
 }
 

@@ -1,0 +1,34 @@
+{
+  "metadata": {
+    "source": "CDC LD_Case_Counts_by_County_2023_updated.csv (experimental placeholder)",
+    "year": 2023,
+    "generated": "2026-05-30T00:00:00",
+    "note": "This is a tiny sample. Replace with real parsed data once the CSV is downloaded and the parser is complete.",
+    "status": "placeholder"
+  },
+  "by_state": {
+    "Massachusetts": {
+      "total": 9715,
+      "counties": [
+        {"name": "Barnstable County", "lat": 41.70, "lng": -70.30, "cases": 420},
+        {"name": "Middlesex County", "lat": 42.48, "lng": -71.39, "cases": 1850},
+        {"name": "Nantucket County", "lat": 41.27, "lng": -70.10, "cases": 95}
+      ]
+    },
+    "New York": {
+      "total": 22173,
+      "counties": [
+        {"name": "Suffolk County", "lat": 40.85, "lng": -72.85, "cases": 2100},
+        {"name": "Westchester County", "lat": 41.12, "lng": -73.78, "cases": 980}
+      ]
+    },
+    "Pennsylvania": {
+      "total": 16671,
+      "counties": [
+        {"name": "Chester County", "lat": 39.97, "lng": -75.75, "cases": 890}
+      ]
+    }
+  },
+  "schema_version": "0.1-experimental",
+  "recommended_next": "Download the real 2023 county CSV and implement pandas parsing + normalization."
+}

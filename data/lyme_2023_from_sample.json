@@ -1,0 +1,10 @@
+{
+  "source": "county-derived from experimental sample",
+  "year": 2023,
+  "lyme_state_totals": {
+    "Massachusetts": 2365,
+    "New York": 3080,
+    "Pennsylvania": 890
+  },
+  "note": "Derived from county sample data — use to improve/validate 2023 anchors in 3state_cases.json. This is placeholder until real county CSV is processed."
+}

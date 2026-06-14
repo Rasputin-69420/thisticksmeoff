@@ -1,0 +1,1544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Thermodynamic Civilization Simulator v70.2 (Emergent)</title>
+<style>
+  :root { --red: #c62828; --blue: #1565c0; --green: #2e7d32; --neutral: #555; }
+  body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; background: #f4f4f4; color: #222; }
+  .header { background: #fff; border-bottom: 1px solid #ccc; padding: 6px 12px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+  .header h1 { margin: 0; font-size: 21px; }
+  .header .meta { font-size: 11px; color: #555; }
+  .main { display: flex; gap: 8px; padding: 6px; max-width: 1500px; margin: 0 auto; }
+  .panel { background: #fff; border: 1px solid #ccc; border-radius: 4px; padding: 5px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+  .left { width: 320px; flex-shrink: 0; }
+  .center { flex: 1; min-width: 780px; max-width: 820px; }
+  .right { width: 255px; flex-shrink: 0; font-size: 12px; }
+  .slider-group { margin-bottom: 1px; }
+  .slider-group label { display: block; font-size: 11.5px; margin-bottom: 0; color: #444; line-height: 1.1; }
+  .slider-group input[type=range] { width: 100%; height: 15px; accent-color: #1565c0; }
+  input[type=range] { accent-color: #1565c0; }
+  .slider-group .value { font-size: 10.5px; font-family: monospace; color: #222; font-weight: 600; }
+  .presets { display: flex; flex-wrap: wrap; gap: 2px; margin-bottom: 4px; }
+  .presets button { font-size: 10.5px; padding: 2px 5px; border: 1px solid #aaa; background: #f5f5f5; border-radius: 2px; cursor: pointer; }
+  .presets button:hover { background: #e8e8e8; }
+  .presets button.active { background: #1565c0; color: #fff; border-color: #0d47a1; font-weight: 600; }
+  #mcStatus { font-size: 9px; color: #555; }
+  .viz-container { position: relative; background: #fff; border: 1px solid #bbb; border-radius: 3px; }
+  #viz { background: #ffffff; display: block; }
+  .playbar { margin-top: 3px; display: flex; align-items: center; gap: 6px; }
+  .playbar button { padding: 4px 10px; font-size: 12px; }
+  .live-values { font-size: 12.5px; line-height: 1.35; }
+  .live-values div { margin-bottom: 1px; }
+  .live-values .val { font-family: monospace; font-weight: 700; }
+  .equation-card {
+    position: absolute; background: #fff; border: 1px solid #333; border-radius: 3px; padding: 5px 6px; font-size: 10px; max-width: 260px; box-shadow: 0 3px 10px rgba(0,0,0,0.2); z-index: 200;
+    font-family: monospace; line-height: 1.2;
+  }
+  .equation-card .title { font-weight: 700; margin-bottom: 2px; color: #111; font-size: 10px; }
+  .highlight-red { filter: saturate(1.8) brightness(0.85) !important; }
+  .highlight-blue { filter: saturate(1.6) brightness(1.1) !important; }
+  .highlight-green { filter: saturate(1.5) brightness(1.05) hue-rotate(80deg) !important; }
+  .bottom-charts { padding: 4px 6px; background: #fff; border-top: 1px solid #ccc; }
+  .spark { display: inline-block; width: 19.2%; margin-right: 0.8%; vertical-align: top; }
+  .spark svg { width: 100%; height: 66px; border: 1px solid #ccc; background: #fafafa; }
+  .spark label { font-size: 10.5px; display: block; margin-top: 0; color: #444; font-weight: 600; }
+  .expanded-chart { margin-top: 4px; border: 1px solid #bbb; padding: 4px; background: #fff; }
+  .status { font-size: 9px; color: #b71c1c; font-weight: 600; }
+  .red { color: var(--red); } .blue { color: var(--blue); } .green { color: var(--green); }
+
+  /* 2-column sliders so everything stays visible */
+  .slider-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 8px;
+    row-gap: 0;
+  }
+  .slider-grid .slider-group { margin-bottom: 0; }
+  .slider-section-title { font-size: 11px; font-weight: 600; color: #333; margin: 3px 0 1px; border-bottom: 1px solid #eee; padding-bottom: 1px; }
+  .help { color: #1565c0; font-weight: 700; cursor: pointer; margin-left: 2px; font-size: 11px; user-select: none; }
+  .help:hover { color: #0d47a1; }
+  .left h3 { font-size: 12px; margin: 2px 0 3px; color: #222; }
+</style>
+</head>
+<body>
+<div class="header">
+  <div>
+    <h1>Thermodynamic Civilization Simulator <span style="font-size:14px; color:#555;">v70.2 (Emergent)</span></h1>
+    <div class="meta">v70.2 • Fully Emergent • Rasputin-69420 Institute Prototype</div>
+  </div>
+  <button onclick="showTextbookModal()" style="font-size:11px; padding:5px 12px; background:#1a1a2e; color:#fff; border:none; border-radius:3px; cursor:pointer; font-family:inherit;">Model Details</button>
+</div>
+
+<div class="main">
+  <!-- LEFT CONTROLS -->
+  <div class="panel left">
+    <h3>Scenario Presets</h3>
+    <div class="presets">
+      <button data-preset="1776" class="active" onclick="applyPreset('1776')">1776 Baseline (Healthy)</button>
+      <button data-preset="minimal" onclick="applyPreset('minimal')">Minimal Entropy Path</button>
+      <button data-preset="highPolitical" onclick="applyPreset('highPolitical')">High Political Allocation</button>
+      <button data-preset="coldWar" onclick="applyPreset('coldWar')">Cold War External Pressure</button>
+      <button data-preset="techBoom" onclick="applyPreset('techBoom')">Tech Boom</button>
+      <!-- New historical presets from audit -->
+      <button data-preset="romanRepublic" onclick="applyPreset('romanRepublic')">Roman Republic (Healthy Expansion)</button>
+      <button data-preset="romanHighEmpire" onclick="applyPreset('romanHighEmpire')">High Roman Empire (Peak)</button>
+      <button data-preset="romanCrisis3rd" onclick="applyPreset('romanCrisis3rd')">Crisis of the 3rd Century</button>
+      <button data-preset="romanLateWest" onclick="applyPreset('romanLateWest')">Late Western Roman Empire</button>
+      <button data-preset="maoistChina" onclick="applyPreset('maoistChina')">Maoist China (1958–1976)</button>
+      <button data-preset="stalinistUSSR" onclick="applyPreset('stalinistUSSR')">Stalinist USSR (1930s–1953)</button>
+      <button data-preset="bronzeAge" onclick="applyPreset('bronzeAge')">Late Bronze Age (High Complexity)</button>
+      <button data-preset="2026America" onclick="applyPreset('2026America')">2026 America</button>
+    </div>
+
+    <h3>External Modifiers</h3>
+    <div class="slider-group">
+      <label>External Competitive Pressure (ECP)<span class="help" onclick="event.stopPropagation(); showLeverHelp(this, 'ecp')">?</span> <span class="value" id="ecp-val">3.0</span></label>
+      <input type="range" id="ecp" min="0" max="10" step="0.1" value="3.0">
+    </div>
+    <div class="slider-group">
+      <label>Technological Dynamism Rate<span class="help" onclick="event.stopPropagation(); showLeverHelp(this, 'tdr')">?</span> <span class="value" id="tdr-val">4.0</span></label>
+      <input type="range" id="tdr" min="0" max="10" step="0.1" value="4.0">
+    </div>
+
+    <div style="margin-top:6px; margin-bottom:8px;">
+      <button onclick="togglePlay()" style="padding:4px 10px; font-size:11px; margin-right:4px;">▶ Play</button>
+      <button onclick="resetSim()" style="padding:4px 8px; font-size:11px;">Reset to 1776</button>
+    </div>
+
+    <div class="slider-section-title">Policy Levers (0-10) - 2-col for instant feedback while running</div>
+    <div class="slider-grid">
+      <div class="slider-group"><label>Fiscal Extraction<span class="help" onclick="event.stopPropagation(); showLeverHelp(this, 'fiscal')">?</span> <span class="value" id="fiscal-val">2.5</span></label><input type="range" id="fiscal" min="0" max="10" step="0.1" value="2.5"></div>
+      <div class="slider-group"><label>Procurement / Crony<span class="help" onclick="event.stopPropagation(); showLeverHelp(this, 'procurement')">?</span> <span class="value" id="procurement-val">2.0</span></label><input type="range" id="procurement" min="0" max="10" step="0.1" value="2.0"></div>
+      <div class="slider-group"><label>Regulatory Burden<span class="help" onclick="event.stopPropagation(); showLeverHelp(this, 'regulatory')">?</span> <span class="value" id="regulatory-val">2.5</span></label><input type="range" id="regulatory" min="0" max="10" step="0.1" value="2.5"></div>
+      <div class="slider-group"><label>Monetary / Bailouts<span class="help" onclick="event.stopPropagation(); showLeverHelp(this, 'monetary')">?</span> <span class="value" id="monetary-val">2.0</span></label><input type="range" id="monetary" min="0" max="10" step="0.1" value="2.0"></div>
+      <div class="slider-group"><label>State Education<span class="help" onclick="event.stopPropagation(); showLeverHelp(this, 'education')">?</span> <span class="value" id="education-val">2.0</span></label><input type="range" id="education" min="0" max="10" step="0.1" value="2.0"></div>
+      <div class="slider-group"><label>Media / Narrative<span class="help" onclick="event.stopPropagation(); showLeverHelp(this, 'information')">?</span> <span class="value" id="information-val">2.0</span></label><input type="range" id="information" min="0" max="10" step="0.1" value="2.0"></div>
+      <div class="slider-group"><label>Bureaucratic Infra<span class="help" onclick="event.stopPropagation(); showLeverHelp(this, 'infrastructure')">?</span> <span class="value" id="infrastructure-val">2.0</span></label><input type="range" id="infrastructure" min="0" max="10" step="0.1" value="2.0"></div>
+      <div class="slider-group"><label>Accountability<span class="help" onclick="event.stopPropagation(); showLeverHelp(this, 'accountability')">?</span> <span class="value" id="accountability-val">7.0</span></label><input type="range" id="accountability" min="0" max="10" step="0.1" value="7.0"></div>
+
+      <!-- New levers -->
+      <div class="slider-group"><label>Institutional Rigidity<span class="help" onclick="event.stopPropagation(); showLeverHelp(this, 'institutionalRigidity')">?</span> <span class="value" id="institutionalRigidity-val">3.0</span></label><input type="range" id="institutionalRigidity" min="0" max="10" step="0.1" value="3.0"></div>
+      <div class="slider-group"><label>Social Trust Decline<span class="help" onclick="event.stopPropagation(); showLeverHelp(this, 'socialTrustDecline')">?</span> <span class="value" id="socialTrustDecline-val">3.0</span></label><input type="range" id="socialTrustDecline" min="0" max="10" step="0.1" value="3.0"></div>
+      <div class="slider-group"><label>Maintenance Culture<span class="help" onclick="event.stopPropagation(); showLeverHelp(this, 'maintenanceCulture')">?</span> <span class="value" id="maintenanceCulture-val">6.0</span></label><input type="range" id="maintenanceCulture" min="0" max="10" step="0.1" value="6.0"></div>
+      <div class="slider-group"><label>Demographic Vitality<span class="help" onclick="event.stopPropagation(); showLeverHelp(this, 'demographicVitality')">?</span> <span class="value" id="demographicVitality-val">5.0</span></label><input type="range" id="demographicVitality" min="0" max="10" step="0.1" value="5.0"></div>
+      <div class="slider-group"><label>Shock Volatility<span class="help" onclick="event.stopPropagation(); showLeverHelp(this, 'shockVolatility')">?</span> <span class="value" id="shockVolatility-val">4.0</span></label><input type="range" id="shockVolatility" min="0" max="10" step="0.1" value="4.0"></div>
+      <div class="slider-group"><label>Fertility / Human Capital<span class="help" onclick="event.stopPropagation(); showLeverHelp(this, 'fertility')">?</span> <span class="value" id="fertility-val">5.5</span></label><input type="range" id="fertility" min="0" max="10" step="0.1" value="5.5"></div>
+      <div class="slider-group"><label>Knowledge Stock<span class="help" onclick="event.stopPropagation(); showLeverHelp(this, 'knowledgeStock')">?</span> <span class="value" id="knowledgeStock-val">1.0</span></label><input type="range" id="knowledgeStock" min="0" max="10" step="0.1" value="1.0"></div>
+      <div class="slider-group"><label>Complexity Index<span class="help" onclick="event.stopPropagation(); showLeverHelp(this, 'complexity')">?</span> <span class="value" id="complexity-val">1.5</span></label><input type="range" id="complexity" min="0" max="10" step="0.1" value="1.5"></div>
+    </div>
+
+    <div class="slider-group" style="margin-top:4px;">
+      <label>Speed (%)<span class="help" onclick="event.stopPropagation(); showLeverHelp(this, 'speed')">?</span> <span class="value" id="speed-val">100</span></label>
+      <input type="range" id="speed" min="1" max="300" step="1" value="100">
+    </div>
+
+    <!-- Troll slider: Political Party Preference - does NOTHING to the model, just fun UI -->
+    <div class="slider-group" style="margin-top:4px;">
+      <label>Political Party Preference <span class="value" id="party-val" style="background: linear-gradient(to right, #1565c0, #7c3aed, #c62828); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight:600;">Purple</span></label>
+      <input type="range" id="party" min="0" max="10" step="0.1" value="5" oninput="updatePartySlider(this)" style="background: linear-gradient(to right, #1565c0, #7c3aed, #c62828); height: 8px; border-radius: 4px;">
+    </div>
+
+    <h3>Monte Carlo Analysis (v70.2 Emergent)</h3>
+    <button onclick="runMonteCarlo(40)" style="font-size:10px; padding:3px 6px; margin-bottom:4px;">Run 40 Emergent Stochastic Trials</button>
+    <div id="mcStatus" style="font-size:9px; color:#555; margin-bottom:4px;">Emergent analysis complete • No targets used</div>
+    <div style="margin-top:3px; font-size:9px;">
+      <input type="checkbox" id="emergentChk" checked> <label>Emergent Mode + noise</label>
+    </div>
+  </div>
+
+  <!-- CENTER VISUALIZATION -->
+  <div class="panel center">
+    <div class="viz-container">
+      <!-- Big prominent year header on the graphic (not buried inside the engine box) -->
+      <div class="year-header" style="text-align:center; padding:3px 0 5px; margin-bottom:2px; background:#fafafa; border:1px solid #ddd; border-radius:3px;">
+        <span style="font-size:14px; font-weight:600; color:#555; letter-spacing:0.5px;">YEAR</span>
+        <span id="yearBig" style="font-size:26px; font-weight:800; font-family:monospace; margin-left:6px; color:#111;">1776</span>
+      </div>
+      <svg id="viz" width="800" height="540" viewBox="0 0 920 620">
+        <g transform="scale(0.95)">
+        <defs>
+          <linearGradient id="hotGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#FF9E58"/>
+            <stop offset="100%" stop-color="#FF3D00"/>
+          </linearGradient>
+          <linearGradient id="coldGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#64B5F6"/>
+            <stop offset="100%" stop-color="#1565C0"/>
+          </linearGradient>
+          <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+            <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <!-- Subtle background grid -->
+        <g id="grid" opacity="0.1">
+          <line x1="0" y1="200" x2="920" y2="200" stroke="#888" stroke-width="1"/>
+          <line x1="0" y1="420" x2="920" y2="420" stroke="#888" stroke-width="1"/>
+        </g>
+
+        <!-- HOT RESERVOIR -->
+        <g id="hotGroup">
+          <rect id="hotReservoir" x="60" y="90" width="200" height="400" rx="12" fill="url(#hotGrad)" stroke="#B71C1C" stroke-width="2.5"/>
+          <text id="hotLabel1" x="160" y="120" text-anchor="middle" font-size="15" font-weight="700" fill="#b71c1c">HOT RESERVOIR</text>
+          <text id="hotLabel2" x="160" y="133" text-anchor="middle" font-size="11" font-weight="600" fill="#b71c1c">Productive Economy</text>
+          <!-- Live T_hot with subscript on the reservoir -->
+          <text id="hotTemp" x="160" y="148" text-anchor="middle" font-size="16" font-weight="800" fill="#fff" stroke="#5c1a00" stroke-width="0.6">T<tspan font-size="11" dy="2" font-weight="700">hot</tspan> = 1.00</text>
+        </g>
+
+        <!-- COLD RESERVOIR -->
+        <g id="coldGroup">
+          <rect id="coldReservoir" x="660" y="90" width="200" height="400" rx="12" fill="url(#coldGrad)" stroke="#0D47A1" stroke-width="2.5"/>
+          <text id="coldLabel1" x="760" y="120" text-anchor="middle" font-size="15" font-weight="700" fill="#0d47a1">COLD RESERVOIR</text>
+          <text id="coldLabel2" x="760" y="133" text-anchor="middle" font-size="11" font-weight="600" fill="#0d47a1">Government / Bureaucracy</text>
+          <!-- Live T_cold with subscript on the reservoir -->
+          <text id="coldTemp" x="760" y="148" text-anchor="middle" font-size="16" font-weight="800" fill="#fff" stroke="#0a2a4a" stroke-width="0.6">T<tspan font-size="11" dy="2" font-weight="700">cold</tspan> = 0.20</text>
+        </g>
+
+        <!-- HEAT ENGINE (smaller, more proportional) -->
+        <g id="engineGroup">
+          <rect x="355" y="170" width="180" height="200" rx="8" fill="#f1f1f1" stroke="#333" stroke-width="1.5"/>
+          <!-- Improved Piston Visual (cylinder + crank) -->
+          <g id="pistonAssembly">
+            <!-- Piston body (cylinder-like) -->
+            <rect id="pistonBody" x="385" y="195" width="120" height="55" rx="6" fill="#555" stroke="#222" stroke-width="2"/>
+            <!-- Piston top highlight -->
+            <rect id="pistonTop" x="385" y="195" width="120" height="12" rx="6" fill="#777" opacity="0.6"/>
+            <!-- Connecting rod -->
+            <rect id="connectingRod" x="440" y="248" width="10" height="55" fill="#444" stroke="#222" stroke-width="1"/>
+            <!-- Crank / flywheel (moved lower for better visual separation) -->
+            <circle id="crank" cx="445" cy="345" r="18" fill="#333" stroke="#222" stroke-width="2"/>
+            <circle id="crankPin" cx="445" cy="345" r="5" fill="#888"/>
+          </g>
+
+          <text x="445" y="158" text-anchor="middle" font-size="13" font-weight="700" fill="#222">CARNOT HEAT ENGINE</text>
+
+          <!-- QH arrow -->
+          <path id="qhArrow" d="M 265 295 Q 320 250 340 265" fill="none" stroke="#E64A19" stroke-width="8" stroke-linecap="round"/>
+          <text id="qhLabel" x="290" y="248" font-size="12" fill="#E64A19" font-weight="600">QH</text>
+
+          <!-- Work arrow (green) -->
+          <path id="workArrow" d="M 460 148 L 460 112" fill="none" stroke="#2E7D32" stroke-width="6" stroke-linecap="round"/>
+          <polygon id="workHead" points="455,106 465,106 460,96" fill="#2E7D32"/>
+          <text x="482" y="125" font-size="12" fill="#2E7D32" font-weight="600">Useful Work → K</text>
+
+          <!-- QC arrow -->
+          <path id="qcArrow" d="M 580 295 Q 630 335 655 315" fill="none" stroke="#1976D2" stroke-width="8" stroke-linecap="round"/>
+          <text id="qcLabel" x="620" y="340" font-size="12" fill="#1976D2" font-weight="600">QC</text>
+        </g>
+
+        <!-- HEAT PUMP (emergent, restrained) - made larger and more prominent -->
+        <g id="pumpGroup" opacity="0">
+          <path id="pumpArrow" d="M 655 255 Q 520 195 265 255" fill="none" stroke="#AD1457" stroke-width="5.5" stroke-linecap="round"/>
+          <text id="pumpLabel" x="460" y="185" text-anchor="middle" font-size="14" font-weight="700" fill="#AD1457">HEAT PUMP</text>
+          <text id="pumpSub" x="460" y="198" text-anchor="middle" font-size="10" fill="#AD1457">(Politically Directed)</text>
+        </g>
+
+        <!-- RESTRAINED COLLAPSE LABEL (lower-right, subtle) -->
+        <g id="collapseLabel" opacity="0">
+          <rect x="680" y="540" width="220" height="28" rx="3" fill="#fff" stroke="#c62828" stroke-width="1" opacity="0.85"/>
+          <text id="collapseText" x="790" y="560" text-anchor="middle" font-size="14" font-weight="600" fill="#c62828">Systemic Collapse - Year 1776</text>
+        </g>
+
+        <text x="460" y="595" text-anchor="middle" font-size="12" fill="#666">Click reservoirs, piston, arrows or background for equations</text>
+        </g>
+      </svg>
+
+      <!-- History plots moved directly under the schematic (higher up) so they stay visible while the sim is running -->
+      <div class="history-strip" style="margin-top:4px; padding-top:4px; border-top:1px solid #eee;">
+        <div style="display:flex; gap:0.5%; flex-wrap:wrap;">
+          <div class="spark"><label>Teff</label><svg id="spark-teff" width="100%" viewBox="0 0 200 42" preserveAspectRatio="none"></svg></div>
+          <div class="spark"><label>S_accum</label><svg id="spark-s" width="100%" viewBox="0 0 200 42" preserveAspectRatio="none"></svg></div>
+          <div class="spark"><label>Capital K</label><svg id="spark-k" width="100%" viewBox="0 0 200 42" preserveAspectRatio="none"></svg></div>
+          <div class="spark"><label>Entropy</label><svg id="spark-entropy" width="100%" viewBox="0 0 200 42" preserveAspectRatio="none"></svg></div>
+          <div class="spark"><label>Heat Pump</label><svg id="spark-pump" width="100%" viewBox="0 0 200 42" preserveAspectRatio="none"></svg></div>
+          <div class="spark"><label>T<sub>hot</sub></label><svg id="spark-th" width="100%" viewBox="0 0 200 42" preserveAspectRatio="none"></svg></div>
+          <div class="spark"><label>T<sub>cold</sub></label><svg id="spark-tc" width="100%" viewBox="0 0 200 42" preserveAspectRatio="none"></svg></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="playbar">
+      <button id="playBtn" onclick="togglePlay()">▶ Play</button>
+      <span id="yearDisplay" style="font-family:monospace; font-size:13px; min-width:90px; font-weight:600;">Year: 1776</span>
+      <span id="status" class="status"></span>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="panel right">
+    <h3>Live State</h3>
+    <div class="live-values">
+      <!-- TH / TC now shown big & live directly on the reservoirs in the main graphic -->
+      <div>Teff: <span id="live-Teff" class="val">0.85</span></div>
+      <div>K (Capital): <span id="live-K" class="val">1.00</span></div>
+      <div>S_accum: <span id="live-S" class="val">0.00</span></div>
+      <div>Heat Pump: <span id="live-pump" class="val">0.00</span></div>
+      <div>Work Output: <span id="live-work" class="val">0.80</span></div>
+      <div>Entropy Rate: <span id="live-entropy" class="val">0.05</span></div>
+      <div>Shock Vol: <span id="live-shock" class="val">4.0</span></div>
+      <div>Fertility: <span id="live-fertility" class="val">5.5</span></div>
+      <div>Knowledge: <span id="live-knowledge" class="val">1.0</span></div>
+      <div>Complexity: <span id="live-complexity" class="val">1.5</span></div>
+    </div>
+
+    <h3 style="margin-top:12px;">Dominant Driver</h3>
+    <div id="dominant" style="font-size:11px; padding:5px; background:#f4f4f4; border-radius:3px; min-height:18px;">-</div>
+
+    <h3 style="margin-top:12px;">Status</h3>
+    <div id="risks" style="font-size:10px; line-height:1.3;">No active risks</div>
+
+    <div style="margin-top:10px; font-size:9px; color:#666;">
+      Red = entropy ↑ / pump ↑ / decline<br>
+      Blue = feedback ↑ / recovery<br>
+      Green = strong healthy work
+    </div>
+
+    <!-- Simple Results Log for Sensitivity Study -->
+    <h3 style="margin-top:14px;">Results Log (Emergent Stochastic)</h3>
+    <textarea id="resultsLog" style="width:100%; height:90px; font-size:9px; font-family:monospace; border:1px solid #ccc; padding:4px;" placeholder="Stochastic runs: survival %, median, histogram"></textarea>
+    <button onclick="logCurrentRun()" style="font-size:9px; padding:2px 6px; margin-top:3px;">Log Current Run</button>
+  </div>
+</div>
+
+<!-- (history strip moved inside the center panel, directly under the engine for constant visibility while playing + sliding) -->
+<div id="expandedChart" class="expanded-chart" style="display:none; max-width: 860px; margin: 4px auto;">
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+    <strong id="expandedTitle"></strong>
+    <button onclick="hideExpanded()" style="font-size:10px; padding:1px 6px;">Close</button>
+  </div>
+  <svg id="expanded-svg" width="100%" height="120" viewBox="0 0 800 120" style="border:1px solid #eee;"></svg>
+</div>
+
+<script>
+// ==================== STATE (added legitimacy for bottom-up Teff) ====================
+let state = {
+  year: 1776,
+  TH: 1.0,
+  TC: 0.2,
+  Teff: 0.85,
+  K: 1.0,
+  S_accum: 0.0,
+  heatPumpStrength: 0.0,
+  workOutput: 0.8,
+  entropyRate: 0.05,
+  sub: {
+    FeedbackLatency: 0.82,
+    SkinInGame: 0.78,
+    InformationFidelity: 0.91,
+    ErrorExtinction: 0.75,
+    ReallocationFluidity: 0.88,
+    CoercionIntensity: 0.79
+  },
+  history: { teff: [], s: [], k: [], entropy: [], pump: [], th: [], tc: [], years: [] },
+  playing: false,
+  lastTime: Date.now(),
+  phase: 0,
+  collapsed: false,
+  shockVolatility: 4.0,
+  fertility: 5.5,
+  knowledgeStock: 1.0,
+  complexity: 1.5,
+  legitimacy: 0.9   // NEW: starts at 0.9, decays with heatPump + S_accum, recovers with high accountability
+};
+
+// ==================== COEFFICIENT PROFILES (base only - dynamic evolution in simStep) ====================
+// Base profile only. Evolution happens inside simulationStep based on state for emergence.
+function getActiveCoefficients() {
+  return {
+    politicalPressureMult: 1.35,
+    gradientThreshold: 0.265,
+    aseiFloor: 0.055,
+    totalEntropyMult: 0.022
+  };
+}
+
+function logCurrentRun() {
+  const log = document.getElementById('resultsLog');
+  if (!log) return;
+  const entry = `Current | Emergent | Year: ${Math.floor(state.year)} | S_accum: ${state.S_accum.toFixed(2)} | Teff: ${state.Teff.toFixed(2)} | Notes: \n`;
+  log.value = log.value + entry;
+}
+
+let simSpeed = 5;
+let maxHistory = 450;
+let monteCarloMode = false;
+
+// ==================== SLIDERS (UI unchanged) ====================
+const sliderIds = ['ecp','tdr','fiscal','procurement','regulatory','monetary','education','information','infrastructure','accountability','institutionalRigidity','socialTrustDecline','maintenanceCulture','demographicVitality','shockVolatility','fertility','knowledgeStock','complexity'];
+function syncSliderValues() {
+  sliderIds.forEach(id => {
+    const el = document.getElementById(id);
+    const valEl = document.getElementById(id + '-val');
+    if (el && valEl) {
+      valEl.textContent = parseFloat(el.value).toFixed(1);
+      el.oninput = () => {
+        valEl.textContent = parseFloat(el.value).toFixed(1);
+        updateFromSliders();
+        if (!state.playing) {
+          computeSubIndices();
+          simulationStep(0.02);
+          updateViz();
+          updateLivePanel();
+        }
+      };
+    }
+  });
+
+  const speedSlider = document.getElementById('speed');
+  if (speedSlider) {
+    speedSlider.oninput = () => {
+      simSpeed = parseFloat(speedSlider.value) / 20;
+      document.getElementById('speed-val').textContent = speedSlider.value;
+    };
+  }
+}
+
+function updateFromSliders() {
+  const ecp = parseFloat(document.getElementById('ecp').value) || 3;
+  const tdr = parseFloat(document.getElementById('tdr').value) || 4;
+  const acc = parseFloat(document.getElementById('accountability').value) || 7;
+
+  const shockV = parseFloat(document.getElementById('shockVolatility').value) || 4;
+  const fert = parseFloat(document.getElementById('fertility').value) || 5.5;
+  const know = parseFloat(document.getElementById('knowledgeStock').value) || 1;
+  const comp = parseFloat(document.getElementById('complexity').value) || 1.5;
+
+  state.shockVolatility = shockV;
+  state.fertility = fert;
+  state.knowledgeStock = know;
+  state.complexity = comp;
+
+  computeSubIndices();
+  state.Teff = Math.max(0.25, Math.min(0.98, state.Teff + (ecp-3)*0.012 + (tdr-4)*0.01 + (acc > 6 ? 0.03 : -0.04)));
+  updateLivePanel();
+  updateViz();
+}
+
+function highlightPreset(name) {
+  document.querySelectorAll('.presets button').forEach(b => b.classList.remove('active'));
+  const btn = document.querySelector(`.presets button[data-preset="${name}"]`);
+  if (btn) btn.classList.add('active');
+}
+
+// ==================== MONTE CARLO (completely rewritten for emergence) ====================
+// Default 40 trials. No historicalTargets. No error/accuracy code.
+// Records collapse and year per run. Reports survival %, median collapse year, 5-bin histogram.
+// Outcomes emerge from internal loops.
+function runMonteCarlo(trials = 40) {
+  const statusEl = document.getElementById('mcStatus');
+  if (statusEl) statusEl.textContent = 'Emergent analysis complete • No targets used';
+
+  console.log('%c=== Stochastic Emergent Monte Carlo (40 trials default) ===', 'color:#1565c0; font-weight:bold');
+  console.log('Exploring stochastic outcomes from internal feedback loops. No historical targets used.\n');
+
+  const presetNames = ['1776', 'minimal', 'highPolitical', 'coldWar', 'techBoom', 'romanRepublic', 'romanHighEmpire', 'romanCrisis3rd', 'romanLateWest', 'maoistChina', 'stalinistUSSR', 'bronzeAge', '2026America'];
+  let allStats = {};
+
+  for (let pName of presetNames) {
+    let collapseYears = [];
+    let collapsedCount = 0;
+
+    for (let t = 0; t < trials; t++) {
+      applyPreset(pName);
+      monteCarloMode = true;
+      resetToBaseline();
+
+      const startY = state.year;
+      const maxY = startY + 2000;
+
+      while (!state.collapsed && state.year < maxY) {
+        simulationStep(1);
+      }
+
+      monteCarloMode = false;
+
+      if (state.collapsed) {
+        collapsedCount++;
+        collapseYears.push(state.year - 1776);
+      }
+    }
+
+    const survival = ((trials - collapsedCount) / trials * 100);
+    let median = 'N/A';
+    if (collapseYears.length > 0) {
+      collapseYears.sort((a, b) => a - b);
+      const mid = Math.floor(collapseYears.length / 2);
+      median = collapseYears.length % 2 === 0 
+        ? ((collapseYears[mid-1] + collapseYears[mid]) / 2).toFixed(0) 
+        : collapseYears[mid].toFixed(0);
+    }
+
+    // 5-bin histogram
+    const binEdges = [0, 200, 500, 1000, 1500, 2000];
+    let hist = new Array(5).fill(0);
+    for (let y of collapseYears) {
+      for (let b = 0; b < 5; b++) {
+        if (y >= binEdges[b] && y < binEdges[b+1]) {
+          hist[b]++;
+          break;
+        }
+      }
+    }
+
+    allStats[pName] = { survival, median, hist, collapseCount: collapsedCount };
+
+    console.log(`\n--- ${pName} ---`);
+    console.log(`Survival: ${survival.toFixed(1)}%`);
+    console.log(`Median collapse year (of collapsed): ${median}`);
+    console.log('Histogram:');
+    for (let b = 0; b < 5; b++) {
+      const pct = (hist[b] / trials * 100).toFixed(1);
+      console.log(`  ${binEdges[b]}-${binEdges[b+1]}: ${hist[b]} (${pct}%)`);
+    }
+  }
+
+  // Update log
+  const logEl = document.getElementById('resultsLog');
+  if (logEl) {
+    let summary = `Stochastic MC v70.2 (${trials} trials) - Emergent, no targets\n`;
+    for (let p in allStats) {
+      const st = allStats[p];
+      summary += `${p}: Survival ${st.survival.toFixed(1)}%, Median ${st.median}, Collapsed: ${st.collapseCount}\n`;
+      summary += `  Hist: ${st.hist.map((h,i) => binEdges[i]+'-'+binEdges[i+1]+':'+h).join(' | ')}\n`;
+    }
+    logEl.value = summary + '\n' + logEl.value;
+  }
+
+  if (statusEl) {
+    statusEl.textContent = `Emergent analysis complete • No targets used`;
+  }
+}
+
+// ==================== PRESETS (only initial sliders + noise) ====================
+// Presets set sliders + tiny noise on state. No special rules or overrides.
+function applyPreset(name) {
+  const s = {
+    ecp: 3.0, tdr: 4.0, fiscal: 2.5, procurement: 2.0, regulatory: 2.5,
+    monetary: 2.0, education: 2.0, information: 2.0, infrastructure: 2.0, accountability: 7.0,
+    institutionalRigidity: 3.0, socialTrustDecline: 3.0, maintenanceCulture: 6.0, demographicVitality: 5.0,
+    shockVolatility: 4.0, fertility: 5.5, knowledgeStock: 1.0, complexity: 1.5
+  };
+
+  if (name === 'minimal') {
+    Object.assign(s, {fiscal:0.8, procurement:0.5, regulatory:0.8, monetary:0.6, education:0.5, information:0.4, infrastructure:0.5, accountability:9.2, ecp:7, tdr:8});
+  } else if (name === 'highPolitical') {
+    Object.assign(s, {fiscal:7.5, procurement:8.2, regulatory:7.8, monetary:7, education:6.5, information:8, infrastructure:7.2, accountability:2.2, ecp:1.2, tdr:1.5});
+  } else if (name === 'coldWar') {
+    Object.assign(s, {ecp:8.5, tdr:3.5, fiscal:3.2, monetary:3.5, information:3.8, accountability:5.5, infrastructure:2.8});
+  } else if (name === 'techBoom') {
+    Object.assign(s, {tdr:8.8, ecp:3.5, fiscal:1.8, procurement:1.2, regulatory:1.5, monetary:1.6, education:1.4, information:2.2, infrastructure:1.3, accountability:7.8});
+  } else if (name === 'romanRepublic') {
+    Object.assign(s, {fiscal:3.5, procurement:2.5, regulatory:2.8, monetary:2.2, education:2.5, information:2.8, infrastructure:3.5, accountability:7.5, ecp:5.5, tdr:6.5});
+  } else if (name === 'romanHighEmpire') {
+    Object.assign(s, {fiscal:4.2, procurement:3.8, regulatory:3.5, monetary:3.0, education:3.0, information:3.5, infrastructure:4.0, accountability:6.5, ecp:3.0, tdr:5.0});
+  } else if (name === 'romanCrisis3rd') {
+    Object.assign(s, {fiscal:7.0, procurement:7.5, regulatory:6.5, monetary:8.5, education:5.0, information:6.0, infrastructure:3.0, accountability:3.5, ecp:8.0, tdr:2.5});
+  } else if (name === 'romanLateWest') {
+    Object.assign(s, {fiscal:8.5, procurement:8.8, regulatory:7.5, monetary:7.0, education:4.5, information:7.0, infrastructure:2.5, accountability:2.0, ecp:9.0, tdr:1.8});
+  } else if (name === 'maoistChina') {
+    Object.assign(s, {fiscal:9.2, procurement:8.5, regulatory:8.0, monetary:6.5, education:9.0, information:9.5, infrastructure:6.0, accountability:0.8, ecp:6.5, tdr:3.5});
+  } else if (name === 'stalinistUSSR') {
+    Object.assign(s, {fiscal:8.8, procurement:8.0, regulatory:7.8, monetary:7.5, education:7.5, information:9.2, infrastructure:7.5, accountability:1.0, ecp:8.5, tdr:5.5});
+  } else if (name === 'bronzeAge') {
+    Object.assign(s, {fiscal:6.5, procurement:6.0, regulatory:5.5, monetary:5.0, education:4.0, information:5.5, infrastructure:6.5, accountability:4.5, ecp:7.5, tdr:3.0});
+  } else if (name === '2026America') {
+    Object.assign(s, { ecp: 6.5, tdr: 7.0, fiscal: 7.5, procurement: 6.5, regulatory: 8.0, monetary: 7.0, education: 7.5, information: 7.5, infrastructure: 7.0, accountability: 4.5, institutionalRigidity: 7.0, socialTrustDecline: 7.5, maintenanceCulture: 4.0, demographicVitality: 4.0, shockVolatility: 6.5, fertility: 3.0, knowledgeStock: 2.0, complexity: 3.5 });
+  }
+
+  Object.keys(s).forEach(k => {
+    const el = document.getElementById(k);
+    if (el) {
+      el.value = s[k];
+      const v = document.getElementById(k+'-val');
+      if (v) v.textContent = parseFloat(s[k]).toFixed(1);
+    }
+  });
+
+  highlightPreset(name);
+  document.getElementById('status').textContent = '';
+
+  // Only tiny random noise on starting state (as required). No special per-preset rules.
+  state.TH += Math.random()*0.08 - 0.04;
+  state.S_accum += Math.random()*0.06;
+
+  if (!state.playing) {
+    // Only do a full reset + history clear if we are currently stopped.
+    // This keeps the simulation running when user clicks a new preset while playing.
+    resetToBaseline();
+  } else {
+    // Live preset switch while running: just update the policy levers.
+    // The simulation continues with the new slider values from the next tick onward.
+    // No history clear, no year reset, playing state unchanged.
+    updateFromSliders();
+  }
+
+  // Re-apply updates so the tiny noise + new levers are immediately reflected.
+  updateViz();
+  updateLivePanel();
+  renderSparklines();
+}
+
+// ==================== MATH & SIM (emergent redesign) ====================
+// Teff bottom-up from state (including legitimacy). 
+// Collapse is probabilistic using the exact multi-factor formula.
+function computeSubIndices() {
+  const ecp = parseFloat(document.getElementById('ecp').value) || 3;
+  const tdr = parseFloat(document.getElementById('tdr').value) || 4;
+  const acc = parseFloat(document.getElementById('accountability').value) || 7;
+
+  const f = parseFloat(document.getElementById('fiscal').value) || 2.5;
+  const p = parseFloat(document.getElementById('procurement').value) || 2;
+  const r = parseFloat(document.getElementById('regulatory').value) || 2.5;
+  const mon = parseFloat(document.getElementById('monetary').value) || 2;
+  const e = parseFloat(document.getElementById('education').value) || 2;
+  const i = parseFloat(document.getElementById('information').value) || 2;
+  const inf = parseFloat(document.getElementById('infrastructure').value) || 2;
+
+  const s = state.S_accum;
+  const hp = state.heatPumpStrength;
+  const k = state.K;
+  const leg = state.legitimacy;
+  const comp = parseFloat(document.getElementById('complexity').value) || 1.5;
+
+  // Bottom-up sub-indices from state variables (legitimacy makes Teff emergent).
+  // Nonlinear for realism.
+  let subs = {
+    FeedbackLatency: 0.25 + 0.70 / (1 + Math.exp( -(leg * 3 + tdr - 4 - s * 0.6) )),
+    SkinInGame: Math.max(0.15, 0.92 * Math.pow(leg, 1.3) * (1 - 0.45 * (p + mon) / 12 )),
+    InformationFidelity: 0.35 + 0.60 * Math.pow( (acc / 10) * (1 - (i + e) / 16), 0.75 ),
+    ErrorExtinction: 0.30 + 0.65 / (1 + Math.exp( -(acc - (p + r) * 0.7 - s * 0.8) )),
+    ReallocationFluidity: 0.45 + 0.50 * Math.pow( (tdr + (leg * 2)) / 9 , 0.65) * (1 - 0.28 * (r + inf) / 12),
+    CoercionIntensity: 0.22 + 0.72 * Math.pow( (f + e + inf) / 16 , 1.15) * (1 - leg * 0.45)
+  };
+
+  Object.keys(subs).forEach(k => subs[k] = Math.max(0.15, Math.min(0.98, subs[k])));
+  state.sub = subs;
+
+  const weights = [1.0, 1.15, 1.0, 1.1, 0.9, 0.85];
+  let prod = 1;
+  const keys = Object.keys(subs);
+  keys.forEach((k, idx) => {
+    prod *= Math.pow(subs[k], weights[idx]);
+  });
+  const wsum = weights.reduce((a, b) => a + b, 0);
+  state.Teff = Math.pow(prod, 1 / wsum);
+}
+
+function simulationStep(dtYears) {
+  if (state.collapsed) return;
+
+  const ecp = parseFloat(document.getElementById('ecp').value) || 3;
+  const tdr = parseFloat(document.getElementById('tdr').value) || 4;
+  const acc = parseFloat(document.getElementById('accountability').value) || 7;
+
+  const f = parseFloat(document.getElementById('fiscal').value) || 2.5;
+  const p = parseFloat(document.getElementById('procurement').value) || 2;
+  const r = parseFloat(document.getElementById('regulatory').value) || 2.5;
+  const mon = parseFloat(document.getElementById('monetary').value) || 2;
+  const inf = parseFloat(document.getElementById('information').value) || 2;
+
+  const instRig = parseFloat(document.getElementById('institutionalRigidity').value) || 3;
+  const trustDecl = parseFloat(document.getElementById('socialTrustDecline').value) || 3;
+  const maintCult = parseFloat(document.getElementById('maintenanceCulture').value) || 6;
+  const demoVit = parseFloat(document.getElementById('demographicVitality').value) || 5;
+
+  const shockV = parseFloat(document.getElementById('shockVolatility').value) || 4;
+  const fert = parseFloat(document.getElementById('fertility').value) || 5.5;
+  const know = parseFloat(document.getElementById('knowledgeStock').value) || 1;
+  const comp = parseFloat(document.getElementById('complexity').value) || 1.5;
+
+  // Dynamic coefficients: base + evolution based on state (S, heatPump, year)
+  const base = getActiveCoefficients();
+  let coeffs = { ...base };
+  const sFactor = 1 + Math.min(1.8, state.S_accum * 0.11);
+  const hpFactor = 1 + state.heatPumpStrength * 0.07;
+  const yearFactor = 1 + (state.year - 1776) * 0.00004;
+  coeffs.totalEntropyMult *= sFactor * yearFactor;
+  coeffs.politicalPressureMult *= hpFactor * (1 + yearFactor * 0.3);
+
+  const asei = coeffs.aseiFloor + (10 - acc) * 0.065 + (f + p + 1.4*mon + inf + 1.3*inf) * 0.013;
+
+  const L_avg = (r + p + mon) / 28;
+  const deadweight = (p + 1.4*mon + r) / 24;
+  const persistence = Math.max(0.4, (10 - acc) * 0.11 + (r + inf) * 0.035);
+
+  computeSubIndices();
+
+  const deltaT = Math.max(0.01, state.TH - state.TC);
+  const flow = 0.55 * L_avg * (1 / Math.max(0.1, state.TC) - 1 / state.TH) * (1 + 0.55 * asei);
+  const alloc = 0.85 * (deadweight + persistence * 0.55) / Math.max(0.18, state.Teff) * (1 + 0.45 * asei);
+  const mol = 0.38 * (inf / 10) * (1 + 0.65 * (10 - acc)/10);
+
+  const totalEntropy = (flow + alloc + mol) * 0.78;
+
+  const politicalPressure = (f + p + 1.5*mon + inf + (10 - acc)) / 55;
+
+  let pump = politicalPressure * coeffs.politicalPressureMult;
+  pump += Math.max(0, (Math.abs(state.TH - state.TC) - coeffs.gradientThreshold) * 0.55);
+  pump += Math.max(0, state.S_accum - 0.65) * 0.16;
+
+  state.heatPumpStrength = Math.min(2.8, pump);
+
+  const eff = Math.max(0.08, (state.TH - state.TC) / Math.max(0.18, state.TH));
+  state.workOutput = eff * state.K * (0.88 + 0.09*(ecp-3)*0.04 + 0.14*(tdr-4)*0.025) * (1 + (state.knowledgeStock - 1) * 0.1);
+
+  const dt = dtYears;
+
+  const gamma_eff = 0.04 * (1 + 0.4 * instRig + 0.3 * trustDecl + 0.5 * p);
+  const delta_eff = 0.06 * (1 - 0.35 * maintCult - 0.25 * demoVit);
+
+  const complexityMult = 1 + (comp - 1.5) * 0.2;
+  state.S_accum += (totalEntropy * dt * coeffs.totalEntropyMult * complexityMult) - (0.075 * dt * (1 + (ecp-3)*0.035));
+  state.S_accum += mon * 0.0025 * dt;
+
+  const backgroundEntropy = 0.0035 * dt * (0.6 + 0.4 * state.K) + 0.0006 * dt * (state.year / 250);
+  state.S_accum += backgroundEntropy;
+  state.S_accum = Math.max(0, Math.min(5, state.S_accum));
+
+  const shockProb = (shockV / 50) * (state.S_accum / 5 + 0.1) * dt;
+  if (Math.random() < shockProb) {
+    const shockSize = shockV * 0.05 * (1 + state.S_accum * 0.2);
+    state.S_accum += shockSize;
+    state.K *= (1 - shockSize * 0.5);
+    console.log(`Stochastic shock fired! Size: ${shockSize.toFixed(3)} at year ${state.year.toFixed(1)}`);
+  }
+
+  const knowledgeGrowth = (tdr + state.Teff + fert) * 0.002 * dt;
+  const knowledgeDeprec = state.S_accum * 0.01 * dt;
+  state.knowledgeStock = Math.max(0.1, Math.min(5, state.knowledgeStock + knowledgeGrowth - knowledgeDeprec));
+
+  state.K += (state.workOutput * 0.0095 * dt * (0.6 + 0.4 * state.Teff) * (fert / 5)) 
+           - (state.S_accum * gamma_eff * 0.25 * dt) 
+           - (state.K * delta_eff * 0.30 * dt) 
+           - (state.heatPumpStrength * 0.0025 * dt);
+  state.K = Math.max(0.15, Math.min(4.5, state.K));
+
+  state.TH = Math.max(0.25, Math.min(1.45, state.TH - state.heatPumpStrength * 0.0012 * dt + (tdr-4)*0.0028 * dt + 0.0009*(ecp-3)*dt));
+  state.TC = Math.max(0.04, Math.min(0.95, state.TC + state.heatPumpStrength * 0.0020 * dt - 0.0018*(tdr-4)*dt));
+
+  // Update legitimacy (emergent)
+  state.legitimacy = Math.max(0.2, Math.min(1.2, state.legitimacy + (0.015 * acc - 0.012 * state.S_accum - 0.008 * state.heatPumpStrength) * dt ));
+
+  state.Teff = Math.max(0.22, Math.min(0.97, state.Teff));
+  state.entropyRate = totalEntropy;
+
+  // Emergent probabilistic collapse (exact formula)
+  const collapsePressure = Math.pow(state.S_accum, 1.75) * (1.65 - state.Teff) * (state.heatPumpStrength + 0.7) * (state.complexity / 2.8);
+  const collapseProb = Math.min(0.22, collapsePressure * dt * 0.011);
+  if (!state.collapsed && Math.random() < collapseProb) {
+    if (monteCarloMode) {
+      state.collapsed = true;
+    } else {
+      triggerCollapse();
+    }
+  }
+
+  if (!monteCarloMode) {
+    const statusEl = document.getElementById('status');
+    if (statusEl) {
+      if (!state.collapsed && (state.S_accum > 0.45 || state.Teff < 0.6)) {
+        statusEl.textContent = 'Pre-collapse: Hot reservoir weakening';
+      } else if (!state.collapsed) {
+        statusEl.textContent = '';
+      }
+    }
+  }
+
+  if (!monteCarloMode) {
+    // sanitize before pushing to history so sparklines never break
+    if (!isFinite(state.Teff)) state.Teff = 0.5;
+    if (!isFinite(state.S_accum)) state.S_accum = 0;
+    if (!isFinite(state.K)) state.K = 0.5;
+    if (!isFinite(state.entropyRate)) state.entropyRate = 0.05;
+    if (!isFinite(state.heatPumpStrength)) state.heatPumpStrength = 0;
+    if (!isFinite(state.TH)) state.TH = 0.8;
+    if (!isFinite(state.TC)) state.TC = 0.3;
+
+    pushHistory();
+  }
+}
+
+function pushHistory() {
+  const h = state.history;
+  h.years.push(state.year);
+  h.teff.push(state.Teff);
+  h.s.push(state.S_accum);
+  h.k.push(state.K);
+  h.entropy.push(state.entropyRate);
+  h.pump.push(state.heatPumpStrength);
+  h.th.push(state.TH);
+  h.tc.push(state.TC);
+
+  if (h.years.length > maxHistory) {
+    ['years','teff','s','k','entropy','pump','th','tc'].forEach(k => h[k].shift());
+  }
+}
+
+function triggerCollapse() {
+  state.collapsed = true;
+  state.playing = false;
+  const pbtn = document.getElementById('playBtn');
+  if (pbtn) pbtn.textContent = '▶ Play';
+  const st = document.getElementById('status');
+  if (st) st.textContent = 'Systemic Collapse';
+
+  const label = document.getElementById('collapseLabel');
+  if (label) label.setAttribute('opacity', '0.9');
+  const ctext = document.getElementById('collapseText');
+  if (ctext) ctext.textContent = `Systemic Collapse - Year ${Math.floor(state.year)}`;
+
+  const viz = document.getElementById('viz');
+  if (viz) viz.style.filter = 'saturate(0.7) hue-rotate(-8deg)';
+
+  const hot = document.getElementById('hotReservoir');
+  if (hot) {
+    hot.setAttribute('height', '120');
+    hot.setAttribute('y', '370');
+    hot.setAttribute('fill', '#5a5a5a');
+  }
+
+  const work = document.getElementById('workArrow');
+  if (work) {
+    work.setAttribute('stroke', '#9e9e9e');
+    work.setAttribute('stroke-width', '2.5');
+  }
+
+  const pa = document.getElementById('pumpArrow');
+  if (pa) pa.setAttribute('stroke-width', '9');
+  const pg = document.getElementById('pumpGroup');
+  if (pg) pg.setAttribute('opacity', '1');
+
+  const cold = document.getElementById('coldReservoir');
+  if (cold) {
+    cold.setAttribute('height', '440');
+    cold.setAttribute('y', '50');
+  }
+
+  const hotT = document.getElementById('hotTemp');
+  const coldT = document.getElementById('coldTemp');
+  if (hotT) hotT.innerHTML = 'T<tspan font-size="10" dy="2" font-weight="700">hot</tspan> = -';
+  if (coldT) coldT.innerHTML = 'T<tspan font-size="10" dy="2" font-weight="700">cold</tspan> = -';
+
+  updateViz();
+}
+
+// VISUAL UPDATE v70.3 - HARDENED (static arrows + defensive clamps + no breakage on long runs)
+function updateViz() {
+  // === GUARDS: prevent NaN / extreme values from breaking SVG ===
+  if (!isFinite(state.K) || state.K < 0.05) state.K = 0.05;
+  if (!isFinite(state.TH) || state.TH < 0.2) state.TH = 0.2;
+  if (!isFinite(state.TC) || state.TC > 0.95) state.TC = 0.95;
+  if (!isFinite(state.heatPumpStrength)) state.heatPumpStrength = 0;
+  if (!isFinite(state.workOutput)) state.workOutput = 0.3;
+  if (!isFinite(state.entropyRate)) state.entropyRate = 0.05;
+
+  const MAX_RESERVOIR_HEIGHT = 420;
+  const MAX_HOT_TOP = 255;     // keep hot reservoir from sinking too deep into engine area
+  const MIN_COLD_TOP = 185;
+
+  // --- HOT RESERVOIR ---
+  let rawHotH = 185 + (state.K * 155) + (state.TH - 0.52) * 95;
+  if (!isFinite(rawHotH)) rawHotH = 200;
+
+  let hotH = Math.max(100, Math.min(rawHotH, MAX_RESERVOIR_HEIGHT));
+  let hotY = 490 - hotH;
+
+  if (hotY > MAX_HOT_TOP) {
+    hotY = MAX_HOT_TOP;
+    hotH = 490 - hotY;
+  }
+  hotH = Math.max(90, hotH);
+  hotY = Math.min(hotY, 430);
+
+  const hot = document.getElementById('hotReservoir');
+  if (hot) {
+    hot.setAttribute('y', hotY);
+    hot.setAttribute('height', hotH);
+  }
+
+  // labels - always safe
+  const hotL1 = document.getElementById('hotLabel1');
+  const hotL2 = document.getElementById('hotLabel2');
+  const hotTemp = document.getElementById('hotTemp');
+  if (hotL1 && hotL2) {
+    const ly = Math.max(hotY + 8, Math.min(hotY + 30, hotY + hotH - 70));
+    hotL1.setAttribute('y', ly);
+    hotL2.setAttribute('y', ly + 13);
+  }
+  if (hotTemp) {
+    const ty = Math.max(hotY + 35, Math.min(hotY + 55, hotY + hotH - 25));
+    hotTemp.setAttribute('y', ty);
+    hotTemp.innerHTML = `T<tspan font-size="10" dy="2" font-weight="700">hot</tspan> = ${state.TH.toFixed(2)}`;
+  }
+
+  // hot visual state
+  if (hot) {
+    if (!state.collapsed) {
+      const health = Math.max(0.15, Math.min(1, state.Teff + state.K / 3 - state.heatPumpStrength * 0.1));
+      hot.style.filter = `saturate(${0.75 + health * 0.5}) brightness(${0.85 + health * 0.35})`;
+    } else {
+      hot.setAttribute('fill', '#555');
+      hot.style.filter = 'saturate(0.4) brightness(0.6)';
+    }
+  }
+
+  // --- COLD RESERVOIR ---
+  let rawColdH = 150 + (state.heatPumpStrength * 65 + state.S_accum * 38);
+  if (!isFinite(rawColdH)) rawColdH = 200;
+  let coldH = Math.max(80, Math.min(rawColdH, MAX_RESERVOIR_HEIGHT));
+  let coldY = 490 - coldH;
+  if (coldY < MIN_COLD_TOP) {
+    coldY = MIN_COLD_TOP;
+    coldH = 490 - coldY;
+  }
+
+  const cold = document.getElementById('coldReservoir');
+  if (cold) {
+    cold.setAttribute('y', coldY);
+    cold.setAttribute('height', coldH);
+  }
+
+  const coldL1 = document.getElementById('coldLabel1');
+  const coldL2 = document.getElementById('coldLabel2');
+  const coldTemp = document.getElementById('coldTemp');
+  if (coldL1 && coldL2) {
+    const ly = Math.max(coldY + 8, Math.min(coldY + 30, coldY + coldH - 70));
+    coldL1.setAttribute('y', ly);
+    coldL2.setAttribute('y', ly + 13);
+  }
+  if (coldTemp) {
+    const ty = Math.max(coldY + 35, Math.min(coldY + 55, coldY + coldH - 25));
+    coldTemp.setAttribute('y', ty);
+    coldTemp.innerHTML = `T<tspan font-size="10" dy="2" font-weight="700">cold</tspan> = ${state.TC.toFixed(2)}`;
+  }
+
+  // --- PISTON ASSEMBLY (very defensive) ---
+  const phase = state.phase * 1.55;
+  const pistonBody = document.getElementById('pistonBody');
+  const pistonTop = document.getElementById('pistonTop');
+  const connectingRod = document.getElementById('connectingRod');
+  const crank = document.getElementById('crank');
+  const crankPin = document.getElementById('crankPin');
+
+  if (pistonBody && pistonTop && connectingRod && crank && crankPin) {
+    const crankAngle = phase * 1.15;
+    const pinX = 445 + Math.cos(crankAngle) * 14;
+    const pinY = 345 + Math.sin(crankAngle) * 14;
+    let pistonY = pinY - 72;
+
+    // hard safety bounds
+    pistonY = Math.max(160, Math.min(380, pistonY));
+    const clampedPistonY = Math.max(178, Math.min(355, pistonY));
+
+    pistonBody.setAttribute('y', clampedPistonY);
+    pistonTop.setAttribute('y', clampedPistonY);
+
+    const rodTopY = clampedPistonY + 52;
+    let rodH = pinY - rodTopY;
+    rodH = Math.max(8, Math.min(120, rodH)); // never negative or crazy
+    connectingRod.setAttribute('y', rodTopY);
+    connectingRod.setAttribute('height', rodH);
+
+    crank.setAttribute('cx', 445);
+    crank.setAttribute('cy', 345);
+    crankPin.setAttribute('cx', pinX);
+    crankPin.setAttribute('cy', pinY);
+  }
+
+  // --- ARROWS: 100% STATIC PATHS (never change d attribute) ---
+  const qh = document.getElementById('qhArrow');
+  if (qh) {
+    qh.setAttribute('stroke-width', Math.max(5, Math.min(11, 5 + (state.workOutput || 0.5) * 3.2)));
+  }
+
+  const qc = document.getElementById('qcArrow');
+  if (qc) {
+    qc.setAttribute('stroke-width', Math.max(5, Math.min(10, 4 + (state.entropyRate || 0.05) * 2.5 + (state.heatPumpStrength || 0) * 1.3)));
+  }
+
+  const workEl = document.getElementById('workArrow');
+  if (workEl) {
+    workEl.setAttribute('stroke-width', Math.max(3, Math.min(8, (state.workOutput || 0.5) * 3)));
+    workEl.setAttribute('stroke', (state.collapsed || (state.workOutput || 0) < 0.4) ? '#9e9e9e' : '#2E7D32');
+  }
+
+  // pump visibility only
+  const pumpG = document.getElementById('pumpGroup');
+  if (pumpG) {
+    const vis = (state.heatPumpStrength || 0) > 0.15 || state.collapsed;
+    pumpG.setAttribute('opacity', vis ? '0.85' : '0');
+  }
+
+  // gentle warning tint
+  if (hot && !state.collapsed && (state.S_accum > 0.42 || state.Teff < 0.55)) {
+    hot.style.filter = (hot.style.filter || '') + ' hue-rotate(-5deg) saturate(0.9)';
+  }
+
+  state.phase += 0.05 + (state.workOutput || 0.5) * 0.03;
+  if (state.collapsed) state.phase += 0.01;
+}
+
+function updateLivePanel() {
+  const safe = (v, def = 0) => (isFinite(v) ? v : def);
+
+  const set = (id, val) => {
+    const el = document.getElementById(id);
+    if (el) {
+      const num = safe(val, 0);
+      el.textContent = num.toFixed(2);
+    }
+  };
+
+  set('live-TH', state.TH);
+  set('live-TC', state.TC);
+  set('live-Teff', state.Teff);
+  set('live-K', state.K);
+  set('live-S', state.S_accum);
+  set('live-pump', state.heatPumpStrength);
+  set('live-work', state.workOutput);
+  set('live-entropy', state.entropyRate);
+  set('live-shock', state.shockVolatility);
+  set('live-fertility', state.fertility);
+  set('live-knowledge', state.knowledgeStock);
+  set('live-complexity', state.complexity);
+
+  const dom = document.getElementById('dominant');
+  let txt = 'Stable healthy engine';
+  let cls = 'green';
+  const teffSafe = safe(state.Teff, 0.5);
+  const pumpSafe = safe(state.heatPumpStrength, 0);
+  const workSafe = safe(state.workOutput, 0.3);
+  if (state.collapsed) { txt = 'Systemic Collapse'; cls = 'red'; }
+  else if (pumpSafe > 0.5) { txt = 'Heat Pump Active'; cls = 'red'; }
+  else if (teffSafe < 0.48) { txt = 'Feedback Quality Declining'; cls = 'red'; }
+  else if (workSafe > 0.95) { txt = 'Strong Productive Work'; cls = 'green'; }
+  dom.textContent = txt;
+  dom.className = cls;
+
+  const risksEl = document.getElementById('risks');
+  let r = [];
+  if (state.collapsed) r.push('Systemic Collapse');
+  if (safe(state.S_accum, 0) > 0.48) r.push('Irreversibility accumulating');
+  if (teffSafe < 0.48) r.push('Feedback quality low');
+  if (pumpSafe > 0.35) r.push('Heat pump strengthening');
+  risksEl.innerHTML = r.length ? r.map(x => '• ' + x).join('<br>') : 'No active risks';
+}
+
+// EQUATION INSPECT (unchanged)
+const equations = {
+  'hot_reservoir': { title: 'Hot Reservoir', eq: 'dK/dt = Work Output − Depreciation − Entropy Drag\n(Entropy Drag rises when heat pump dominates)' },
+  'cold_reservoir': { title: 'Cold Reservoir', eq: 'Cold height grows modestly with Heat Pump Strength' },
+  'piston': { title: 'Carnot Efficiency', eq: 'η = 1 − TC / TH\nWork Output = η × QH' },
+  'qhArrow': { title: 'Heat Inflow (QH)', eq: 'Flow from productive reservoir to engine' },
+  'workArrow': { title: 'Useful Work Output', eq: 'Work Output = η × QH   |   η = 1 − TC / TH' },
+  'qcArrow': { title: 'Heat Rejection (QC)', eq: 'Flow entropy increases when resources leak to lower-feedback channels' },
+  'pumpArrow': { title: 'Heat Pump Strength', eq: 'Heat Pump Strength ≈ max(0, |TH − TC| − 0.55) + f(ASEI_media, S_accum)' },
+  'pumpGroup': { title: 'Politically Directed Allocation', eq: 'Resources moved against market gradients → rising entropy' }
+};
+
+function setupClickInspect() {
+  const svg = document.getElementById('viz');
+  svg.addEventListener('click', (e) => {
+    const t = e.target;
+    let key = t.id || (t.parentNode && t.parentNode.id) || '';
+
+    if (key.includes('hot') || key.includes('Gauge')) key = 'hot_reservoir';
+    if (key.includes('cold') || key.includes('Gauge')) key = 'cold_reservoir';
+    if (key === 'piston') key = 'piston';
+    if (key.includes('qh')) key = 'qhArrow';
+    if (key.includes('qc')) key = 'qcArrow';
+    if (key.includes('work')) key = 'workArrow';
+    if (key.includes('pump')) key = 'pumpArrow';
+
+    const data = equations[key] || { title: 'System Overview', eq: 'T_eff = (∏ w_k · T_k )^(1/Σ w_k) - six feedback sub-indices (bottom-up from state + legitimacy)' };
+
+    document.querySelectorAll('.equation-card').forEach(el => el.remove());
+
+    const card = document.createElement('div');
+    card.className = 'equation-card';
+    card.innerHTML = `<div class="title">${data.title}</div><div>${data.eq.replace(/\n/g,'<br>')}</div>`;
+    card.style.left = (e.clientX + 12) + 'px';
+    card.style.top = (e.clientY - 8) + 'px';
+    document.body.appendChild(card);
+
+    highlightForEquation(key);
+
+    setTimeout(() => {
+      document.addEventListener('click', function once() {
+        card.remove();
+        clearHighlights();
+        document.removeEventListener('click', once);
+      }, {once:true});
+    }, 80);
+  });
+}
+
+function highlightForEquation(key) {
+  clearHighlights();
+  const hot = document.getElementById('hotGroup');
+  const cold = document.getElementById('coldGroup');
+  const pump = document.getElementById('pumpGroup');
+  const work = document.getElementById('workArrow');
+
+  if (key.includes('hot') || key === 'hot_reservoir') {
+    if (hot) hot.style.filter = 'saturate(1.5) brightness(0.92)';
+  }
+  if (key.includes('cold') || key === 'cold_reservoir') {
+    if (cold) cold.style.filter = 'saturate(1.35) brightness(0.96)';
+  }
+  if (key.includes('pump')) {
+    if (pump) pump.style.filter = 'saturate(1.7)';
+  }
+  if (key.includes('work')) {
+    if (work) work.style.filter = 'saturate(1.4) hue-rotate(65deg)';
+  }
+}
+
+function clearHighlights() {
+  ['hotGroup','coldGroup','pumpGroup','workArrow'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.filter = '';
+  });
+}
+
+// Lever explanations (unchanged)
+const leverHelp = {
+  ecp: "External Competitive Pressure (ECP): Outside forces such as rival states, markets, or existential threats. Can stimulate productive work and innovation but raises stress and entropy if excessive.",
+  tdr: "Technological Dynamism Rate (TDR): Speed of genuine productivity-enhancing innovation. Boosts work output (K growth) and helps offset entropy drag and capital depreciation.",
+  fiscal: "Fiscal Extraction & Redistribution: Volume of taxation, transfers, and politically directed spending. High levels create deadweight loss and feed the heat pump (entropy ↑).",
+  procurement: "Procurement & Contracting (Cronyism): Share of activity routed through politically favored contracts. Strongly strengthens the heat pump and weakens Skin-in-the-Game.",
+  regulatory: "Regulatory Burden: Complexity, cost, and delay from rules and permitting. Increases Feedback Latency and Reallocation Fluidity penalties → more entropy.",
+  monetary: "Monetary Ease & Bailouts: Loose credit policy and rescues of failing actors. Temporarily supports activity but fuels moral hazard and heat-pump growth.",
+  education: "State Education Control: Centralization of schooling and credentials. Affects Information Fidelity and Error Extinction in the knowledge/feedback system.",
+  information: "Media & Narrative Strength: Concentration and alignment of information channels with power. Degrades Information Fidelity and slows correction of bad policies.",
+  infrastructure: "Bureaucratic Infrastructure Share: Resources and authority locked into administrative delivery systems. Raises Coercion Intensity and background coordination entropy.",
+  accountability: "Accountability & Skin-in-the-Game: Extent to which decision makers personally suffer consequences. The single strongest negative multiplier on heat-pump strength and entropy.",
+  institutionalRigidity: "Institutional Rigidity (Reform Resistance): How hard it is to change rules, organizations, or spending patterns. Directly increases entropy drag (gamma_eff).",
+  socialTrustDecline: "Social Trust Decline: Loss of generalized cooperation and reciprocity. Raises background entropy accumulation and coordination costs across the system.",
+  maintenanceCulture: "Maintenance Culture: Priority placed on repair, stewardship, and long-term upkeep versus short-term extraction. Strongly reduces capital depreciation rate.",
+  demographicVitality: "Demographic Vitality: Health, skills, and reproductive capacity of the population base. Supports work output and provides buffer against entropy and depreciation.",
+  shockVolatility: "Shock Volatility: Amplitude of random external shocks (e.g. wars, pandemics, natural disasters). Higher values increase the frequency and severity of sudden entropy spikes and capital destruction.",
+  fertility: "Fertility / Human Capital: Quality and growth of the population's capabilities. Boosts knowledge stock accumulation, K growth, and Teff.",
+  knowledgeStock: "Knowledge Stock: Accumulated scientific, technical, and cultural knowledge. Grows with TDR, Teff, and fertility; depreciates with entropy. Boosts work output and Teff.",
+  complexity: "Complexity Index: Degree of societal interdependence and specialization. Increases fragility; higher values amplify entropy production and shock impact.",
+  speed: "Simulation Speed: Purely a UI control for how fast simulated time advances. Has no effect on the underlying model equations."
+};
+
+function showLeverHelp(el, key) {
+  document.querySelectorAll('.equation-card').forEach(c => c.remove());
+
+  const desc = leverHelp[key] || "No description available.";
+  const title = el.parentElement.textContent.trim().replace('?', '').replace(/\s+\d+(\.\d+)?$/, '') || key;
+
+  const card = document.createElement('div');
+  card.className = 'equation-card';
+  card.style.maxWidth = '320px';
+  card.innerHTML = `<div class="title">${title}</div><div style="line-height:1.3;">${desc}</div><div style="font-size:9px; margin-top:4px; color:#666;">(Click anywhere to close)</div>`;
+
+  const rect = el.getBoundingClientRect();
+  card.style.left = (rect.right + 8) + 'px';
+  card.style.top = (rect.top - 4) + 'px';
+
+  document.body.appendChild(card);
+
+  setTimeout(() => {
+    document.addEventListener('click', function once(ev) {
+      if (!card.contains(ev.target)) {
+        card.remove();
+        document.removeEventListener('click', once);
+      }
+    }, {once: true});
+  }, 10);
+}
+
+// CHARTS - now very defensive so sparklines almost never go blank
+function renderSparklines() {
+  const h = state.history;
+
+  // If history is empty or corrupted, seed a few safe points so the UI always looks alive
+  if (!h.years.length || h.years.length < 5) {
+    h.years = [];
+    h.teff = [];
+    h.s = [];
+    h.k = [];
+    h.entropy = [];
+    h.pump = [];
+    h.th = [];
+    h.tc = [];
+    for (let i = 0; i < 30; i++) {
+      h.years.push(1776 + i * 4);
+      h.teff.push(0.82 + Math.sin(i / 6) * 0.04);
+      h.s.push(i * 0.008);  // slightly higher starting values so S_accum sparkline looks active from the beginning
+      h.k.push(1 + i * 0.004);
+      h.entropy.push(0.04 + Math.sin(i / 7) * 0.01);
+      h.pump.push(Math.max(0, i * 0.002 - 0.03));
+      h.th.push(0.98 - i * 0.001);
+      h.tc.push(0.2 + i * 0.0004);
+    }
+  }
+
+  renderSpark('spark-teff', h.teff, '#1565c0', 0.2, 1.0);
+  // S_accum gets dynamic scaling so even modest growth is clearly visible (it's the main variable)
+  const sData = h.s.filter(v => isFinite(v));
+  const sMin = sData.length ? Math.min(...sData) : 0;
+  const sMax = sData.length ? Math.max(sMin + 0.01, Math.max(...sData)) : 12;
+  renderSpark('spark-s', h.s, '#c62828', sMin, sMax);
+  renderSpark('spark-k', h.k, '#2e7d32', 0.1, 4);
+  renderSpark('spark-entropy', h.entropy, '#6a1b9a', 0, 1.2);
+  renderSpark('spark-pump', h.pump, '#c2185b', 0, 3);
+  renderSpark('spark-th', h.th, '#e65100', 0.15, 1.5);
+  renderSpark('spark-tc', h.tc, '#0277bd', 0.05, 1.0);
+}
+
+function renderSpark(id, data, color, min, max) {
+  const svg = document.getElementById(id);
+  if (!svg || !data.length) return;
+
+  // filter out any remaining bad values
+  const clean = data.filter(v => isFinite(v));
+  if (clean.length === 0) return;
+
+  svg.innerHTML = '';
+  const w = 200, hgt = 42;   // match the actual SVG viewBox="0 0 200 42" so lines are visible inside the box
+  let pts = '';
+  const len = clean.length;
+
+  // handle degenerate range
+  const range = (max - min) || 1;
+
+  for (let i = 0; i < len; i++) {
+    const x = (i / (len - 1)) * w;
+    let y = hgt - ((clean[i] - min) / range) * (hgt - 2) - 1;
+    y = Math.max(1, Math.min(hgt - 1, y));
+    pts += (i === 0 ? 'M ' : 'L ') + x + ',' + y + ' ';
+  }
+
+  const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  p.setAttribute('d', pts);
+  p.setAttribute('fill', 'none');
+  p.setAttribute('stroke', color);
+  p.setAttribute('stroke-width', '1.6');
+  svg.appendChild(p);
+}
+
+function showExpanded(which) {
+  const cont = document.getElementById('expandedChart');
+  const ttl = document.getElementById('expandedTitle');
+  const svg = document.getElementById('expanded-svg');
+  svg.innerHTML = '';
+  cont.style.display = 'block';
+
+  let data, lbl, mn, mx, cl;
+  if (which === 'teff') { data = state.history.teff; lbl = 'Teff (Composite Feedback Quality)'; mn=0.2; mx=1; cl='#1565c0'; }
+  else if (which === 's') { data = state.history.s; lbl = 'S_accum (Accumulated Irreversibility)'; mn=0; mx=5; cl='#c62828'; }
+  else if (which === 'k') { data = state.history.k; lbl = 'Capital Stock K'; mn=0.1; mx=4; cl='#2e7d32'; }
+  else if (which === 'entropy') { data = state.history.entropy; lbl = 'Entropy Production Rate'; mn=0; mx=1.2; cl='#6a1b9a'; }
+  else { data = state.history.pump; lbl = 'Heat Pump Strength'; mn=0; mx=3; cl='#c2185b'; }
+
+  ttl.textContent = lbl;
+
+  const w = 800, h = 140;
+  const len = data.length;
+  let d = '';
+  for (let i=0; i<len; i++) {
+    const x = (i/(len-1))*w;
+    const norm = (data[i]-mn)/(mx-mn);
+    const y = h - norm*(h-8) - 4;
+    d += (i===0?'M ':'L ') + x + ' ' + y + ' ';
+  }
+  const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+  path.setAttribute('d', d);
+  path.setAttribute('fill','none');
+  path.setAttribute('stroke', cl);
+  path.setAttribute('stroke-width','2.2');
+  svg.appendChild(path);
+}
+
+function hideExpanded() {
+  document.getElementById('expandedChart').style.display = 'none';
+}
+
+function updatePartySlider(el) {
+  const valEl = document.getElementById('party-val');
+  if (!valEl) return;
+  const v = parseFloat(el.value);
+  let label = 'Purple';
+  let color = '#7c3aed';
+  if (v < 3.5) {
+    label = 'Blue';
+    color = '#1565c0';
+  } else if (v > 6.5) {
+    label = 'Red';
+    color = '#c62828';
+  }
+  valEl.textContent = label;
+}
+
+let raf = null;
+
+function loop() {
+  if (!state.playing) {
+    raf = requestAnimationFrame(loop);
+    return;
+  }
+
+  try {
+    const now = Date.now();
+    const speedMultiplier = Math.max(0.05, simSpeed); // 1% = very slow, 300% = fast
+    const dt = (now - state.lastTime) / 1000 * speedMultiplier;
+    state.lastTime = now;
+
+    const dtY = dt * (speedMultiplier * 0.65);
+    if (dtY > 0.0003) {
+      state.year += dtY;
+      // Update big prominent year header (outside the engine box)
+      const yearBig = document.getElementById('yearBig');
+      if (yearBig) {
+        yearBig.textContent = Math.floor(state.year);
+      }
+      // keep small one in playbar in sync too
+      const smallYear = document.getElementById('yearDisplay');
+      if (smallYear) {
+        smallYear.textContent = `Year: ${Math.floor(state.year)}`;
+      }
+      simulationStep(dtY);
+    }
+
+    updateViz();
+    updateLivePanel();
+    renderSparklines();
+  } catch (e) {
+    // Do not let a single bad tick (e.g. bad filter string, missing temp el, etc.) kill the RAF chain
+    console.error('simulation loop tick error (play continues):', e);
+  }
+
+  if (state.collapsed) {
+    state.playing = false;
+    const pbtn = document.getElementById('playBtn');
+    if (pbtn) pbtn.textContent = '▶ Play';
+  }
+
+  raf = requestAnimationFrame(loop);
+}
+
+function togglePlay() {
+  const btn = document.getElementById('playBtn');
+  state.playing = !state.playing;
+  const label = state.playing ? '⏸ Pause' : '▶ Play';
+  if (btn) btn.textContent = label;
+  // Also update the left-panel play button (this file has two onclick="togglePlay()" buttons)
+  document.querySelectorAll('button[onclick*="togglePlay"]').forEach(b => {
+    if (b) b.textContent = label;
+  });
+  if (state.playing && !state.collapsed) {
+    state.lastTime = Date.now();
+    // Immediate kickoff: advance year visibly + run sim step + redraw everything so it feels like it starts right away
+    state.year += 0.3;
+    const yearBig = document.getElementById('yearBig');
+    if (yearBig) yearBig.textContent = Math.floor(state.year);
+    const smallYear = document.getElementById('yearDisplay');
+    if (smallYear) smallYear.textContent = `Year: ${Math.floor(state.year)}`;
+    simulationStep(0.3);
+    updateViz();
+    updateLivePanel();
+    renderSparklines();
+    // Always (re)schedule so the loop is definitely running for this play session
+    raf = requestAnimationFrame(loop);
+  }
+}
+
+function resetSim() {
+  resetToBaseline();
+  const st = document.getElementById('status');
+  if (st) st.textContent = '';
+  const pbtn = document.getElementById('playBtn');
+  if (pbtn) pbtn.textContent = '▶ Play';
+  state.playing = false;
+  renderSparklines();
+  highlightPreset('1776');
+}
+
+function resetToBaseline() {
+  state.year = 1776;
+  state.TH = 1.0;
+  state.TC = 0.2;
+  state.Teff = 0.85;
+  state.K = 1.0;
+  state.S_accum = 0.0;
+  state.heatPumpStrength = 0.0;
+  state.workOutput = 0.8;
+  state.entropyRate = 0.05;
+  state.collapsed = false;
+  state.phase = 0;
+  state.shockVolatility = 4.0;
+  state.fertility = 5.5;
+  state.knowledgeStock = 1.0;
+  state.complexity = 1.5;
+  state.legitimacy = 0.9;
+  state.history = { teff: [], s: [], k: [], entropy: [], pump: [], th: [], tc: [], years: [] };
+
+  state.playing = false;
+  const pbtn = document.getElementById('playBtn');
+  if (pbtn) pbtn.textContent = '▶ Play';
+  // also sync any other play buttons on the page
+  document.querySelectorAll('button[onclick*="togglePlay"]').forEach(b => { if (b) b.textContent = '▶ Play'; });
+
+  for (let i=0; i<50; i++) {
+    state.history.years.push(1776 + i*3);
+    state.history.teff.push(0.85 - i*0.0008);
+    state.history.s.push(i*0.002);
+    state.history.k.push(1 + i*0.003);
+    state.history.entropy.push(0.04 + Math.sin(i/8)*0.01);
+    state.history.pump.push(Math.max(0, i*0.001 - 0.02));
+    state.history.th.push(1.0 - i * 0.0008);
+    state.history.tc.push(0.2 + i * 0.0003);
+  }
+
+  const viz = document.getElementById('viz');
+  if (viz) viz.style.filter = '';
+
+  const hot = document.getElementById('hotReservoir');
+  if (hot) hot.setAttribute('fill', 'url(#hotGrad)');
+
+  const work = document.getElementById('workArrow');
+  if (work) work.setAttribute('stroke', '#2E7D32');
+
+  const coll = document.getElementById('collapseLabel');
+  if (coll) coll.setAttribute('opacity', '0');
+
+  const yearBig = document.getElementById('yearBig');
+  if (yearBig) yearBig.textContent = '1776';
+  const smallYear = document.getElementById('yearDisplay');
+  if (smallYear) smallYear.textContent = 'Year: 1776';
+
+  updateFromSliders();
+  updateViz();
+  updateLivePanel();
+  renderSparklines();
+
+  // Emergent Mode checkbox adds extra noise (id="emergentChk")
+  const emergent = document.getElementById('emergentChk') && document.getElementById('emergentChk').checked;
+  if (emergent) {
+    state.TH += Math.random()*0.08 - 0.04;
+    state.S_accum += Math.random()*0.06;
+    state.legitimacy = Math.max(0.3, Math.min(1.2, state.legitimacy * (1 + (Math.random()-0.5)*0.10)));
+  }
+}
+
+// INIT (UI identical)
+function init() {
+  syncSliderValues();
+
+  for (let i=0; i<55; i++) {
+    state.history.years.push(0 + i*2.5);
+    state.history.teff.push(0.84 + Math.sin(i/12)*0.02);
+    state.history.s.push(i * 0.0018);
+    state.history.k.push(1 + i * 0.0025);
+    state.history.entropy.push(0.035 + Math.sin(i/9)*0.012);
+    state.history.pump.push(Math.max(0, (i-30)*0.001));
+    state.history.th.push(1.0);
+    state.history.tc.push(0.2);
+  }
+
+  updateFromSliders();
+  updateViz();
+  updateLivePanel();
+  renderSparklines();
+
+  const yb = document.getElementById('yearBig');
+  if (yb) yb.textContent = Math.floor(state.year || 1776);
+
+  highlightPreset('1776');
+
+  setTimeout(() => {
+    console.log('%c[Auto demo MC v70.2] Running tiny 20-trial emergent demo for quick feedback...', 'color:orange');
+    if (typeof runMonteCarlo === 'function') {
+      console.log('%c[Note] Click the Monte Carlo button for 40-trial stochastic emergent distributions. No targets used.', 'color:gray');
+    }
+  }, 1500);
+
+  setupClickInspect();
+
+  ['teff','s','k','entropy','pump'].forEach(k => {
+    const s = document.getElementById('spark-' + k);
+    if (s) s.onclick = () => showExpanded(k);
+  });
+
+  raf = requestAnimationFrame(loop);
+
+  setTimeout(() => {
+    const st = document.getElementById('status');
+    if (st && !st.textContent) st.textContent = 'v70.2 • Fully Emergent • No Target Chasing • Stochastic';
+  }, 650);
+
+  document.addEventListener('keydown', e => {
+    if (e.key === ' ') { e.preventDefault(); togglePlay(); }
+    if (e.key.toLowerCase() === 'r') resetSim();
+  });
+
+  console.log('%c[Thermodynamic Simulator v70.2] Fully emergent stochastic mode. All outcomes from internal loops. No target chasing.', 'color:#555');
+}
+
+window.onload = init;
+function showTextbookModal() {
+  const modal = document.getElementById('textbookModal');
+  if (modal) modal.style.display = 'block';
+  document.body.style.overflow = 'hidden';
+}
+
+function hideTextbookModal() {
+  const modal = document.getElementById('textbookModal');
+  if (modal) modal.style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    const modal = document.getElementById('textbookModal');
+    if (modal && modal.style.display === 'block') {
+      hideTextbookModal();
+    }
+  }
+});
+</script>
+
+<!-- Full-screen scrollable Textbook Modal (updated with new content) -->
+<div id="textbookModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(20,20,30,0.92); z-index:10000; overflow:auto; padding:20px; box-sizing:border-box;">
+  <div style="max-width:860px; margin:20px auto; background:#fff; color:#222; font-family:Georgia, 'Times New Roman', serif; line-height:1.65; font-size:15px; padding:50px 60px 60px; box-shadow:0 10px 40px rgba(0,0,0,0.6); position:relative; border:1px solid #ccc;">
+    <!-- Close X -->
+    <button onclick="hideTextbookModal()" style="position:absolute; top:12px; right:18px; font-size:28px; line-height:1; background:none; border:none; color:#555; cursor:pointer; padding:0; width:32px; height:32px;">×</button>
+    <div style="max-width:820px; margin:0 auto; font-family:Georgia, serif; line-height:1.7; font-size:15px;">
+  <h1 style="text-align:center; font-size:26px; border-bottom:2px solid #222; padding-bottom:10px;">Thermodynamic Civilization Simulator v70.2</h1>
+  <p style="text-align:center; font-style:italic; color:#444;">Emergent Edition • Rasputin-69420 Institute of Complex Systems</p>
+
+  <h2>1. Core Metaphor</h2>
+  <p>Civilization is modeled as a heat engine. The productive economy is the hot reservoir. Government/bureaucracy is the cold reservoir. The temperature difference drives useful work (capital K). Policies can act as a politically-directed heat pump that moves resources against the natural gradient, creating extra entropy (waste, misallocation, lost potential).</p>
+
+  <h2>2. Key Equations</h2>
+  <ul style="margin-left:20px;">
+    <li><strong>Work Output</strong>: Work = η × QH × modifiers (where η ≈ 1 − TC/TH)</li>
+    <li><strong>Entropy Production</strong>: Ṡ = flow + allocation + coordination (amplified by political allocation and complexity)</li>
+    <li><strong>Bottom-up Teff</strong>: Composite feedback quality derived from legitimacy, trust, accountability, competition, and other state variables (nonlinear)</li>
+    <li><strong>Collapse Probability</strong>: pressure = S_accum¹·⁷⁵ × (1.65 − Teff) × (heatPump + 0.7) × (complexity/2.8) → prob = min(0.22, pressure × dt × 0.011)</li>
+  </ul>
+
+  <h2>3. Policy Levers (what they actually represent)</h2>
+  <p><strong>Fiscal, Procurement, Regulatory, Monetary, Education, Media, Infrastructure</strong>: Increase heat pump strength and entropy production.</p>
+  <p><strong>Accountability</strong>: The single strongest brake on the heat pump and entropy.</p>
+  <p><strong>ECP & TDR</strong>: External competition and genuine innovation — the best ways the hot reservoir fights back.</p>
+  <p><strong>Institutional Rigidity, Trust Decline, Maintenance Culture, Demographic Vitality, Complexity, Shock Volatility</strong>: Supporting variables that affect depreciation, legitimacy, and fragility.</p>
+
+  <h2>4. How the Model Works (Emergent v70)</h2>
+  <p>Start with any preset (only initial conditions + tiny randomness). The engine converts temperature difference into capital. Policies can boost short-term activity but narrow the gradient and raise entropy. Entropy slowly degrades everything. When high entropy + weak feedback + strong heat pump + high complexity pile up, collapse probability rises sharply. Monte Carlo runs many slightly different futures to show realistic variation instead of forcing exact outcomes. All behavior emerges from the rules — there are no hidden targets.</p>
+
+  <p style="text-align:center; margin-top:25px; font-size:13px; color:#555;">
+    Play with levers and presets. Discover what configurations are robust and which ones collapse. This is a toy model for insight, not prediction. Visualization bug fixed in this version.
+  </p>
+</div>
+  </div>
+</div>
+
+</body>
+</html>

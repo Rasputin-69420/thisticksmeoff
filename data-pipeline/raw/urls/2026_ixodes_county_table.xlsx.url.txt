@@ -1,0 +1,9 @@
+# Public Use Ixodes County Table 2026 (Blacklegged ticks + pathogens)
+# Direct CDC download (May 2026 batch)
+# Source: https://www.cdc.gov/ticks/media/files/2026/04/Public_Use_Ixodes_County_Table_2026_03252026.xlsx
+#
+# Local filename: Public_Use_Ixodes_County_Table_2026_03252026.xlsx
+# Contains county-level established/reported status for Ixodes scapularis.
+# Highest value for expanding the purple tick density layer to real county precision + Ixodes vs Lone Star.
+#
+# Download and place appropriately. This + the 2023 county Lyme CSV are the two files to prioritize for county heat work.

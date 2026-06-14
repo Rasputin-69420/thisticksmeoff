@@ -1,0 +1,25 @@
+{
+  "data_sources": [
+    {
+      "name": "Arkansas Alpha-gal Mandatory Reporting Data (2023–2025)",
+      "description": "Mandatory reporting numbers: 304 cases in 2023, 2,613 in 2024, 3,781 in 2025. Northern Arkansas is the clear hotspot.",
+      "category": "Alpha-gal",
+      "type": "State Dashboard + Reports",
+      "url": "https://experience.arcgis.com/experience/8d5f6076b9094fb1853b27726ed6df12/page/Tickborne",
+      "coverage": "Arkansas counties, 2023–2025",
+      "notes": "First state to mandate reporting — excellent concrete yearly progression data for the red layer."
+    },
+    {
+      "name": "California Lyme Disease Cases 2024 (CDPH Annual Report)",
+      "description": "96 total reported cases in 2024 (down slightly from 2023). County-level breakdowns included.",
+      "category": "Lyme",
+      "type": "PDF Report",
+      "url": "https://westnile.ca.gov/pdfs/VBDSAnnualReport24.pdf",
+      "coverage": "California 2024",
+      "notes": "Reinforces very low incidence on the West Coast."
+    }
+  ],
+  "last_updated": "2026-05-30",
+  "generated_for": "thisticksmeoff — infection case data batch",
+  "notes_for_pipeline": "Use the 2023 Lyme county CSV as the base layer. Overlay AGS estimates from MO/AR dashboards for contrast. West Coast stays low-intensity on both. Most other items in this dump were already integrated from prior batches."
+}

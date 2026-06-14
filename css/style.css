@@ -1,0 +1,919 @@
+/* ============================================
+   This Tics Me Off — Alpha-gal & Lyme Tracker
+   Stylesheet (extracted from index.html)
+   Mobile-first design with large, readable text
+   ============================================ */
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #111;
+  color: #ddd;
+  overflow-x: hidden; /* prevent accidental horizontal scroll on mobile */
+}
+
+/* Map container */
+#map {
+  position: relative;   /* allows absolute overlays inside the map */
+  height: 80vh;
+  width: 100%;
+  background: #222;
+}
+
+/* Give the map much more space on desktop (we removed the top legend row) */
+@media (min-width: 1024px) {
+  #map {
+    height: 87vh;
+  }
+}
+
+/* (Old .controls bar removed — slider now lives inside .header) */
+
+/* Year labels under the slider (base) */
+.year-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: #888;
+}
+
+button {
+  padding: 6px 12px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* ============================================
+   CUTE "CLICK THE TICK" — floating lower-right
+   Purple circular icon + label + popup menu
+   Designed to be reliably clickable over the map
+   ============================================ */
+
+.tick-container {
+  position: fixed;
+  right: 14px;
+  bottom: 110px;  /* moved up 2x more from the previous position */
+  z-index: 10001;
+  text-align: center;
+  user-select: none;
+}
+
+.tick-icon {
+  width: 84px;
+  height: 84px;
+  background: #111;                    /* black surroundings so the purple tick pops */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7),
+              0 0 0 3px #222,                  /* subtle dark ring */
+              0 0 0 6px rgba(124, 58, 237, 0.12);  /* faint purple halo */
+  cursor: pointer;
+  touch-action: manipulation;          /* better tap response on iOS */
+  transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1), 
+              box-shadow 0.2s ease;
+}
+
+.tick-icon svg {
+  width: 74px;
+  height: 74px;
+  transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+  display: block;
+  transform-origin: 39px 46px; /* center of the tick body */
+}
+
+/* Make legs rotate around the body center for cute wiggling */
+.leg {
+  transform-origin: 39px 46px;
+}
+
+/* Bigger, sillier reaction when you tap the little guy */
+.tick-icon:hover {
+  transform: scale(1.07);
+  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.75),
+              0 0 0 3px #222,
+              0 0 0 10px rgba(124, 58, 237, 0.35);
+}
+
+.tick-icon:hover svg {
+  transform: scale(1.15) rotate(6deg);
+}
+
+/* Legs do a quick, silly wiggle on hover/tap */
+.tick-icon:hover .leg,
+.tick-icon:active .leg,
+.tick-icon.tapped .leg {
+  animation: legWiggle 420ms ease-in-out;
+}
+
+@keyframes legWiggle {
+  0%   { transform: rotate(0deg); }
+  18%  { transform: rotate(9deg); }
+  36%  { transform: rotate(-7deg); }
+  54%  { transform: rotate(6deg); }
+  72%  { transform: rotate(-4deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.tick-icon:active {
+  transform: scale(0.9);
+}
+
+.tick-icon:active svg {
+  transform: scale(0.92) rotate(-3deg);
+}
+
+.tick-label {
+  margin-top: 5px;
+  font-size: 13px;
+  color: #c4b5fd;
+  font-weight: 600;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+}
+
+/* The popup menu that appears when you click the cute icon */
+.tick-menu {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #1f1f1f;
+  border: 1px solid #4b3f6e;
+  border-radius: 12px;
+  padding: 6px 0;
+  min-width: 260px;
+  max-width: 320px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.75);
+  z-index: 10002;
+  overflow: hidden;
+}
+
+.tick-menu a {
+  display: block;
+  padding: 12px 18px;
+  color: #ddd;
+  text-decoration: none;
+  font-size: 15.5px;
+  transition: background 0.1s ease;
+  cursor: pointer;
+}
+
+.tick-menu a:hover {
+  background: #2a2a3a;
+  color: #e0d4ff;
+}
+
+.tick-menu a:active {
+  background: #16161f;
+}
+
+/* Mobile: cuter but still very tappable */
+@media (max-width: 600px) {
+  .tick-icon {
+    width: 68px;
+    height: 68px;
+  }
+
+  .tick-icon svg {
+    width: 58px;
+    height: 58px;
+  }
+
+  .tick-label {
+    font-size: 11px;
+    margin-top: 3px;
+  }
+
+  .tick-menu {
+    min-width: 260px;
+    max-width: 88vw;
+  }
+
+  .tick-menu a {
+    padding: 16px 20px;
+    font-size: 17px;
+  }
+
+}
+
+/* Page title + header area (reusing the large black space) */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  background: #1a1a1a;
+  padding: 8px 15px 6px;
+}
+
+.title {
+  padding: 0;
+  font-size: clamp(20px, 5vw, 32px);
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+/* Controls placed in the header black space, to the right of the title */
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  flex: 1;
+  justify-content: flex-end;
+  min-width: 0;
+}
+
+/* Play button in the header (above the slider, in title black space) */
+.play-btn-header {
+  font-size: 16px;
+  padding: 3px 9px;
+  line-height: 1;
+  background: #222;
+  border: 1px solid #555;
+  color: #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  touch-action: manipulation;
+  flex-shrink: 0;
+}
+
+.play-btn-header:hover {
+  background: #333;
+  border-color: #777;
+}
+
+/* Make toggles more compact when living in the header next to the title */
+.header-controls .disease-toggle {
+  gap: 8px;
+}
+
+.header-controls .disease-option {
+  padding: 2px 6px;
+  font-size: 13px;
+}
+
+.header-controls .overlay-toggle {
+  font-size: 13px;
+}
+
+.header-controls .overlay-toggle .dot {
+  width: 14px;
+  height: 14px;
+}
+
+/* Date slider centered in the header space between title and play button */
+.header-slider {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  padding: 0 10px;
+}
+
+.header-slider input[type="range"] {
+  width: 100%;
+  max-width: 240px;
+  height: 5px;
+  background: #ddd;           /* light / near-white track */
+  border-radius: 3px;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Solid red thumb */
+.header-slider input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 14px;
+  width: 14px;
+  background: #e60000;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 1px solid #b30000;
+  margin-top: -4.5px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+
+.header-slider input[type="range"]::-moz-range-thumb {
+  height: 14px;
+  width: 14px;
+  background: #e60000;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 1px solid #b30000;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+
+.header .year-labels {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 240px;
+  font-size: 9.5px;
+  color: #888;
+  margin-top: 1px;
+  line-height: 1;
+}
+
+/* Year box — middle left of the map (anchored inside #map).
+   Moved to left side for better iPhone screen real estate. */
+.year-big-display {
+  position: absolute;
+  left: 10px;
+  top: 38%;                     /* shifted up a bit because the box is now taller (scale + legend) */
+  transform: translateY(-50%);
+  color: #aaa;
+  background: rgba(26, 26, 26, 0.8);
+  padding: 5px 9px;
+  border-radius: 5px;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  line-height: 1.05;
+  font-size: 13px;
+
+  /* Draggable info panel */
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+}
+
+.year-big-display:hover {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.55);
+}
+
+.year-big-display.dragging {
+  cursor: grabbing;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.65);
+  z-index: 2500;
+}
+
+/* Tiny reset button that appears in the corner after the user drags the box */
+.year-big-display .yearbox-reset {
+  font-size: 15px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: rgba(0,0,0,0.3);
+}
+
+.year-big-display .yearbox-reset:active {
+  background: rgba(124, 58, 237, 0.3);
+  color: #c4b5fd;
+}
+
+@media (max-width: 600px) {
+  .year-big-display .yearbox-reset {
+    font-size: 16px;
+    padding: 3px 7px;
+    top: 1px;
+    right: 3px;
+  }
+}
+
+/* Inner lines */
+.year-big-display .y-year {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.year-big-display .y-total {
+  font-size: 18px;
+  margin-top: 10px;   /* more space after the legend + scale */
+  opacity: 0.85;
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+}
+
+.year-big-display .y-total-number {
+  font-size: 24px;
+  font-weight: 800;
+  color: #e60000;   /* match the bright red from the legend dot */
+  line-height: 1;
+}
+
+.year-big-display .y-total-label {
+  font-size: 18px;
+  color: #fff;
+  opacity: 1;
+}
+
+/* Mobile sizing (now on left side for iPhone) */
+@media (max-width: 600px) {
+  .year-big-display {
+    top: 34%;   /* a bit higher on small screens to preserve map space */
+    left: 8px;
+    padding: 4px 7px;
+    font-size: 13px;
+  }
+  .year-big-display .y-year { font-size: 20px; }
+  .year-big-display .y-total { font-size: 14px; }
+  .year-big-display .y-total-number { font-size: 17px; }
+  .year-big-display .y-total-label {
+    font-size: 17px;
+    color: #fff;
+    opacity: 1;
+  }
+}
+
+/* Modal for educational content */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 2000;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: #1a1a1a;
+  padding: 20px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  font-size: 28px;           /* mobile-first */
+  line-height: 1.35;
+}
+
+.close {
+  float: right;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Desktop: much smaller, scannable modal text (fits ~1/4 page) */
+@media (min-width: 768px) {
+  .modal-content {
+    font-size: 16px;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+  .modal-content h3 {
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+}
+
+/* ============================================
+   Desktop / larger screen improvements
+   (Smartphone-first — these only activate on wider screens)
+   ============================================ */
+
+@media (min-width: 768px) {
+  .header .year-labels {
+    font-size: 10px;
+  }
+
+  /* Title stays prominent but not tiny */
+  .title {
+    font-size: 26px;
+    padding: 14px 20px;
+  }
+
+  /* Give buttons a bit more presence on desktop */
+  button {
+    font-size: 15px;
+    padding: 9px 16px;
+  }
+
+  /* Keep the top UI from stretching ridiculously wide on big monitors
+     while the map stays full-bleed (smartphone-first but desktop-friendly) */
+  .header {
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (min-width: 1200px) {
+  /* Extra breathing room on very wide screens */
+  .header {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+/* ============================================
+   Leaflet Popups & Tooltips — Desktop friendly + mobile readable
+   Text size is fixed relative to the screen (does not scale with map zoom)
+   ============================================ */
+
+.leaflet-popup-content-wrapper {
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.leaflet-popup-content {
+  font-size: 13px;
+  line-height: 1.35;
+  padding: 2px 4px;
+  min-width: 160px;
+}
+
+.leaflet-popup-content strong {
+  font-size: 13px;
+}
+
+/* Desktop: keep popups compact and readable */
+@media (min-width: 768px) {
+  .leaflet-popup-content {
+    font-size: 12px;
+    line-height: 1.3;
+  }
+  .leaflet-popup-content strong {
+    font-size: 12px;
+  }
+}
+
+/* Tooltips (hover on desktop) — small and clean */
+.leaflet-tooltip {
+  background: #222;
+  border: 1px solid #555;
+  color: #ddd;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+  font-weight: 600;
+}
+
+/* Mobile: slightly larger popups for touch */
+@media (max-width: 600px) {
+  .leaflet-popup-content {
+    font-size: 15px;
+  }
+  .leaflet-popup-content strong {
+    font-size: 15px;
+  }
+  .leaflet-tooltip {
+    display: none; /* no hover tooltips on touch devices */
+  }
+}
+
+/* ============================================
+   Disease Toggle (Lyme / Alpha-gal)
+   Bright red dot for selected, white for unselected
+   ============================================ */
+
+.disease-toggle {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.disease-option {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  user-select: none;
+  padding: 4px 8px;
+  border-radius: 999px;
+  transition: background-color 0.15s ease;
+}
+
+.disease-option .dot {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #777;
+  flex-shrink: 0;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+/* Active/selected state for custom buttons */
+.disease-option.active .dot {
+  background: #e60000;
+  border-color: #e60000;
+}
+
+.disease-option:hover {
+  background: rgba(255,255,255,0.06);
+}
+
+.disease-option.active:hover .dot {
+  background: #ff1a1a;
+  border-color: #ff1a1a;
+}
+
+/* Overlay toggle for Verified Tick Population (purple) */
+.overlay-control {
+  display: flex;
+  align-items: center;
+}
+
+.overlay-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  user-select: none;
+  font-size: inherit;
+}
+
+.overlay-toggle input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.overlay-toggle .dot {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #777;
+  flex-shrink: 0;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+/* Purple toggle specific - only purple when checked */
+.overlay-toggle .dot.purple {
+  background: #fff;
+  border: 2px solid #777;
+}
+
+.overlay-toggle input[type="checkbox"]:checked + .dot.purple {
+  background: #7c3aed;           /* vivid purple when on */
+  border-color: #5b21b6;
+}
+
+.overlay-toggle:hover .dot.purple {
+  border-color: #aaa;
+}
+
+.overlay-toggle input[type="checkbox"]:checked + .dot.purple:hover {
+  background: #9f7aea;
+  border-color: #7c3aed;
+}
+
+/* Legend (red + purple dots) — now moved inside the right-side year box, under the scale bar */
+.layer-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 13.5px;
+  color: #999;
+  margin-top: 5px;
+  align-items: center;
+  line-height: 1.1;
+  padding: 0 2px;
+}
+
+.layer-legend .legend-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.layer-legend .legend-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.layer-legend .legend-dot.red {
+  background: #e60000;
+}
+
+.layer-legend .legend-dot.purple {
+  background: #7c3aed;
+}
+
+/* Scoped version inside the year box (the one you actually see) — increased ~50% */
+.year-big-display .layer-legend {
+  font-size: 13px;
+  margin-top: 7px;
+  padding-top: 5px;
+  border-top: 1px solid rgba(120, 120, 120, 0.35);
+  color: #999;
+}
+
+.year-big-display .layer-legend .legend-item {
+  gap: 4px;
+}
+
+.year-big-display .layer-legend .legend-dot {
+  width: 7.5px;
+  height: 7.5px;
+}
+
+/* Standalone legend items now used inside year-big-display (after splitting for visual grouping) */
+.year-big-display .legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: #aaa;
+  margin-top: 3px;
+  white-space: nowrap;
+}
+
+.year-big-display .legend-item .legend-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.year-big-display .legend-item .legend-dot.red {
+  background: #e60000;
+}
+
+.year-big-display .legend-item .legend-dot.purple {
+  background: #7c3aed;
+}
+
+
+
+/* Visual feedback when human case (red) heat map is turned off */
+.disease-toggle.red-off {
+  opacity: 0.45;
+  filter: grayscale(0.6);
+}
+
+/* (Old play-btn-small styles removed — play button now uses .play-btn-header in the title area) */
+
+/* Purple scale bar — now right under the big year number */
+.year-big-display .purple-scale {
+  margin-top: 5px;
+  padding: 0 4px;
+  font-size: 13px;
+  color: #aaa;
+  text-align: center;
+  line-height: 1.1;
+  width: 100%;
+}
+.year-big-display .purple-scale .ps-gradient {
+  height: 11px;
+  width: 100%;
+  max-width: 130px;
+  margin: 2px auto 3px;
+  border-radius: 4px;
+  border: 1px solid #555;
+  background: linear-gradient(to right, #e0d4ff, #c4b5fd, #a78bfa, #7c3aed, #5b21b6);
+  box-shadow: inset 0 0 2px rgba(0,0,0,0.4);
+}
+.year-big-display .purple-scale .ps-labels {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 130px;
+  margin: 0 auto;
+  font-size: 11px;
+  color: #999;
+  gap: 3px;
+}
+.year-big-display .purple-scale .ps-labels span {
+  flex: 1;
+  text-align: center;
+  white-space: nowrap;
+}
+.year-big-display .purple-scale .ps-labels span:first-child { text-align: left; }
+.year-big-display .purple-scale .ps-labels span:last-child { text-align: right; }
+.year-big-display .purple-scale .ps-unit {
+  font-size: 9.5px;
+  color: #888;
+  opacity: 0.85;
+  flex: 1.8;
+  letter-spacing: 0.2px;
+}
+
+/* Desktop: larger scale bar fonts to match the bigger legend */
+@media (min-width: 1024px) {
+  .year-big-display .purple-scale {
+    font-size: 14px;
+  }
+  .year-big-display .purple-scale .ps-gradient {
+    height: 12px;
+    max-width: 138px;
+  }
+  .year-big-display .purple-scale .ps-labels {
+    font-size: 12px;
+    max-width: 138px;
+  }
+  .year-big-display .purple-scale .ps-unit {
+    font-size: 10.5px;
+  }
+}
+
+/* Mobile adjustments (year box is smaller) */
+@media (max-width: 600px) {
+  .year-big-display .purple-scale {
+    font-size: 10px;
+    margin-top: 5px;
+  }
+  .year-big-display .purple-scale .ps-gradient {
+    height: 8px;
+    max-width: 108px;
+  }
+  .year-big-display .purple-scale .ps-labels {
+    font-size: 8.5px;
+    max-width: 108px;
+  }
+  .year-big-display .purple-scale .ps-unit {
+    font-size: 7.5px;
+  }
+
+
+
+}
+
+/* ============================================
+   MOBILE HEADER — make everything fit on iPhone without horizontal scroll
+   Two-row approach: title + compact controls on top, full slider below
+   ============================================ */
+@media (max-width: 600px) {
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    padding: 6px 10px 5px;
+  }
+
+  .title {
+    font-size: 17px;
+    line-height: 1.1;
+    text-align: left;
+    padding: 0 2px 2px;
+    flex: none;
+  }
+
+  /* Controls row: Play button + disease toggles, compact */
+  .header-controls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    flex: none;
+    order: 2; /* put controls above slider */
+    padding: 2px 0;
+  }
+
+  .play-btn-header {
+    font-size: 13px;
+    padding: 4px 10px;
+    flex-shrink: 0;
+  }
+
+  .header-controls .disease-option {
+    font-size: 12px;
+    padding: 4px 10px;
+  }
+
+  .header-controls .disease-option .label-text {
+    font-size: 12px;
+  }
+
+  /* Slider gets its own full-width row at the bottom of the header */
+  .header-slider {
+    order: 3;
+    flex: none;
+    width: 100%;
+    padding: 0 2px 2px;
+    align-items: flex-start;
+  }
+
+  .header-slider input[type="range"] {
+    max-width: 100%;
+    height: 6px;
+  }
+
+  .header .year-labels {
+    font-size: 9px;
+    max-width: 100%;
+  }
+
+  /* Give the map a bit more room since header is now taller but clean */
+  #map {
+    height: 82vh;
+  }
+}

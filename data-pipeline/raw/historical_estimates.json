@@ -1,0 +1,14 @@
+﻿{
+  "lyme": {
+    "2010": {"Massachusetts": 6500, "Connecticut": 4200, "Pennsylvania": 3100, "New York": 9200, "New Jersey": 2800, "Maine": 1100, "New Hampshire": 650, "Vermont": 550, "Rhode Island": 1050, "West Virginia": 850},
+    "2014": {"Massachusetts": 7200, "Connecticut": 4800, "Pennsylvania": 3900, "New York": 10500, "New Jersey": 3400, "Maine": 1400, "New Hampshire": 800, "Vermont": 720, "Rhode Island": 1300, "West Virginia": 1100},
+    "2018": {"Massachusetts": 8100, "Connecticut": 5500, "Pennsylvania": 4800, "New York": 13200, "New Jersey": 4200, "Maine": 1800, "New Hampshire": 950, "Vermont": 880, "Rhode Island": 1600, "West Virginia": 1500},
+    "2021": {"Massachusetts": 8900, "Connecticut": 6100, "Pennsylvania": 5700, "New York": 15800, "New Jersey": 5100, "Maine": 2200, "New Hampshire": 1150, "Vermont": 1050, "Rhode Island": 2000, "West Virginia": 1900}
+  },
+  "alpha": {
+    "2010": {"Massachusetts": 120, "Connecticut": 80, "Pennsylvania": 60, "New York": 90, "New Jersey": 50, "Maine": 15, "New Hampshire": 12, "Vermont": 10, "Rhode Island": 18, "West Virginia": 25},
+    "2014": {"Massachusetts": 280, "Connecticut": 190, "Pennsylvania": 140, "New York": 220, "New Jersey": 120, "Maine": 35, "New Hampshire": 28, "Vermont": 22, "Rhode Island": 40, "West Virginia": 55},
+    "2018": {"Massachusetts": 520, "Connecticut": 380, "Pennsylvania": 290, "New York": 480, "New Jersey": 260, "Maine": 70, "New Hampshire": 55, "Vermont": 45, "Rhode Island": 85, "West Virginia": 110},
+    "2021": {"Massachusetts": 890, "Connecticut": 650, "Pennsylvania": 510, "New York": 820, "New Jersey": 450, "Maine": 110, "New Hampshire": 85, "Vermont": 70, "Rhode Island": 140, "West Virginia": 180}
+  }
+}

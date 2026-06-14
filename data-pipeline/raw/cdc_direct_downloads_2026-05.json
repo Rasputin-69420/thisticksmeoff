@@ -1,0 +1,79 @@
+{
+  "data_sources": [
+    {
+      "name": "2023 Lyme Disease Cases by County",
+      "description": "County-level reported Lyme disease case counts for 2023 (exact numbers, not just dots)",
+      "type": "CSV",
+      "url": "https://www.cdc.gov/lyme/media/files/2025/02/LD_Case_Counts_by_County_2023_updated.csv",
+      "coverage": "2023 only, all US counties",
+      "category": "Lyme",
+      "notes": "Perfect drop-in for county heatmap. Direct from CDC page."
+    },
+    {
+      "name": "Lyme Disease Cases by State or Locality 2008-2023",
+      "description": "State-level Lyme case counts and incidence over time",
+      "type": "CSV",
+      "url": "https://www.cdc.gov/lyme/media/files/2025/02/2023_CaseIncid-Lyme-Disease-Cases-by-State-or-Locality.csv",
+      "coverage": "2008–2023",
+      "category": "Lyme",
+      "notes": "Good for trends and fallback when county data is missing"
+    },
+    {
+      "name": "Reported Tickborne Disease Cases by County 2019-2022",
+      "description": "County-level cases for Lyme + Babesiosis + Anaplasmosis + Ehrlichiosis + Spotted Fever Rickettsiosis + more",
+      "type": "Excel",
+      "url": "https://www.cdc.gov/ticks/media/files/2024/05/AllTBD2022_Public.xlsx",
+      "coverage": "2019–2022, all US counties",
+      "category": "Tickborne Diseases",
+      "notes": "Broadest county-level tickborne dataset available"
+    },
+    {
+      "name": "Geographic Distribution of Suspected Alpha-gal Syndrome Cases",
+      "description": "MMWR study with county-level suspected AGS cases from lab data (highest per capita counties listed)",
+      "type": "HTML / MMWR Report",
+      "url": "https://www.cdc.gov/mmwr/volumes/72/wr/mm7230a2.htm",
+      "coverage": "2017–2022",
+      "category": "Alpha-gal",
+      "notes": "No raw CSV, but detailed county tables and maps. Cross-reference with census for rates."
+    },
+    {
+      "name": "Tick Surveillance Data Sets - Ixodes (Blacklegged) Ticks",
+      "description": "County-level established/reported status for blacklegged ticks and associated pathogens (2023–2026 update)",
+      "type": "Excel",
+      "url": "https://www.cdc.gov/ticks/media/files/2026/04/Public_Use_Ixodes_County_Table_2026_03252026.xlsx",
+      "coverage": "Up to 2025",
+      "category": "Tick Species",
+      "notes": "Best for actual tick presence/density layers"
+    },
+    {
+      "name": "Lone Star Tick Surveillance (Alpha-gal vector)",
+      "description": "County-level distribution of Lone Star ticks",
+      "type": "Interactive + Download",
+      "url": "https://www.cdc.gov/ticks/data-research/facts-stats/lone-star-tick-surveillance.html",
+      "coverage": "Current",
+      "category": "Tick Species",
+      "notes": "Part of the main tick surveillance hub"
+    },
+    {
+      "name": "CDC Tick Data Research Hub",
+      "description": "Main landing page for all tick species surveillance maps and downloads",
+      "type": "Hub Page",
+      "url": "https://www.cdc.gov/ticks/data-research/facts-stats/index.html",
+      "coverage": "Ongoing",
+      "category": "General",
+      "notes": "Links to every species-specific Excel file"
+    },
+    {
+      "name": "CDC WONDER NNDSS Annual Summary",
+      "description": "Interactive query tool for national notifiable disease data (Lyme + others)",
+      "type": "Interactive Database",
+      "url": "https://wonder.cdc.gov/nndss-annual-summary.html",
+      "coverage": "2016–2023+",
+      "category": "General",
+      "notes": "Great for custom year-by-year queries"
+    }
+  ],
+  "last_updated": "2026-05-30",
+  "generated_for": "thisticksmeoff tick/Alpha-gal/Lyme tracker",
+  "integration_status": "Metadata added to lyme_ags_sources.json and additional_sources.json. Full data download + processing planned for county-level heatmap work."
+}

@@ -1,0 +1,15 @@
+Year,Reported_Lyme_Cases_MA,Notes
+Pre-2015,Typically 3000-5000 annually,Intensive surveillance with follow-up
+2015,4370,Last year with intensive follow-up; confirmed+probable
+2016,207,Surveillance change: no routine follow-up, sharp drop
+2017,416,Low due to reporting practices
+2018,189,Low
+2019,165,Low
+2020,103,Low (also COVID)
+2021,28,Lowest
+2022,5102,New lab-only criteria, increase
+2023,9728,Probable cases under new criteria; high incidence
+2024,8840,Similar
+2025,8619,Probable; statewide incidence ~118.5 per 100k
+2026 YTD (to Apr),1184,Preliminary
+County notes,"Highest rates often Barnstable (Cape Cod), Plymouth, Bristol, Berkshire; Nantucket/Dukes combined lower numbers but historically epicenter with high prevalence (15% lifetime in 2001 study). See Nantucket specific file.",Massachusetts DPH data; reporting changes affect comparability pre/post 2022

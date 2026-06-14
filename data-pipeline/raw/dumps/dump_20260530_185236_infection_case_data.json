@@ -1,0 +1,79 @@
+﻿{
+  "infection_case_data": [
+    {
+      "name": "2023 Lyme Disease Cases by County (exact counts)",
+      "description": "County-level reported Lyme cases for 2023 — the best national county file",
+      "type": "CSV",
+      "url": "https://www.cdc.gov/lyme/media/files/2025/02/LD_Case_Counts_by_County_2023_updated.csv",
+      "coverage": "2023, all US counties",
+      "category": "Lyme",
+      "notes": "Direct drop-in for your heatmap. MO/AR show almost zero; CA has scattered low numbers."
+    },
+    {
+      "name": "Lyme Cases by State 2008–2023",
+      "description": "State-level Lyme case counts and incidence over time",
+      "type": "CSV",
+      "url": "https://www.cdc.gov/lyme/media/files/2025/02/2023_CaseIncid-Lyme-Disease-Cases-by-State-or-Locality.csv",
+      "coverage": "2008–2023",
+      "category": "Lyme",
+      "notes": "Great for animation trends. Shows West Coast stays low."
+    },
+    {
+      "name": "Arkansas Alpha-gal Syndrome Surveillance (2023–2025)",
+      "description": "Mandatory reporting data: 304 cases (2023), 2,613 (2024), 3,781 (2025)",
+      "type": "State Dashboard + Reports",
+      "url": "https://experience.arcgis.com/experience/8d5f6076b9094fb1853b27726ed6df12/page/Tickborne",
+      "coverage": "Arkansas counties, 2023–2025",
+      "category": "Alpha-gal",
+      "notes": "First state to mandate reporting — northern AR is the hottest zone."
+    },
+    {
+      "name": "Missouri Alpha-gal Syndrome Estimate + Tracking Bill Data",
+      "description": "Official DHSS estimate: 7,300–34,400 Missourians affected since 2021",
+      "type": "State Report",
+      "url": "https://health.mo.gov/living/healthcondiseases/communicable/tickscarrydisease/ags.php",
+      "coverage": "Missouri 2021–present",
+      "category": "Alpha-gal",
+      "notes": "HB 1855 (2026) now makes AGS reportable — strong counter to Reddit claims"
+    },
+    {
+      "name": "California Lyme Disease Cases 2024 (CDPH Annual Report)",
+      "description": "96 total reported cases in 2024 (down slightly from 2023)",
+      "type": "PDF Report",
+      "url": "https://westnile.ca.gov/pdfs/VBDSAnnualReport24.pdf",
+      "coverage": "California 2024",
+      "category": "Lyme",
+      "notes": "County-level breakdowns in the report + interactive Story Map"
+    },
+    {
+      "name": "California Lyme Incidence Story Map (2014–2024)",
+      "description": "Interactive county-level Lyme cases and incidence",
+      "type": "Interactive ArcGIS",
+      "url": "https://storymaps.arcgis.com/stories/f64d0c19a3ab42cf90e8ce38397e96e0",
+      "coverage": "California counties 2014–2024",
+      "category": "Lyme",
+      "notes": "Click any county for exact numbers"
+    },
+    {
+      "name": "Oregon & Washington Lyme Cases (low incidence)",
+      "description": "Oregon ~61 cases (2023); Washington ~25 cases (2023)",
+      "type": "State Data",
+      "url": "https://www.oregon.gov/oha/ph/diseasesconditions/communicabledisease/pages/ticks.aspx + WA Tick Dashboard",
+      "coverage": "OR/WA recent years",
+      "category": "Lyme",
+      "notes": "Mostly travel-related; very low local transmission"
+    },
+    {
+      "name": "CDC MMWR Alpha-gal Geographic Distribution (2017–2022)",
+      "description": "Suspected AGS cases from 357k+ lab tests — county-level hotspots",
+      "type": "MMWR Report",
+      "url": "https://www.cdc.gov/mmwr/volumes/72/wr/mm7230a2.htm",
+      "coverage": "2017–2022",
+      "category": "Alpha-gal",
+      "notes": "Missouri, Arkansas, Oklahoma, Kentucky are national hotspots"
+    }
+  ],
+  "last_updated": "2026-05-30",
+  "generated_for": "thisticksmeoff — Lyme + Alpha-gal INFECTION case data (not just ticks)",
+  "notes_for_pipeline": "Use the 2023 Lyme county CSV as the base layer. Overlay AGS estimates from MO/AR dashboards for contrast. West Coast stays low-intensity on both."
+}

@@ -1,0 +1,25 @@
+{
+  "data_sources": [
+    {
+      "name": "Texas DSHS Zoonotic Cases 2020–2026 (Detailed)",
+      "description": "Lyme: 19–21 cases/year (mostly imported). Ehrlichiosis: 13–14/year. Spotted Fever Rickettsiosis: 15–18/year. Useful for a broader 'tickborne illness' red dot layer beyond just Lyme.",
+      "type": "State Table",
+      "url": "https://www.dshs.texas.gov/disease-surveillance-epidemiology-section/zoonosis-control/zoonotic-disease-cases/human-cases-2020-2024",
+      "coverage": "Texas 2020–2026",
+      "category": "Infections (non-AGS)",
+      "notes": "Hard numbers for expanding red layer to include Ehrlichia/RMSF."
+    },
+    {
+      "name": "Texas Alpha-gal Syndrome – Growing Incidence 2026",
+      "description": "Lone Star ticks widespread across Texas. AGS cases increasing, but no mandatory reporting yet → no county-level numbers available. Good for Texas-wide purple blob popup notes.",
+      "type": "Health Alert + News",
+      "url": "https://txnaturalpediatrics.com/2026/04/02/news-alert-growing-incidence-of-alpha-gal/",
+      "coverage": "Texas statewide 2026",
+      "category": "Alpha-gal",
+      "notes": "Perfect for a Texas-wide popup when someone clicks the purple blob."
+    }
+  ],
+  "last_updated": "2026-05-30",
+  "generated_for": "thisticksmeoff — Texas red-dot gap fix",
+  "notes": "The MMWR and military seroprevalence items were already integrated from prior dumps. This batch adds the specific Texas DSHS detailed table and the 2026 growing incidence health alert."
+}

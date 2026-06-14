@@ -1,0 +1,601 @@
+{
+  "primary_cdc_lyme": [
+    {
+      "title": "CDC Lyme Disease Surveillance Data",
+      "url": "https://www.cdc.gov/lyme/data-research/facts-stats/surveillance-data-1.html",
+      "description": "National yearly, state, and CSV downloads for cases 1996-2023",
+      "accessed": "2026-05"
+    },
+    {
+      "title": "CDC Lyme Disease Case Maps",
+      "url": "https://www.cdc.gov/lyme/data-research/facts-stats/lyme-disease-case-map.html",
+      "description": "County-level dot maps for 1995, 2010, 2023 and 2023 county CSV with historical columns",
+      "accessed": "2026-05"
+    },
+    {
+      "title": "CDC MMWR: Surveillance for Lyme Disease After Implementation of a Revised Case Definition — United States, 2022",
+      "url": "https://www.cdc.gov/mmwr/volumes/73/wr/mm7306a1.htm",
+      "description": "2022 case counts, incidence changes, high-incidence jurisdictions",
+      "accessed": "2026-05"
+    },
+    {
+      "title": "CDC Lyme Disease Facts and Statistics / Index",
+      "url": "https://www.cdc.gov/lyme/data-research/facts-stats/index.html",
+      "description": "Overview, 89,000+ cases in 2023, links to data",
+      "accessed": "2026-05"
+    }
+  ],
+  "cdc_alpha_gal": [
+    {
+      "title": "Geographic Distribution of Suspected Alpha-gal Syndrome Cases — United States, 2017–2022",
+      "url": "https://www.cdc.gov/mmwr/volumes/72/wr/mm7230a2.htm",
+      "description": "90,018 positive tests 2017-2022, yearly breakdown, geographic (county-level rates), demographics, methodology (Eurofins Viracor lab data)",
+      "accessed": "2026-05"
+    },
+    {
+      "title": "CDC About Alpha-gal Syndrome",
+      "url": "https://www.cdc.gov/alpha-gal-syndrome/about/index.html",
+      "description": ">110,000 suspected cases 2010-2022, estimate up to 450,000 affected",
+      "accessed": "2026-05"
+    }
+  ],
+  "massachusetts_dph": [
+    {
+      "title": "Massachusetts Tick-borne Disease Surveillance Summaries and Data",
+      "url": "https://www.mass.gov/lists/tick-borne-disease-surveillance-summaries-and-data",
+      "description": "10-year morbidity report, yearly Lyme cases 2015-2026 YTD, surveillance changes noted, annual reports 2019-2025",
+      "accessed": "2026-05"
+    },
+    {
+      "title": "Massachusetts Monthly Tick-borne Disease Reports",
+      "url": "https://www.mass.gov/lists/monthly-tickborne-disease-reports",
+      "description": "Seasonal trends and updates",
+      "accessed": "2026-05"
+    }
+  ],
+  "nantucket_and_local": [
+    {
+      "title": "Reports of Lyme disease in Nantucket County, Massachusetts (tickcheck.com / CDC data)",
+      "url": "https://www.tickcheck.com/stats/county/massachusetts/nantucket-county/lyme",
+      "description": "Yearly confirmed cases 2000-2020 (723 total), sourced from CDC surveillance",
+      "accessed": "2026-05"
+    },
+    {
+      "title": "Nantucket Cottage Hospital / Town of Nantucket Ticks Page",
+      "url": "https://www.nantucket-ma.gov/2760/Ticks",
+      "description": "Local context, links to infectious disease reports",
+      "accessed": "2026-05"
+    },
+    {
+      "title": "Phillips et al. (2001) - Lyme disease and preventive behaviors in residents of Nantucket Island",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/11275450/",
+      "description": "15% lifetime prevalence study (2001)",
+      "accessed": "2026-05"
+    }
+  ],
+  "johns_hopkins": [
+    {
+      "title": "Johns Hopkins Lyme and Tickborne Diseases Dashboard / Tracker",
+      "url": "https://www.hopkinslymetracker.org/",
+      "description": "Interactive maps, data explorer, county-level visualizations, references to CDC data",
+      "accessed": "2026-05"
+    },
+    {
+      "title": "Johns Hopkins Lyme Disease Page",
+      "url": "https://www.hopkinslyme.org/lyme-disease/",
+      "description": "~500,000 diagnosed/treated per year estimates, geographic expansion info",
+      "accessed": "2026-05"
+    }
+  ],
+  "literature_and_other": [
+    {
+      "title": "Mead et al. (2024) - Lyme Disease Surveillance and Epidemiology in the United States",
+      "url": "https://academic.oup.com/jid/article/230/Supplement_1/S11/7733440",
+      "description": ">844,000 cases reported 1982-2022, geographic distribution figures",
+      "accessed": "2026-05"
+    },
+    {
+      "title": "Kugeler et al. (2021) - Estimating the Frequency of Lyme Disease Diagnoses, United States, 2010-2018",
+      "url": "https://wwwnc.cdc.gov/eid/article/27/2/20-2728_article",
+      "description": "476,000 estimated annual diagnoses (claims data)",
+      "accessed": "2026-05"
+    },
+    {
+      "title": "ArcGIS Hub - Reported Cases of Lyme Disease by County of Residence Map, United States (2000-2020)",
+      "url": "https://hub.arcgis.com/maps/cdcarcgis::reported-cases-of-lyme-disease-by-county-of-residence-map-united-states/about",
+      "description": "Density map 2000-2020",
+      "accessed": "2026-05"
+    },
+    {
+      "title": "Various MMWR and Statista references for incidence rates and historical summaries",
+      "url": "Multiple (e.g., https://www.cdc.gov/mmwr/, Statista Lyme incidence by state)",
+      "description": "Supplementary state-level and trend data",
+      "accessed": "2026-05"
+    }
+  ],
+  "web_search_and_browse_sources": [
+    "web:31 to web:74 from initial and follow-up searches (CDC pages, MMWR, mass.gov, PubMed, JHU, etc.)",
+    "Specific browsed URLs: surveillance-data-1.html, lyme-disease-case-map.html, mm7230a2.htm, mass.gov tickborne lists, tickcheck.com Nantucket page"
+  ],
+
+  "historical_tick_distribution": [
+    {
+      "title": "Spatial Distribution of Counties in the Continental United States With Records of Occurrence of Amblyomma americanum (Ixodida: Ixodidae)",
+      "authors": "Yuri P. Springer, Lars Eisen, Lorenza Beati, Angela M. James, Rebecca J. Eisen",
+      "year": 2014,
+      "journal": "Journal of Medical Entomology",
+      "url": "https://academic.oup.com/jme/article/51/2/342/882013",
+      "free_pdf": "https://stacks.cdc.gov/view/cdc/36293/cdc_36293_DS1.pdf",
+      "description": "Compilation of 18,121 collection records (1898–2012) with county-level classifications as 'established' or 'reported'. Includes decadal and cumulative maps. Best publicly available historical county-level data for Lone Star tick distribution. Used for future time-dynamic versions of the purple Verified Tick Population layer.",
+      "accessed": "2026-05"
+    }
+  ],
+
+  "expanded_surveillance_2015_2025": [
+    {
+      "title": "County-Level Distribution of Ixodes scapularis and Ixodes pacificus — United States, 2015",
+      "authors": "Eisen et al.",
+      "year": 2016,
+      "url": "https://www.cdc.gov/mmwr/volumes/65/wr/mm6511a1.htm",
+      "description": "National county-level maps of established and reported blacklegged tick populations. Strong candidate for expanding the Ixodes portion of the purple density layer.",
+      "accessed": "2026-05",
+      "priority": "High"
+    },
+    {
+      "title": "CDC Tick Surveillance Data and Maps (2025)",
+      "authors": "CDC Division of Vector-Borne Diseases",
+      "year": 2025,
+      "url": "https://www.cdc.gov/ticks/data-research/facts-stats/index.html",
+      "description": "Latest multi-species county-level presence data (including Ixodes and Amblyomma americanum). Excellent source for updating 2025 purple tick layers.",
+      "accessed": "2026-05",
+      "priority": "High"
+    },
+    {
+      "title": "Lyme Disease Cases by County of Residence — United States, 2023",
+      "authors": "CDC",
+      "year": 2023,
+      "url": "https://www.cdc.gov/lyme/data-research/facts-stats/lyme-disease-case-map.html",
+      "description": "County-level Lyme case data with downloadable CSV. Useful for extending the red layer time series and county-level detail.",
+      "accessed": "2026-05",
+      "priority": "High"
+    },
+    {
+      "title": "Climate Change Indicators: Lyme Disease (EPA)",
+      "authors": "U.S. Environmental Protection Agency",
+      "year": 2021,
+      "url": "https://www.epa.gov/climate-indicators/climate-change-indicators-lyme-disease",
+      "description": "Long-term national and regional Lyme incidence trends tied to climate variables. Good supporting context.",
+      "accessed": "2026-05",
+      "priority": "Medium"
+    }
+  ],
+
+  "new_recommended_sources_for_expansion": [
+    {
+      "title": "County-Level Distribution of Ixodes scapularis and Ixodes pacificus (Blacklegged and Western Blacklegged Ticks) — United States, 2015",
+      "authors": "Eisen et al.",
+      "year": 2016,
+      "url": "https://www.cdc.gov/mmwr/volumes/65/wr/mm6511a1.htm",
+      "description": "Updated national county-level maps for blacklegged ticks. Key for future Ixodes-focused purple layer expansion.",
+      "accessed": "2026-05",
+      "priority": "High"
+    },
+    {
+      "title": "CDC Tick Surveillance Data and Maps",
+      "authors": "CDC Division of Vector-Borne Diseases",
+      "year": 2025,
+      "url": "https://www.cdc.gov/ticks/data-research/facts-stats/index.html",
+      "description": "Latest 2025 county-level data for multiple tick species including Lone Star and blacklegged. Primary source for current purple blob updates.",
+      "accessed": "2026-05",
+      "priority": "High"
+    },
+    {
+      "title": "Lyme Disease Cases by County of Residence — United States, 2023",
+      "authors": "CDC",
+      "year": 2023,
+      "url": "https://www.cdc.gov/lyme/data-research/facts-stats/lyme-disease-case-map.html",
+      "description": "County-level Lyme data. Used to expand red dots to many more states in testnet.",
+      "accessed": "2026-05",
+      "priority": "High"
+    },
+    {
+      "title": "Estimating the Frequency of Lyme Disease Diagnoses, United States, 2010–2018",
+      "authors": "Kugeler et al.",
+      "year": 2021,
+      "url": "https://wwwnc.cdc.gov/eid/article/27/2/20-2728_article",
+      "description": "~476,000 annual diagnoses estimate. Important context for underreporting disclaimers.",
+      "accessed": "2026-05",
+      "priority": "Medium"
+    },
+    {
+      "title": "Climate Change Indicators: Lyme Disease",
+      "authors": "U.S. Environmental Protection Agency",
+      "year": 2021,
+      "url": "https://www.epa.gov/climate-indicators/climate-change-indicators-lyme-disease",
+      "description": "Long-term Lyme trends linked to climate. Useful for explanatory text.",
+      "accessed": "2026-05",
+      "priority": "Medium"
+    },
+    {
+      "title": "Johns Hopkins Lyme and Tickborne Diseases Dashboard",
+      "authors": "Johns Hopkins Bloomberg School of Public Health",
+      "year": 2025,
+      "url": "https://www.jhsph.edu/research/centers-and-institutes/lyme-and-tickborne-diseases/dashboard/",
+      "description": "Interactive county-level visualizations for validation and future features.",
+      "accessed": "2026-05",
+      "priority": "Medium"
+    },
+    {
+      "title": "Geographic Distribution of Suspected Alpha-gal Syndrome Cases — United States, 2017–2022",
+      "authors": "Thompson et al. (CDC MMWR)",
+      "year": 2023,
+      "url": "https://www.cdc.gov/mmwr/volumes/72/wr/mm7230a2.htm",
+      "description": "Core Alpha-gal data source (already in use).",
+      "accessed": "2026-05",
+      "priority": "High (already in use)"
+    },
+    {
+      "title": "Spatial Distribution of Counties With Records of Amblyomma americanum (Springer et al. 2014 references)",
+      "authors": "Springer et al.",
+      "year": 2014,
+      "url": "https://academic.oup.com/jme/article/51/2/342/905922",
+      "description": "Foundational historical Lone Star tick data for the purple layer.",
+      "accessed": "2026-05",
+      "priority": "Medium"
+    }
+  ],
+
+  "cdc_direct_downloads_2026": [
+    {
+      "title": "2023 Lyme Disease Cases by County (CDC CSV)",
+      "url": "https://www.cdc.gov/lyme/media/files/2025/02/LD_Case_Counts_by_County_2023_updated.csv",
+      "description": "Exact county-level reported Lyme case counts for 2023 across all US counties. Ideal for future county heatmap / choropleth layer.",
+      "category": "Lyme",
+      "type": "CSV",
+      "accessed": "2026-05",
+      "priority": "High"
+    },
+    {
+      "title": "Lyme Disease Cases by State or Locality 2008–2023 (CDC CSV)",
+      "url": "https://www.cdc.gov/lyme/media/files/2025/02/2023_CaseIncid-Lyme-Disease-Cases-by-State-or-Locality.csv",
+      "description": "State-level Lyme counts and incidence rates over time. Excellent for trends, validation, and fallback data.",
+      "category": "Lyme",
+      "type": "CSV",
+      "accessed": "2026-05",
+      "priority": "High"
+    },
+    {
+      "title": "Reported Tickborne Disease Cases by County 2019–2022 (All TBD Excel)",
+      "url": "https://www.cdc.gov/ticks/media/files/2024/05/AllTBD2022_Public.xlsx",
+      "description": "County-level cases for Lyme, Babesiosis, Anaplasmosis, Ehrlichiosis, Spotted Fever Rickettsiosis and more. Broadest county tickborne dataset.",
+      "category": "Tickborne Diseases",
+      "type": "Excel",
+      "accessed": "2026-05",
+      "priority": "High"
+    },
+    {
+      "title": "Geographic Distribution of Suspected Alpha-gal Syndrome Cases (MMWR 2023)",
+      "url": "https://www.cdc.gov/mmwr/volumes/72/wr/mm7230a2.htm",
+      "description": "County-level suspected AGS cases from lab data (2017–2022). Highest per-capita counties detailed. Cross-reference with census for rates.",
+      "category": "Alpha-gal",
+      "type": "Report + Tables",
+      "accessed": "2026-05",
+      "priority": "High (already in use)"
+    },
+    {
+      "title": "Public Use Ixodes County Table 2026 (Blacklegged Tick Surveillance)",
+      "url": "https://www.cdc.gov/ticks/media/files/2026/04/Public_Use_Ixodes_County_Table_2026_03252026.xlsx",
+      "description": "County-level established/reported status for Ixodes scapularis + associated pathogens (up to 2025 data). Best current data for actual tick presence layers.",
+      "category": "Tick Species",
+      "type": "Excel",
+      "accessed": "2026-05",
+      "priority": "High"
+    },
+    {
+      "title": "Lone Star Tick Surveillance (Amblyomma americanum)",
+      "url": "https://www.cdc.gov/ticks/data-research/facts-stats/lone-star-tick-surveillance.html",
+      "description": "County-level distribution data for the primary Alpha-gal vector. Downloadable datasets from the CDC tick surveillance hub.",
+      "category": "Tick Species",
+      "type": "Interactive + Data",
+      "accessed": "2026-05",
+      "priority": "High"
+    },
+    {
+      "title": "CDC Tick Data Research Hub (All Species)",
+      "url": "https://www.cdc.gov/ticks/data-research/facts-stats/index.html",
+      "description": "Central index to all current tick species surveillance maps, data files, and species-specific Excels (Ixodes, Lone Star, etc.).",
+      "category": "General",
+      "type": "Hub",
+      "accessed": "2026-05",
+      "priority": "High"
+    },
+    {
+      "title": "CDC WONDER NNDSS Annual Summary (Notifiable Diseases)",
+      "url": "https://wonder.cdc.gov/nndss-annual-summary.html",
+      "description": "Interactive query system for national notifiable disease data including Lyme. Useful for custom year/state extracts and incidence.",
+      "category": "General",
+      "type": "Interactive Database",
+      "accessed": "2026-05",
+      "priority": "Medium"
+    },
+    {
+      "title": "2023 Lyme Disease Cases by County (exact counts)",
+      "url": "https://www.cdc.gov/lyme/media/files/2025/02/LD_Case_Counts_by_County_2023_updated.csv",
+      "description": "County-level reported Lyme cases for 2023 — direct drop-in for heatmap. Best single-year county file available.",
+      "category": "Lyme",
+      "type": "CSV",
+      "accessed": "2026-05",
+      "priority": "High"
+    },
+    {
+      "title": "Lyme Cases by State 2008–2023 (historical trends)",
+      "url": "https://www.cdc.gov/lyme/media/files/2025/02/2023_CaseIncid-Lyme-Disease-Cases-by-State-or-Locality.csv",
+      "description": "State-level counts and incidence over 16 years. Great for animation fill-in years and trend validation.",
+      "category": "Lyme",
+      "type": "CSV",
+      "accessed": "2026-05",
+      "priority": "High"
+    },
+    {
+      "title": "All Tickborne Diseases by County 2019–2022",
+      "url": "https://www.cdc.gov/ticks/media/files/2024/05/AllTBD2022_Public.xlsx",
+      "description": "Lyme + Anaplasmosis + Babesiosis + Ehrlichiosis + Spotted Fever + more — county level. Broadest county dataset CDC publishes.",
+      "category": "Multi-disease",
+      "type": "Excel",
+      "accessed": "2026-05",
+      "priority": "High"
+    },
+    {
+      "title": "Tickborne Diseases by County 2016–2019 (older baseline)",
+      "url": "https://www.cdc.gov/ticks/resources/Reported-Tickborne-Disease-Cases-by-County-of-Residence_2016-2019.xlsx",
+      "description": "Historic county-level for multiple diseases. Fills earlier animation years.",
+      "category": "Multi-disease",
+      "type": "Excel",
+      "accessed": "2026-05",
+      "priority": "Medium"
+    },
+    {
+      "title": "2025 Lone Star Tick Surveillance (Alpha-gal vector)",
+      "url": "https://www.cdc.gov/ticks/media/files/2026/05/2025-lone-star-tick-surveillance-map-data.xlsx",
+      "description": "County-level established/reported status for Lone Star ticks — updated through 2025. MISSOURI GOLD — established in nearly every county.",
+      "category": "Tick Species",
+      "type": "Excel",
+      "accessed": "2026-05",
+      "priority": "High"
+    },
+    {
+      "title": "Ixodes (Blacklegged) Tick Surveillance 2025–2026",
+      "url": "https://www.cdc.gov/ticks/media/files/2026/04/Public_Use_Ixodes_County_Table_2026_03252026.xlsx",
+      "description": "County-level established/reported for Lyme vector. Best for Lyme density layers and multi-species purple expansion.",
+      "category": "Tick Species",
+      "type": "Excel",
+      "accessed": "2026-05",
+      "priority": "High"
+    },
+    {
+      "title": "Geographic Distribution of Suspected Alpha-gal Cases (MMWR 2023)",
+      "url": "https://www.cdc.gov/mmwr/volumes/72/wr/mm7230a2.htm",
+      "description": "County-level suspected AGS from 357k+ lab tests (2017–2022). Missouri, OK, AR, KY, VA are hotspots — raw county tables inside.",
+      "category": "Alpha-gal",
+      "type": "HTML + tables",
+      "accessed": "2026-05",
+      "priority": "High"
+    },
+    {
+      "title": "Missouri Alpha-gal Syndrome Official Estimate",
+      "url": "https://health.mo.gov/living/healthcondiseases/communicable/tickscarrydisease/ags.php",
+      "description": "7,300–34,400 Missourians affected since 2021 (DHSS). Direct counter to misinformation about tick presence.",
+      "category": "Alpha-gal",
+      "type": "State Report",
+      "accessed": "2026-05",
+      "priority": "High"
+    },
+    {
+      "title": "Missouri Tickborne Disease Story Map",
+      "url": "https://storymaps.arcgis.com/stories/298b7a6bf3dc4d079a57332c264c62f3",
+      "description": "Interactive DHSS dashboard — Ehrlichiosis, Lyme, ticks, etc. Visual + case trends for MO-specific layers.",
+      "category": "Missouri",
+      "type": "Interactive + data",
+      "accessed": "2026-05",
+      "priority": "Medium"
+    },
+    {
+      "title": "NEON Tick Abundance & Pathogen Data (ecological)",
+      "url": "https://data.neonscience.org/data-products/DP1.10093.001",
+      "description": "Standardized drag-sampling across US sites — abundance + pathogens (2014–present). High-quality density data, not just cases.",
+      "category": "Ecological / Citizen Science",
+      "type": "NEON Data Portal",
+      "accessed": "2026-05",
+      "priority": "High"
+    },
+    {
+      "title": "NEON Tick Pathogen Status",
+      "url": "https://data.neonscience.org/data-products/DP1.10092.001",
+      "description": "Pathogen testing results from NEON ticks (Borrelia, Anaplasma, Babesia, Ehrlichia, etc.). Pairs with abundance for risk modeling.",
+      "category": "Ecological / Citizen Science",
+      "type": "NEON Data Portal",
+      "accessed": "2026-05",
+      "priority": "High"
+    },
+    {
+      "title": "Arkansas DH Tickborne Disease Interactive Dashboard",
+      "url": "https://experience.arcgis.com/experience/8d5f6076b9094fb1853b27726ed6df12/page/Tickborne",
+      "description": "County-level data for Alpha-gal, RMSF, Ehrlichiosis, Tularemia, etc. by year (2021–2025). Goldmine — select any Arkansas county for exact numbers.",
+      "category": "Multi-disease + Alpha-gal",
+      "type": "Interactive ArcGIS",
+      "accessed": "2026-05",
+      "priority": "High"
+    },
+    {
+      "title": "Alpha-gal Syndrome Arkansas Surveillance (2023–July 2025)",
+      "url": "https://www.jacionline.org/article/S0091-6749(25)01398-3/fulltext",
+      "description": "5,167 reported cases across 49/75 Arkansas counties; 403 confirmed. Peer-reviewed study with demographics and northern AR hotspot data.",
+      "category": "Alpha-gal",
+      "type": "Peer-reviewed study",
+      "accessed": "2026-05",
+      "priority": "High"
+    },
+    {
+      "title": "Arkansas Alpha-gal Fact Sheet & Reporting",
+      "url": "https://healthy.arkansas.gov/programs-services/diseases-conditions/diseases-from-animals-insects/alpha-gal-allergy/",
+      "description": "Official Arkansas Department of Health page with fact sheet and data download links.",
+      "category": "Alpha-gal",
+      "type": "State Report",
+      "accessed": "2026-05",
+      "priority": "Medium"
+    },
+    {
+      "title": "Arkansas Alpha-gal Mandatory Reporting Data (2023–2025)",
+      "url": "https://experience.arcgis.com/experience/8d5f6076b9094fb1853b27726ed6df12/page/Tickborne",
+      "description": "Mandatory reporting numbers: 304 cases in 2023, 2,613 in 2024, 3,781 in 2025. Northern Arkansas is the clear hotspot.",
+      "category": "Alpha-gal",
+      "type": "State Dashboard + Reports",
+      "accessed": "2026-05",
+      "priority": "High"
+    },
+    {
+      "title": "California Lyme Disease Cases 2024 (CDPH Annual Report)",
+      "url": "https://westnile.ca.gov/pdfs/VBDSAnnualReport24.pdf",
+      "description": "96 total reported Lyme cases in California for 2024 (county-level breakdowns included).",
+      "category": "Lyme",
+      "type": "PDF Report",
+      "accessed": "2026-05",
+      "priority": "Medium"
+    },
+    {
+      "title": "Missouri DHSS Tickborne Disease Main Page",
+      "url": "https://health.mo.gov/living/healthcondiseases/communicable/tickscarrydisease/index.php",
+      "description": "Official Missouri DHSS page covering reportable tickborne diseases (RMSF, Ehrlichiosis, Tularemia, Lyme-like illness) and general surveillance information with links to reference materials.",
+      "category": "General",
+      "type": "State Page",
+      "accessed": "2026-05",
+      "priority": "Medium"
+    },
+    {
+      "title": "Show-Me Ticks Citizen Science Study",
+      "url": "https://mdc.mo.gov/magazines/missouri-conservationist/2023-02/show-me-ticks",
+      "description": "3,811 ticks collected across 33 Missouri counties (2019–2021); 89% were Lone Star ticks. Excellent baseline abundance data from citizen science.",
+      "category": "Tick Species",
+      "type": "Study / MDC Report",
+      "accessed": "2026-05",
+      "priority": "Medium"
+    },
+    {
+      "title": "Ixodes Pathogen County Table 2026",
+      "url": "https://www.cdc.gov/ticks/media/files/2026/04/Public_Use_Ixodes_Pathogens_County_Table_2026_04292026.xlsx",
+      "description": "County-level pathogens found in I. pacificus and I. scapularis (Borrelia, Anaplasma, etc.). Direct infection data for Lyme/anaplasmosis in Western ticks.",
+      "category": "Pathogens",
+      "type": "Excel",
+      "accessed": "2026-05",
+      "priority": "High"
+    },
+    {
+      "title": "California Lyme & Tick Surveillance Story Map",
+      "url": "https://storymaps.arcgis.com/stories/f64d0c19a3ab42cf90e8ce38397e96e0",
+      "description": "Interactive county-level Lyme incidence (2014–2024) + I. pacificus testing results (positives for Borrelia). Best visual for CA — click counties for exact case counts and tick testing data.",
+      "category": "California",
+      "type": "Interactive ArcGIS Story Map",
+      "accessed": "2026-05",
+      "priority": "High"
+    },
+    {
+      "title": "Oregon Tickborne Disease Statistics & Maps",
+      "url": "https://www.oregon.gov/oha/ph/diseasesconditions/communicabledisease/pages/ticks.aspx",
+      "description": "Graphs and maps for Lyme, RMSF, relapsing fever, etc. (low local Lyme). Shows how rare local Lyme is in Oregon.",
+      "category": "Oregon",
+      "type": "State Dashboard",
+      "accessed": "2026-05",
+      "priority": "Medium"
+    },
+    {
+      "title": "Washington Tick Submission Dashboard",
+      "url": "https://doh.wa.gov/data-and-statistical-reports/washington-tracking-network-wtn/tick-data/tick-dashboard",
+      "description": "Citizen-submitted ticks by species, county, year, host. Excellent passive surveillance data from public submissions.",
+      "category": "Washington",
+      "type": "Interactive Dashboard",
+      "accessed": "2026-05",
+      "priority": "High"
+    },
+    {
+      "title": "Washington Alpha-gal Case Report (I. pacificus linked)",
+      "url": "https://wwwnc.cdc.gov/eid/article/31/4/24-0577_article",
+      "description": "2025 documented AGS case from local Western blacklegged tick bite. Rare West Coast AGS evidence.",
+      "category": "Alpha-gal",
+      "type": "Case Report",
+      "accessed": "2026-05",
+      "priority": "Medium"
+    },
+    {
+      "title": "CDC Tick Bite Data Tracker (ER Visits for Tick Bites)",
+      "url": "https://www.cdc.gov/ticks/data-research/facts-stats/tick-bite-data-tracker.html",
+      "description": "National syndromic surveillance of emergency department visits for tick bites — by week, month, region, age, sex. Best real-time proxy for disease burden. 2026 spring data showed highest ER visit rates since 2017 in Northeast + Midwest.",
+      "category": "Tick Bites / Burden",
+      "type": "Interactive Dashboard",
+      "accessed": "2026-05",
+      "priority": "High"
+    },
+    {
+      "title": "Missouri ER Visits for Tick Bites (2026 Spring Surge)",
+      "url": "https://www.komu.com/news/midmissourinews/tick-bites-in-the-midwest-raise-concerns-over-alpha-gal-syndrome/article_1b4599de-ad23-4f50-aad4-af04bc5e9dd7.html",
+      "description": "Midwest (incl. Missouri) sharp rise: 39 per 100,000 in March → 137 per 100,000 in April 2026. Directly tied to Lone Star activity and rising AGS warnings. University Health (KC) opened dedicated AGS hotline.",
+      "category": "Missouri ER Burden",
+      "type": "CDC + Local News",
+      "accessed": "2026-05",
+      "priority": "High"
+    },
+    {
+      "title": "Oklahoma Alpha-gal Syndrome Mandatory Reporting (SB 1644, 2026)",
+      "url": "https://oklahomavoice.com/2026/05/13/alpha-gal-syndrome-added-to-oklahomas-list-of-tick-borne-illnesses/",
+      "description": "SB 1644 signed May 2026 — AGS becomes reportable Nov 1, 2026. Seroprevalence ~35% (military recruits); estimated 70,000–140,000 potential full AGS cases. Multiple reports of repeated ER visits for anaphylaxis.",
+      "category": "Oklahoma AGS",
+      "type": "State Law + Study",
+      "accessed": "2026-05",
+      "priority": "High"
+    },
+    {
+      "title": "Texas Tickborne Disease Cases (DSHS 2020–2026)",
+      "url": "https://www.dshs.texas.gov/disease-surveillance-epidemiology-section/zoonosis-control/zoonotic-disease-cases/human-cases-2020-2024",
+      "description": "Low Lyme (21 cases in 2024, 19 in 2025 YTD); Ehrlichiosis steady (13–14 cases/year). Lone Star tick widespread across the state — expected high AGS burden despite low reported Lyme.",
+      "category": "Texas Infections",
+      "type": "State Surveillance Table",
+      "accessed": "2026-05",
+      "priority": "High"
+    },
+    {
+      "title": "Texas DSHS Zoonotic Cases 2020–2026 (Detailed)",
+      "url": "https://www.dshs.texas.gov/disease-surveillance-epidemiology-section/zoonosis-control/zoonotic-disease-cases/human-cases-2020-2024",
+      "description": "Lyme: 19–21 cases/year (mostly imported). Ehrlichiosis: 13–14/year. Spotted Fever Rickettsiosis: 15–18/year. Useful for a broader 'tickborne illness' red dot layer beyond just Lyme.",
+      "category": "Infections (non-AGS)",
+      "type": "State Table",
+      "accessed": "2026-05",
+      "priority": "High"
+    },
+    {
+      "title": "Texas Alpha-gal Syndrome – Growing Incidence 2026",
+      "url": "https://txnaturalpediatrics.com/2026/04/02/news-alert-growing-incidence-of-alpha-gal/",
+      "description": "Lone Star ticks widespread across Texas. AGS cases increasing, but no mandatory reporting yet → no county-level numbers available. Good for Texas-wide purple blob popup notes.",
+      "category": "Alpha-gal",
+      "type": "Health Alert + News",
+      "accessed": "2026-05",
+      "priority": "High"
+    },
+    {
+      "title": "Alpha-gal IgE Prevalence in U.S. Military Recruits (2024 study)",
+      "url": "https://www.jaci-inpractice.org/article/S2213-2198(23)01201-1/abstract",
+      "description": "6.0% overall positivity; highest in AR (39%), OK (35%), MO (29%). Closely tracks Lone Star tick range. Strong South burden indicator.",
+      "category": "Alpha-gal (seroprevalence)",
+      "type": "Peer-reviewed seroprevalence study",
+      "accessed": "2026-05",
+      "priority": "High"
+    },
+    {
+      "title": "AGS Healthcare Utilization Studies (Anaphylaxis & ER/Hospital Burden)",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5932728/ + https://alphagalaction.org/research-and-epidemiology/",
+      "description": "Multiple studies show >50% of AGS patients experience anaphylaxis requiring ED visits (some multiple hospitalizations). Delayed diagnosis drives high costs. Underdiagnosed AGS in South/Midwest leads to repeated ER visits.",
+      "category": "Alpha-gal Burden",
+      "type": "Peer-reviewed papers",
+      "accessed": "2026-05",
+      "priority": "High"
+    }
+  ]
+}

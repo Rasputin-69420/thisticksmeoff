@@ -1,0 +1,381 @@
+{
+  "metadata": {
+    "title": "Lyme Disease and Alpha-Gal Syndrome (AGS) Compiled US Database",
+    "subtitle": "Focus: New England (esp. Massachusetts, Nantucket) and Appalachian (e.g. West Virginia)",
+    "compiled_by": "Grok (xAI) - May 28, 2026",
+    "version": "1.0",
+    "description": "Aggregated reported/suspected case data from CDC, state health depts, MMWR, Johns Hopkins, and secondary sources. Significant underreporting applies. See sources.json for full attribution and links.",
+    "limitations": "Lyme: passive surveillance, case definition changes (2022), residence not exposure. AGS: lab-suspected only, not notifiable nationally. No full zip-level longitudinal public data available.",
+    "cumulative_lyme_reported_1982_to_2023_approx": 933000,
+    "estimated_annual_lyme_diagnoses_recent_us": 476000,
+    "ags_estimated_affected_us": "up to 450000"
+  },
+  "lyme_disease": {
+    "national_yearly_reported_cases_1996_2023": [
+      {
+        "Year": 1996,
+        "Cases": 16455
+      },
+      {
+        "Year": 1997,
+        "Cases": 12801
+      },
+      {
+        "Year": 1998,
+        "Cases": 16801
+      },
+      {
+        "Year": 1999,
+        "Cases": 16273
+      },
+      {
+        "Year": 2000,
+        "Cases": 17730
+      },
+      {
+        "Year": 2001,
+        "Cases": 17029
+      },
+      {
+        "Year": 2002,
+        "Cases": 23763
+      },
+      {
+        "Year": 2003,
+        "Cases": 21273
+      },
+      {
+        "Year": 2004,
+        "Cases": 19804
+      },
+      {
+        "Year": 2005,
+        "Cases": 23305
+      },
+      {
+        "Year": 2006,
+        "Cases": 19931
+      },
+      {
+        "Year": 2007,
+        "Cases": 27444
+      },
+      {
+        "Year": 2008,
+        "Cases": 35198
+      },
+      {
+        "Year": 2009,
+        "Cases": 38468
+      },
+      {
+        "Year": 2010,
+        "Cases": 30158
+      },
+      {
+        "Year": 2011,
+        "Cases": 33097
+      },
+      {
+        "Year": 2012,
+        "Cases": 30831
+      },
+      {
+        "Year": 2013,
+        "Cases": 36307
+      },
+      {
+        "Year": 2014,
+        "Cases": 33461
+      },
+      {
+        "Year": 2015,
+        "Cases": 38069
+      },
+      {
+        "Year": 2016,
+        "Cases": 36429
+      },
+      {
+        "Year": 2017,
+        "Cases": 42743
+      },
+      {
+        "Year": 2018,
+        "Cases": 33666
+      },
+      {
+        "Year": 2019,
+        "Cases": 34945
+      },
+      {
+        "Year": 2020,
+        "Cases": 18000
+      },
+      {
+        "Year": 2021,
+        "Cases": 24611
+      },
+      {
+        "Year": 2022,
+        "Cases": 62551
+      },
+      {
+        "Year": 2023,
+        "Cases": 89468
+      }
+    ],
+    "us_2023_cases_by_state_or_locality": {
+      "Alabama": 36,
+      "Alaska": 2,
+      "Arizona": 16,
+      "Arkansas": 5,
+      "California": 109,
+      "Colorado": 32,
+      "Connecticut": 3239,
+      "Delaware": 349,
+      "District of Columbia": 108,
+      "Florida": 271,
+      "Georgia": 18,
+      "Idaho": 11,
+      "Illinois": 372,
+      "Indiana": 257,
+      "Iowa": 212,
+      "Kansas": 12,
+      "Kentucky": 120,
+      "Louisiana": 15,
+      "Maine": 2942,
+      "Maryland": 2470,
+      "Massachusetts": 9715,
+      "Michigan": 1152,
+      "Minnesota": 2938,
+      "Mississippi": 4,
+      "Missouri": 16,
+      "Montana": 11,
+      "Nebraska": 5,
+      "Nevada": 14,
+      "New Hampshire": 1573,
+      "New Jersey": 7224,
+      "New Mexico": 11,
+      "New York": 22173,
+      "North Carolina": 228,
+      "North Dakota": 15,
+      "Ohio": 1307,
+      "Oklahoma": 3,
+      "Oregon": 61,
+      "Pennsylvania": 16671,
+      "Rhode Island": 2852,
+      "South Carolina": 55,
+      "South Dakota": 7,
+      "Tennessee": 50,
+      "Texas": 27,
+      "Utah": 16,
+      "Vermont": 1445,
+      "Virginia": 1747,
+      "Washington": 25,
+      "West Virginia": 3242,
+      "Wisconsin": 6283,
+      "Wyoming": 2,
+      "US_Total": 89468
+    },
+    "massachusetts_historical_reported_cases": [
+      {
+        "Year": "Pre-2015",
+        "Reported_Lyme_Cases_MA": "Typically 3000-5000 annually",
+        "Notes": "Intensive surveillance with follow-up"
+      },
+      {
+        "Year": 2015,
+        "Reported_Lyme_Cases_MA": 4370,
+        "Notes": "Last year with intensive follow-up; confirmed+probable"
+      },
+      {
+        "Year": 2016,
+        "Reported_Lyme_Cases_MA": 207,
+        "Notes": "Surveillance change: no routine follow-up, sharp drop"
+      },
+      {
+        "Year": 2017,
+        "Reported_Lyme_Cases_MA": 416,
+        "Notes": "Low due to reporting practices"
+      },
+      {
+        "Year": 2018,
+        "Reported_Lyme_Cases_MA": 189,
+        "Notes": "Low"
+      },
+      {
+        "Year": 2019,
+        "Reported_Lyme_Cases_MA": 165,
+        "Notes": "Low"
+      },
+      {
+        "Year": 2020,
+        "Reported_Lyme_Cases_MA": 103,
+        "Notes": "Low (also COVID)"
+      },
+      {
+        "Year": 2021,
+        "Reported_Lyme_Cases_MA": 28,
+        "Notes": "Lowest"
+      },
+      {
+        "Year": 2022,
+        "Reported_Lyme_Cases_MA": 5102,
+        "Notes": "New lab-only criteria, increase"
+      },
+      {
+        "Year": 2023,
+        "Reported_Lyme_Cases_MA": 9728,
+        "Notes": "Probable cases under new criteria; high incidence"
+      },
+      {
+        "Year": 2024,
+        "Reported_Lyme_Cases_MA": 8840,
+        "Notes": "Similar"
+      },
+      {
+        "Year": 2025,
+        "Reported_Lyme_Cases_MA": 8619,
+        "Notes": "Probable; statewide incidence ~118.5 per 100k"
+      },
+      {
+        "Year": "2026 YTD (to Apr)",
+        "Reported_Lyme_Cases_MA": 1184,
+        "Notes": "Preliminary"
+      }
+    ],
+    "nantucket_county_confirmed_cases_2000_2020": [
+      {
+        "Year": 2000,
+        "Cases_Confirmed_Nantucket_County": 39
+      },
+      {
+        "Year": 2001,
+        "Cases_Confirmed_Nantucket_County": 43
+      },
+      {
+        "Year": 2002,
+        "Cases_Confirmed_Nantucket_County": 54
+      },
+      {
+        "Year": 2003,
+        "Cases_Confirmed_Nantucket_County": 37
+      },
+      {
+        "Year": 2004,
+        "Cases_Confirmed_Nantucket_County": 50
+      },
+      {
+        "Year": 2005,
+        "Cases_Confirmed_Nantucket_County": 29
+      },
+      {
+        "Year": 2006,
+        "Cases_Confirmed_Nantucket_County": 11
+      },
+      {
+        "Year": 2007,
+        "Cases_Confirmed_Nantucket_County": 61
+      },
+      {
+        "Year": 2008,
+        "Cases_Confirmed_Nantucket_County": 44
+      },
+      {
+        "Year": 2009,
+        "Cases_Confirmed_Nantucket_County": 46
+      },
+      {
+        "Year": 2010,
+        "Cases_Confirmed_Nantucket_County": 32
+      },
+      {
+        "Year": 2011,
+        "Cases_Confirmed_Nantucket_County": 46
+      },
+      {
+        "Year": 2012,
+        "Cases_Confirmed_Nantucket_County": 67
+      },
+      {
+        "Year": 2013,
+        "Cases_Confirmed_Nantucket_County": 59
+      },
+      {
+        "Year": 2014,
+        "Cases_Confirmed_Nantucket_County": 57
+      },
+      {
+        "Year": 2015,
+        "Cases_Confirmed_Nantucket_County": 34
+      },
+      {
+        "Year": 2016,
+        "Cases_Confirmed_Nantucket_County": 6
+      },
+      {
+        "Year": 2017,
+        "Cases_Confirmed_Nantucket_County": 4
+      },
+      {
+        "Year": 2018,
+        "Cases_Confirmed_Nantucket_County": 0
+      },
+      {
+        "Year": 2019,
+        "Cases_Confirmed_Nantucket_County": 1
+      },
+      {
+        "Year": 2020,
+        "Cases_Confirmed_Nantucket_County": 3
+      }
+    ]
+  },
+  "alpha_gal_syndrome": {
+    "suspected_ags_cases_yearly": [
+      {
+        "Year": "2010-2016",
+        "Positive_Tests_Suspected_AGS": 20211,
+        "Notes": "From earlier CDC summary (part of 34k 2010-2018)"
+      },
+      {
+        "Year": 2017,
+        "Positive_Tests_Suspected_AGS": 13371,
+        "Notes": "CDC MMWR Eurofins Viracor data"
+      },
+      {
+        "Year": 2018,
+        "Positive_Tests_Suspected_AGS": 13821,
+        "Notes": ""
+      },
+      {
+        "Year": 2019,
+        "Positive_Tests_Suspected_AGS": 17372,
+        "Notes": ""
+      },
+      {
+        "Year": 2020,
+        "Positive_Tests_Suspected_AGS": 16936,
+        "Notes": ""
+      },
+      {
+        "Year": 2021,
+        "Positive_Tests_Suspected_AGS": 18885,
+        "Notes": "Peak testing year"
+      },
+      {
+        "Year": 2022,
+        "Positive_Tests_Suspected_AGS": 9633,
+        "Notes": "Drop possibly due to new labs entering market"
+      }
+    ],
+    "summary": {
+      "total_suspected_2010_2022": 110229,
+      "total_positive_tests_2017_2022": 90018,
+      "positivity_rate_2017_2022_percent": 30.5,
+      "geographic_pattern": "Predominantly southern, midwestern, and mid-Atlantic US (lone star tick range); some Northeast clusters (e.g. Suffolk County NY)"
+    }
+  },
+  "additional_notes_from_readme": "Lyme Disease and Alpha-Gal Syndrome (AGS) Compiled Database - US Focus, Emphasis on New England/Appalachian (e.g. MA, WV, Nantucket)\n\nSources: Primarily CDC (NNDSS surveillance data, MMWR reports, county CSVs), Massachusetts DPH, Johns Hopkins Lyme Tracker references, peer-reviewed (e.g. MMWR 2023 on AGS, various MMWR on Lyme), secondary like tickcheck.com for Nantucket granular. Data as of ~2025-2026 publications. Note: Reported cases undercount true incidence significantly (est. 10x or more for Lyme; AGS not notifiable).\n\nKEY TOTALS:\n- Lyme reported cases: ~844,000+ from 1982-2022 (per literature); +89,468 in 2023 = ~933k+ cumulative reported. Actual new diagnoses/treatments est. ~476,000 per year recently (CDC claims data analysis); cumulative affected in millions including chronic.\n- AGS: >110,000 suspected cases identified 2010-2022 via lab testing (one major lab); est. up to 450,000 people affected nationwide. Positivity ~30% among tested. Rising trend until 2022.\n\nGEOGRAPHICAL SPREAD & FOCUS AREAS:\n- Lyme: Endemic core Northeast (NY, PA, CT, MA, NJ, ME, NH, VT, RI), Upper Midwest (WI, MN). Expanding: high in WV (3,242 cases 2023, notable for Appalachian), PA/NY highest volume. Since 1995, significant westward/southward expansion per CDC maps (county dot maps show spread). ~90% cases from 15 high-incidence jurisdictions historically. County-level data available (e.g. 2023 CDC CSV with 2001-2023 per county; 1,000s of counties affected cumulatively).\n- Nantucket, MA: Historic epicenter (\"Nantucket fever\"); 723 confirmed cases 2000-2020 (avg ~34/yr); 15% lifetime prevalence (2001 study). High tick infection rates. Recent MA reports combine with Dukes (low absolute due to pop ~14k).\n- MA overall: High incidence state (3rd or so nationally); 2023: 9,715 cases (~139/100k est.); recent years ~8-9k under new criteria. Cape Cod/Barnstable, Berkshire high rates. Surveillance changes (intensive follow-up abandoned ~2016-2021 causing drop; new lab criteria 2022+ rebound).\n- Appalachian e.g. WV: Emerging/high 2023 (top 5 states); part of expanding range.\n- AGS: Primarily southern/midwestern/mid-Atlantic (lone star tick Amblyomma americanum range: AR, OK, MO, KY, VA, etc. high); some NE spillover (e.g. Suffolk NY high absolute). Not Lyme (blacklegged tick).\n\nDATA FILES IN THIS DATABASE (singular compiled resource):\n1. lyme_national_yearly_cases.csv : US total reported cases 1996-2023 + notes on pre-1996/cumulative/actual estimates.\n2. lyme_2023_state_cases.csv : Full state/locality breakdown for most recent year (top: NY 22k, PA 16.7k, MA 9.7k, WI 6.3k, WV 3.2k).\n3. lyme_ma_historical.csv : MA statewide 2015-2026 YTD with surveillance notes (pre-2015 ~4k+, dip, rebound ~9k).\n4. nantucket_lyme_cases_2000_2020.csv : Granular county-level historical for epicenter.\n5. alpha_gal_syndrome_suspected_cases.csv : Yearly positives 2017-2022 + totals, demo/geo summary, estimates.\n\nADDITIONAL RESOURCES (user should download for full granularity):\n- CDC Lyme county 2023 (and historical columns): https://www.cdc.gov/lyme/media/files/2025/02/LD_Case_Counts_by_County_2023_updated.csv (has 2001-2023 per county!)\n- CDC state/year tables and maps: https://www.cdc.gov/lyme/data-research/facts-stats/surveillance-data-1.html and case-map.html (dot maps 1995/2010/2023 showing spread).\n- MA DPH annual reports: https://www.mass.gov/lists/tick-borne-disease-surveillance-summaries-and-data (county possible in full DOCX).\n- Johns Hopkins Lyme Tracker: https://www.hopkinslymetracker.org/ (interactive county maps, data explorer, download).\n- AGS MMWR: https://www.cdc.gov/mmwr/volumes/72/wr/mm7230a2.htm (county-level suspected rates map 2017-2022).\n- CDC WONDER NNDSS for custom queries.\n\nLIMITATIONS & NOTES:\n- Lyme reporting: Passive surveillance; changes in case defs (2022 revision increased counts ~1.7x); underreporting high (esp. early/mild); residence not exposure site; COVID impacted 2020-21.\n- AGS: Lab-based suspected only (no national surveillance pre some states); one lab dominant; clinical confirmation lacking in data; expanding with tick range (climate/deer factors).\n- Granular (zip/county over time): Partial; best for recent Lyme county (CDC file), AGS county rates in MMWR, MA limited. No full zip historical public.\n- Focus areas prioritized: New England (MA detailed + Nantucket), Appalachian (WV highlighted in 2023 data).\n\nVISUALIZATIONS & MAPS:\n- CDC provides excellent time-point maps (1995: limited NE; 2010: broader; 2023: widespread NE/Midwest + emerging elsewhere) - one dot/county/case. Downloadable.\n- For cumulative growth: See national yearly CSV (steady rise with jumps post-changes); geographical: expansion from CT/MA/NY core outward.\n- Suggested: Use CDC county CSV + GIS software (QGIS/ArcGIS) or JHU explorer for custom cumulative/animated maps. Python (pandas here) for analysis.\n- Example plots generated if possible (see artifacts for any PNGs).\n\nThis singular database aggregates max publicly extractable data from searches/browses. For full raw, download linked CSVs. Actual infections >> reported. Prevention key: tick checks, repellents, especially in endemic/expanding areas like New England, WV, etc.\n\nCompiled May 2026 by Grok/xAI analysis of CDC, state, JHU sources."
+}

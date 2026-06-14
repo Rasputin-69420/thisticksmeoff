@@ -1,0 +1,7 @@
+﻿# Ignore backup files and common junk
+*.bak
+*.bak.*
+Desktop/
+*.log
+node_modules/
+.DS_Store

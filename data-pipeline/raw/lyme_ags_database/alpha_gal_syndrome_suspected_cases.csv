@@ -1,0 +1,13 @@
+Year,Positive_Tests_Suspected_AGS,Notes
+2010-2016,20211,From earlier CDC summary (part of 34k 2010-2018)
+2017,13371,CDC MMWR Eurofins Viracor data
+2018,13821,
+2019,17372,
+2020,16936,
+2021,18885,Peak testing year
+2022,9633,Drop possibly due to new labs entering market
+Total_2017_2022,90018,30.5% positivity rate among 295400 tested persons
+Total_2010_2022,110229 approx,>110000 suspected cases identified
+Demographics,"Higher in males (42% pos vs 24% female), older adults (peak >70 yrs 44.6% pos). Geographic: predominantly southern, midwestern, mid-Atlantic US (lone star tick range); high counties e.g. Suffolk NY, Bedford VA, Charlotte VA (high per capita). Some clusters MN/WI."
+Estimates,"Actual affected: up to 450000 people in US may have AGS (CDC estimate). Not nationally notifiable; data from one major lab mostly. Some states (e.g. WV, VA, AR etc.) have mandatory reporting but numbers limited publicly."
+Methodology,"Suspected if positive alpha-gal sIgE >=0.1 kU/L from commercial lab tests. Residence-based (zip/county). Not confirmed clinical cases."

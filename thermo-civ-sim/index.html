@@ -142,7 +142,7 @@
     </div>
 
     <h3>Monte Carlo Analysis (v69.420)</h3>
-    <button onclick="runMonteCarlo(200)" style="font-size:10px; padding:3px 6px; margin-bottom:4px;">Run Monte Carlo (200 trials per preset)</button>
+    <button onclick="runMonteCarlo(20)" style="font-size:10px; padding:3px 6px; margin-bottom:4px;">Run Monte Carlo (20 trials per preset)</button>
     <div id="mcStatus" style="font-size:9px; color:#555; margin-bottom:4px;">Click to analyze historical accuracy of coeff profiles.</div>
   </div>
 
@@ -430,7 +430,7 @@ function highlightPreset(name) {
   if (btn) btn.classList.add('active');
 }
 
-function runMonteCarlo(trials = 200) {
+function runMonteCarlo(trials = 20) {
   const profiles = ['monteCarloTuned'];
   const presetNames = ['1776', 'minimal', 'highPolitical', 'coldWar', 'techBoom', 'romanRepublic', 'romanHighEmpire', 'romanCrisis3rd', 'romanLateWest', 'maoistChina', 'stalinistUSSR', 'bronzeAge', '2026America'];
 
@@ -1436,7 +1436,7 @@ function init() {
   highlightPreset('1776');
 
   // Auto-run a very small demo MC on load (20 trials) so you see real numbers in console immediately
-  // (full button uses 200+ for accuracy)
+  // (full button uses 20 for speed)
   setTimeout(() => {
     console.log('%c[Auto demo MC v69.420] Running tiny 20-trial demo for quick feedback...', 'color:orange');
     // Call a light version
@@ -1444,7 +1444,7 @@ function init() {
       // Temporarily override trials for demo
       const orig = runMonteCarlo;
       // We can't easily override, so just log a note
-      console.log('%c[Note] Click the Monte Carlo button for full 200-trial accurate results across all profiles/presets.', 'color:gray');
+      console.log('%c[Note] Click the Monte Carlo button for 20-trial results across all profiles/presets.', 'color:gray');
     }
   }, 1500);
 

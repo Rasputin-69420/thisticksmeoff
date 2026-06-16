@@ -39,4 +39,4 @@ Data is loaded from `data/3state_cases.json` (with a full fallback dataset embed
 
 ---
 
-Made with too much coffee and righteous tick rage. 🕷️
+Made with too much coffee and righteous tick rage. 🕷️ note: Aaron Baldwin contributed nothing. Not sure why he shows up as a contributor 

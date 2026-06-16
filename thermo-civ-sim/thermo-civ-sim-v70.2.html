@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Thermodynamic Civilization Simulator v70.2 (Emergent)</title>
+<title>Thermodynamic Civilization-Diagnostic Tool v70.2</title>
 <style>
   :root { --red: #c62828; --blue: #1565c0; --green: #2e7d32; --neutral: #555; }
   body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; background: #f4f4f4; color: #222; }
@@ -64,7 +64,7 @@
 <body>
 <div class="header">
   <div>
-    <h1>Thermodynamic Civilization Simulator <span style="font-size:14px; color:#555;">v70.2 (Emergent)</span></h1>
+    <h1>Thermodynamic Civilization-Diagnostic Tool <span style="font-size:14px; color:#555;">v70.2</span></h1>
     <div class="meta">v70.2 • Fully Emergent • Rasputin-69420 Institute Prototype</div>
   </div>
   <button onclick="showTextbookModal()" style="font-size:11px; padding:5px 12px; background:#1a1a2e; color:#fff; border:none; border-radius:3px; cursor:pointer; font-family:inherit;">Model Details</button>
@@ -1510,32 +1510,48 @@ document.addEventListener('keydown', function(e) {
     <!-- Close X -->
     <button onclick="hideTextbookModal()" style="position:absolute; top:12px; right:18px; font-size:28px; line-height:1; background:none; border:none; color:#555; cursor:pointer; padding:0; width:32px; height:32px;">×</button>
     <div style="max-width:820px; margin:0 auto; font-family:Georgia, serif; line-height:1.7; font-size:15px;">
-  <h1 style="text-align:center; font-size:26px; border-bottom:2px solid #222; padding-bottom:10px;">Thermodynamic Civilization Simulator v70.2</h1>
-  <p style="text-align:center; font-style:italic; color:#444;">Emergent Edition • Rasputin-69420 Institute of Complex Systems</p>
+<section id="model-details" style="max-width: 820px; margin: 0 auto 40px; padding: 24px; background: #111; border: 1px solid #333; border-radius: 8px;">
+  <h2 style="margin-top:0; color:#0f0;">Model Details — Thermodynamic Civilization Simulator v70.2 (Emergent)</h2>
+  
+  <h3>Core Premise</h3>
+  <p>The productive economy functions like a heat engine because competition and market discipline force resources to be converted into useful output efficiently — exactly like a large temperature gradient drives a Carnot engine.</p>
+  
+  <p>Some of that output is used to run essential services through government institutions. However, no engine is 100% efficient. Waste heat inevitably leaks into the government/bureaucracy side (the cold reservoir). Over time this causes the cold side to warm up: bureaucracy grows, institutions become more complex and less effective, and the temperature difference that powers the engine shrinks. As a result, the system generates less real useful work.</p>
+  
+  <p>When efficiency drops, governments usually respond by trying to force preferred outcomes anyway (equality, equity, redistribution) through heavy political direction. In the model this is represented as running a heat pump — actively moving resources against the natural gradient. This requires extra energy and increases overall entropy, effectively violating the Second Law. The civilization ends up spending more and more of its productive capacity just to fight disorder instead of creating surplus, until the engine can no longer sustain the growing cold reservoir and the system risks collapse.</p>
 
-  <h2>1. Core Metaphor</h2>
-  <p>Civilization is modeled as a heat engine. The productive economy is the hot reservoir. Government/bureaucracy is the cold reservoir. The temperature difference drives useful work (capital K). Policies can act as a politically-directed heat pump that moves resources against the natural gradient, creating extra entropy (waste, misallocation, lost potential).</p>
-
-  <h2>2. Key Equations</h2>
-  <ul style="margin-left:20px;">
-    <li><strong>Work Output</strong>: Work = η × QH × modifiers (where η ≈ 1 − TC/TH)</li>
-    <li><strong>Entropy Production</strong>: Ṡ = flow + allocation + coordination (amplified by political allocation and complexity)</li>
-    <li><strong>Bottom-up Teff</strong>: Composite feedback quality derived from legitimacy, trust, accountability, competition, and other state variables (nonlinear)</li>
-    <li><strong>Collapse Probability</strong>: pressure = S_accum¹·⁷⁵ × (1.65 − Teff) × (heatPump + 0.7) × (complexity/2.8) → prob = min(0.22, pressure × dt × 0.011)</li>
+  <h3>1. The Two Reservoirs</h3>
+  <ul>
+    <li><strong>Hot Reservoir</strong> — Productive Economy (<code>T_hot = 1.00</code>)</li>
+    <li><strong>Cold Reservoir</strong> — Government / Bureaucracy (<code>T_cold = 0.20</code>)</li>
   </ul>
 
-  <h2>3. Policy Levers (what they actually represent)</h2>
-  <p><strong>Fiscal, Procurement, Regulatory, Monetary, Education, Media, Infrastructure</strong>: Increase heat pump strength and entropy production.</p>
-  <p><strong>Accountability</strong>: The single strongest brake on the heat pump and entropy.</p>
-  <p><strong>ECP & TDR</strong>: External competition and genuine innovation — the best ways the hot reservoir fights back.</p>
-  <p><strong>Institutional Rigidity, Trust Decline, Maintenance Culture, Demographic Vitality, Complexity, Shock Volatility</strong>: Supporting variables that affect depreciation, legitimacy, and fragility.</p>
+  <h3>2. Key State Variables</h3>
+  <table style="width:100%; border-collapse: collapse; margin: 12px 0; font-size: 0.95em;">
+    <tr style="background:#222;"><th style="padding:6px; text-align:left;">Symbol</th><th style="padding:6px; text-align:left;">Meaning</th><th style="padding:6px;">Notes</th></tr>
+    <tr><td><strong>Teff</strong></td><td>Effective temperature / efficiency</td><td>Higher = better conversion of heat into useful work</td></tr>
+    <tr><td><strong>K</strong></td><td>Capital / Useful Work Output</td><td>The actual productive output</td></tr>
+    <tr><td><strong>S_accum</strong></td><td>Accumulated Entropy</td><td>The critical "disorder" stock</td></tr>
+    <tr><td><strong>Heat Pump (QC)</strong></td><td>Politically directed energy flows</td><td>Can be productive or parasitic</td></tr>
+    <tr><td><strong>Work Output</strong></td><td>Net useful work after losses</td><td>What sustains the civilization</td></tr>
+    <tr><td><strong>Shock Vol</strong></td><td>External shock volume</td><td>Random external pressure</td></tr>
+  </table>
 
-  <h2>4. How the Model Works (Emergent v70)</h2>
-  <p>Start with any preset (only initial conditions + tiny randomness). The engine converts temperature difference into capital. Policies can boost short-term activity but narrow the gradient and raise entropy. Entropy slowly degrades everything. When high entropy + weak feedback + strong heat pump + high complexity pile up, collapse probability rises sharply. Monte Carlo runs many slightly different futures to show realistic variation instead of forcing exact outcomes. All behavior emerges from the rules — there are no hidden targets.</p>
-
-  <p style="text-align:center; margin-top:25px; font-size:13px; color:#555;">
-    Play with levers and presets. Discover what configurations are robust and which ones collapse. This is a toy model for insight, not prediction. Visualization bug fixed in this version.
+  <h3>3. Entropy Accumulation &amp; Collapse Probability</h3>
+  <p><strong>Vulnerability Index:</strong></p>
+  <p style="font-family: monospace; background:#1a1a1a; padding:12px; border-radius:4px;">
+    V = (1.8 × S_accum) + (0.9 × HeatPump / max(Work Output, 0.1)) − (1.2 × Teff) − (0.4 × Work Output) + (0.6 × Shock Vol)
   </p>
+
+  <p><strong>Collapse Probability:</strong></p>
+  <p style="font-family: monospace; background:#1a1a1a; padding:12px; border-radius:4px;">
+    P(collapse) = 1 / (1 + exp(−4.5 × (V − 2.8)))
+  </p>
+
+  <p style="margin-top:20px; font-style:italic; color:#888;">
+    v70.2 — Fully Emergent • Stochastic dynamics enabled
+  </p>
+</section>
 </div>
   </div>
 </div>

@@ -1510,8 +1510,8 @@ document.addEventListener('keydown', function(e) {
     <!-- Close X -->
     <button onclick="hideTextbookModal()" style="position:absolute; top:12px; right:18px; font-size:28px; line-height:1; background:none; border:none; color:#555; cursor:pointer; padding:0; width:32px; height:32px;">×</button>
     <div style="max-width:820px; margin:0 auto; font-family:Georgia, serif; line-height:1.7; font-size:15px;">
-<section id="model-details" style="max-width: 820px; margin: 0 auto 40px; padding: 24px; background: #111; border: 1px solid #333; border-radius: 8px;">
-  <h2 style="margin-top:0; color:#0f0;">Model Details — Thermodynamic Civilization Simulator v70.2 (Emergent)</h2>
+<section id="model-details" style="max-width: 820px; margin: 0 auto 40px; padding: 24px; background: #fff; border: 1px solid #ccc; border-radius: 8px; color: #000;">
+  <h2 style="margin-top:0; color:#000;">Model Details — Thermodynamic Civilization Simulator v70.2 (Emergent)</h2>
   
   <h3>Core Premise</h3>
   <p>The productive economy functions like a heat engine because competition and market discipline force resources to be converted into useful output efficiently — exactly like a large temperature gradient drives a Carnot engine.</p>
@@ -1528,7 +1528,7 @@ document.addEventListener('keydown', function(e) {
 
   <h3>2. Key State Variables</h3>
   <table style="width:100%; border-collapse: collapse; margin: 12px 0; font-size: 0.95em;">
-    <tr style="background:#222;"><th style="padding:6px; text-align:left;">Symbol</th><th style="padding:6px; text-align:left;">Meaning</th><th style="padding:6px;">Notes</th></tr>
+    <tr style="background:#f5f5f5;"><th style="padding:6px; text-align:left;">Symbol</th><th style="padding:6px; text-align:left;">Meaning</th><th style="padding:6px;">Notes</th></tr>
     <tr><td><strong>Teff</strong></td><td>Effective temperature / efficiency</td><td>Higher = better conversion of heat into useful work</td></tr>
     <tr><td><strong>K</strong></td><td>Capital / Useful Work Output</td><td>The actual productive output</td></tr>
     <tr><td><strong>S_accum</strong></td><td>Accumulated Entropy</td><td>The critical "disorder" stock</td></tr>
@@ -1539,16 +1539,16 @@ document.addEventListener('keydown', function(e) {
 
   <h3>3. Entropy Accumulation &amp; Collapse Probability</h3>
   <p><strong>Vulnerability Index:</strong></p>
-  <p style="font-family: monospace; background:#1a1a1a; padding:12px; border-radius:4px;">
+  <p style="font-family: monospace; background:#f5f5f5; padding:12px; border-radius:4px; color:#000;">
     V = (1.8 × S_accum) + (0.9 × HeatPump / max(Work Output, 0.1)) − (1.2 × Teff) − (0.4 × Work Output) + (0.6 × Shock Vol)
   </p>
 
   <p><strong>Collapse Probability:</strong></p>
-  <p style="font-family: monospace; background:#1a1a1a; padding:12px; border-radius:4px;">
+  <p style="font-family: monospace; background:#f5f5f5; padding:12px; border-radius:4px; color:#000;">
     P(collapse) = 1 / (1 + exp(−4.5 × (V − 2.8)))
   </p>
 
-  <p style="margin-top:20px; font-style:italic; color:#888;">
+  <p style="margin-top:20px; font-style:italic; color:#555;">
     v70.2 — Fully Emergent • Stochastic dynamics enabled
   </p>
 </section>

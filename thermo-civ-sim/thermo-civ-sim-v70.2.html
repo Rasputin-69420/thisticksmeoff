@@ -1589,9 +1589,9 @@ function updateEngineSound() {
     regime = 'collapsing';
   } else if (state.S_accum > 1.8 || state.Teff < 0.45) {
     regime = 'collapsing';
-  } else if (state.workOutput > 0.75 && state.heatPumpStrength < 0.6) {
+  } else if (state.workOutput > 0.6) {
     regime = 'chugging';
-  } else if (state.workOutput > 0.35) {
+  } else {
     regime = 'growing';
   }
 

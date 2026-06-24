@@ -60,6 +60,8 @@
   .help:hover { color: #0d47a1; }
   .left h3 { font-size: 12px; margin: 2px 0 3px; color: #222; }
 </style>
+<!-- Howler.js for audio management -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
 </head>
 <body>
 <div class="header">
@@ -531,12 +533,14 @@ function applyPreset(name) {
     Object.assign(s, {tdr:8.8, ecp:3.5, fiscal:1.8, procurement:1.2, regulatory:1.5, monetary:1.6, education:1.4, information:2.2, infrastructure:1.3, accountability:7.8});
   } else if (name === 'romanRepublic') {
     Object.assign(s, {fiscal:3.5, procurement:2.5, regulatory:2.8, monetary:2.2, education:2.5, information:2.8, infrastructure:3.5, accountability:7.5, ecp:5.5, tdr:6.5});
+  // ROMAN PRESETS — Thermodynamically justified (Tainter + model logic)
+  // High Empire = stable high returns | Crisis = high-risk entropy spike | Late = slow decline
   } else if (name === 'romanHighEmpire') {
-    Object.assign(s, {fiscal:4.2, procurement:3.8, regulatory:3.5, monetary:3.0, education:3.0, information:3.5, infrastructure:4.0, accountability:6.5, ecp:3.0, tdr:5.0});
+    Object.assign(s, {fiscal:4.0, procurement:3.5, regulatory:3.2, monetary:2.8, education:3.2, information:3.5, infrastructure:4.5, accountability:7.0, ecp:3.5, tdr:5.5, institutionalRigidity:3.0, socialTrustDecline:2.5, maintenanceCulture:6.5, shockVolatility:3.5});
   } else if (name === 'romanCrisis3rd') {
-    Object.assign(s, {fiscal:7.0, procurement:7.5, regulatory:6.5, monetary:8.5, education:5.0, information:6.0, infrastructure:3.0, accountability:3.5, ecp:8.0, tdr:2.5});
+    Object.assign(s, {fiscal:6.5, procurement:6.0, regulatory:5.8, monetary:7.0, education:4.0, information:5.2, infrastructure:3.2, accountability:4.2, ecp:7.5, tdr:3.0, institutionalRigidity:5.0, socialTrustDecline:4.8, maintenanceCulture:4.5, shockVolatility:6.0});
   } else if (name === 'romanLateWest') {
-    Object.assign(s, {fiscal:8.5, procurement:8.8, regulatory:7.5, monetary:7.0, education:4.5, information:7.0, infrastructure:2.5, accountability:2.0, ecp:9.0, tdr:1.8});
+    Object.assign(s, {fiscal:7.8, procurement:7.5, regulatory:6.8, monetary:6.5, education:3.5, information:6.0, infrastructure:2.8, accountability:2.8, ecp:8.2, tdr:2.2, institutionalRigidity:7.0, socialTrustDecline:6.5, maintenanceCulture:3.2, shockVolatility:6.5});
   } else if (name === 'maoistChina') {
     Object.assign(s, {fiscal:9.2, procurement:8.5, regulatory:8.0, monetary:6.5, education:9.0, information:9.5, infrastructure:6.0, accountability:0.8, ecp:6.5, tdr:3.5});
   } else if (name === 'stalinistUSSR') {
@@ -1301,6 +1305,11 @@ function loop() {
     updateViz();
     updateLivePanel();
     renderSparklines();
+
+    // Update engine sounds based on current regime
+    if (typeof updateSounds === 'function') {
+      updateSounds();
+    }
   } catch (e) {
     // Do not let a single bad tick (e.g. bad filter string, missing temp el, etc.) kill the RAF chain
     console.error('simulation loop tick error (play continues):', e);
@@ -1494,6 +1503,105 @@ document.addEventListener('keydown', function(e) {
     }
   }
 });
+
+// ==================== STEAM ENGINE SOUNDS (using Howler) ====================
+
+let startupSound = new Howl({
+    src: ['Acccelerating At Startup.mp3'],
+    loop: true,
+    volume: 0.45,
+    autoplay: false
+});
+
+let cruisingSound = new Howl({
+    src: ['Cruizing At High Speed.mp3'],
+    loop: true,
+    volume: 0.4,
+    autoplay: false
+});
+
+let collapseSound = new Howl({
+    src: ['Civilization Collapse.mp3'],
+    loop: false,
+    volume: 0.6,
+    autoplay: false
+});
+
+let currentSound = null;
+
+function playEngineSound(regime) {
+    if (currentSound) {
+        currentSound.stop();
+    }
+    if (regime === 'startup') {
+        currentSound = startupSound;
+        startupSound.play();
+    } else if (regime === 'cruising') {
+        currentSound = cruisingSound;
+        cruisingSound.play();
+    } else if (regime === 'collapse') {
+        currentSound = collapseSound;
+        collapseSound.play();
+    }
+}
+
+function stopAllEngineSounds() {
+    if (startupSound) startupSound.stop();
+    if (cruisingSound) cruisingSound.stop();
+    if (collapseSound) collapseSound.stop();
+    currentSound = null;
+}
+
+// Determine regime and play appropriate looping sound (or collapse once)
+let lastRegime = null;
+function updateEngineSounds() {
+    if (!state.playing) {
+        stopAllEngineSounds();
+        lastRegime = null;
+        return;
+    }
+
+    let regime;
+    if (state.collapsed) {
+        regime = 'collapse';
+    } else {
+        // Accelerating / startup when low entropy, low heat pump, high work potential
+        const isAccelerating = (state.S_accum < 1.0) && (state.heatPumpStrength < 0.8) && (state.workOutput > 0.5);
+        regime = isAccelerating ? 'startup' : 'cruising';
+    }
+
+    if (regime !== lastRegime) {
+        playEngineSound(regime);
+        lastRegime = regime;
+    }
+}
+
+// Call this from the main loop (e.g. after simulationStep or in loop)
+function updateSounds() {
+    updateEngineSounds();
+}
+
+// Also stop sounds on pause/reset etc.
+const originalTogglePlay = togglePlay;
+togglePlay = function() {
+    const wasPlaying = state.playing;
+    originalTogglePlay.apply(this, arguments);
+    if (!state.playing) {
+        stopAllEngineSounds();
+        lastRegime = null;
+    }
+};
+
+// Ensure collapse sound plays once when collapse triggers
+const originalTriggerCollapse = triggerCollapse;
+triggerCollapse = function() {
+    originalTriggerCollapse.apply(this, arguments);
+    if (state.collapsed) {
+        stopAllEngineSounds();
+        collapseSound.play();
+    }
+};
+
 </script>
 
 <!-- Full-screen scrollable Textbook Modal (updated with new content) -->

@@ -60,6 +60,8 @@
   .help:hover { color: #0d47a1; }
   .left h3 { font-size: 12px; margin: 2px 0 3px; color: #222; }
 </style>
+<!-- Howler.js for audio management -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
 </head>
 <body>
 <div class="header">
@@ -1303,6 +1305,11 @@ function loop() {
     updateViz();
     updateLivePanel();
     renderSparklines();
+
+    // Update engine sounds based on current regime
+    if (typeof updateSounds === 'function') {
+      updateSounds();
+    }
   } catch (e) {
     // Do not let a single bad tick (e.g. bad filter string, missing temp el, etc.) kill the RAF chain
     console.error('simulation loop tick error (play continues):', e);
@@ -1496,6 +1503,105 @@ document.addEventListener('keydown', function(e) {
     }
   }
 });
+
+// ==================== STEAM ENGINE SOUNDS (using Howler) ====================
+
+let startupSound = new Howl({
+    src: ['Acccelerating At Startup.mp3'],
+    loop: true,
+    volume: 0.45,
+    autoplay: false
+});
+
+let cruisingSound = new Howl({
+    src: ['Cruizing At High Speed.mp3'],
+    loop: true,
+    volume: 0.4,
+    autoplay: false
+});
+
+let collapseSound = new Howl({
+    src: ['Civilization Collapse.mp3'],
+    loop: false,
+    volume: 0.6,
+    autoplay: false
+});
+
+let currentSound = null;
+
+function playEngineSound(regime) {
+    if (currentSound) {
+        currentSound.stop();
+    }
+    if (regime === 'startup') {
+        currentSound = startupSound;
+        startupSound.play();
+    } else if (regime === 'cruising') {
+        currentSound = cruisingSound;
+        cruisingSound.play();
+    } else if (regime === 'collapse') {
+        currentSound = collapseSound;
+        collapseSound.play();
+    }
+}
+
+function stopAllEngineSounds() {
+    if (startupSound) startupSound.stop();
+    if (cruisingSound) cruisingSound.stop();
+    if (collapseSound) collapseSound.stop();
+    currentSound = null;
+}
+
+// Determine regime and play appropriate looping sound (or collapse once)
+let lastRegime = null;
+function updateEngineSounds() {
+    if (!state.playing) {
+        stopAllEngineSounds();
+        lastRegime = null;
+        return;
+    }
+
+    let regime;
+    if (state.collapsed) {
+        regime = 'collapse';
+    } else {
+        // Accelerating / startup when low entropy, low heat pump, high work potential
+        const isAccelerating = (state.S_accum < 1.0) && (state.heatPumpStrength < 0.8) && (state.workOutput > 0.5);
+        regime = isAccelerating ? 'startup' : 'cruising';
+    }
+
+    if (regime !== lastRegime) {
+        playEngineSound(regime);
+        lastRegime = regime;
+    }
+}
+
+// Call this from the main loop (e.g. after simulationStep or in loop)
+function updateSounds() {
+    updateEngineSounds();
+}
+
+// Also stop sounds on pause/reset etc.
+const originalTogglePlay = togglePlay;
+togglePlay = function() {
+    const wasPlaying = state.playing;
+    originalTogglePlay.apply(this, arguments);
+    if (!state.playing) {
+        stopAllEngineSounds();
+        lastRegime = null;
+    }
+};
+
+// Ensure collapse sound plays once when collapse triggers
+const originalTriggerCollapse = triggerCollapse;
+triggerCollapse = function() {
+    originalTriggerCollapse.apply(this, arguments);
+    if (state.collapsed) {
+        stopAllEngineSounds();
+        collapseSound.play();
+    }
+};
+
 </script>
 
 <!-- Full-screen scrollable Textbook Modal (updated with new content) -->

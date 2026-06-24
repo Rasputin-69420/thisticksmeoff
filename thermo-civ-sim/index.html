@@ -833,6 +833,11 @@ function triggerCollapse() {
   if (coldT) coldT.innerHTML = 'T<tspan font-size="10" dy="2" font-weight="700">cold</tspan> = -';
 
   updateViz();
+
+  // Force engine sound update for collapse
+  if (typeof updateEngineSound === 'function') {
+    updateEngineSound();
+  }
 }
 
 // VISUAL UPDATE v70.3 - HARDENED (static arrows + defensive clamps + no breakage on long runs)
@@ -1509,6 +1514,11 @@ function init() {
   });
 
   console.log('%c[Thermodynamic Simulator v70.2] Fully emergent stochastic mode. All outcomes from internal loops. No target chasing.', 'color:#555');
+
+  // Ensure preset button sounds are attached
+  if (typeof addPresetButtonSounds === 'function') {
+    addPresetButtonSounds();
+  }
 }
 
 window.onload = init;
@@ -1537,26 +1547,27 @@ document.addEventListener('keydown', function(e) {
 
 // Background music - "Bleu" by Komiku (place in audio/ folder, same as ncase.me/trust)
 let bgMusic = new Howl({
-  src: ['audio/Bleu.mp3'],
+  src: ['Bleu.mp3'],  // or 'audio/Bleu.mp3' if you move it; using existing if present, or add your file
   loop: true,
   volume: 0.25,
   autoplay: false
 });
 
-// Engine sounds - place the Pixabay MP3s in audio/ folder
+// Engine sounds using the files present in the folder (Acccelerating for startup/growing, Cruizing for high speed, Collapse for collapsing)
+// Update src if you use the new Pixabay files in audio/
 let engineSounds = {
   collapsing: new Howl({
-    src: ['audio/film-special-effects-steam-powered-engine-release-451357.mp3'],
+    src: ['Civilization Collapse.mp3'],
     loop: true,
     volume: 0.55
   }),
   growing: new Howl({
-    src: ['audio/technology-steam-engine-speeding-up-28760.mp3'],
+    src: ['Acccelerating At Startup.mp3'],
     loop: true,
     volume: 0.5
   }),
   chugging: new Howl({
-    src: ['audio/film-special-effects-steam-engine-37399.mp3'],
+    src: ['Cruizing At High Speed.mp3'],
     loop: true,
     volume: 0.5
   })
@@ -1567,7 +1578,7 @@ let currentEngine = null;
 // Helper to switch engine sound based on sim state
 // Call this from simulationStep() or the main loop
 function updateEngineSound() {
-  if (!state.playing) {
+  if (!state || !state.playing) {
     stopEngineSound();
     return;
   }
@@ -1583,6 +1594,8 @@ function updateEngineSound() {
   } else if (state.workOutput > 0.35) {
     regime = 'growing';
   }
+
+  console.log('Engine regime:', regime, 'S:', state.S_accum.toFixed(2), 'Teff:', state.Teff.toFixed(2), 'work:', state.workOutput.toFixed(2));
 
   if (currentEngine !== regime) {
     stopEngineSound();

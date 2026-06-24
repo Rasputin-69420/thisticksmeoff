@@ -764,6 +764,11 @@ function simulationStep(dtYears) {
 
     pushHistory();
   }
+
+  // Update engine sound based on current state
+  if (typeof updateEngineSound === 'function') {
+    updateEngineSound();
+  }
 }
 
 function pushHistory() {
@@ -1316,9 +1321,9 @@ function loop() {
     updateLivePanel();
     renderSparklines();
 
-    // Update engine sounds based on current regime
-    if (typeof updateSounds === 'function') {
-      updateSounds();
+    // Update engine sound (and bg music volume if needed)
+    if (typeof updateEngineSound === 'function') {
+      updateEngineSound();
     }
   } catch (e) {
     // Do not let a single bad tick (e.g. bad filter string, missing temp el, etc.) kill the RAF chain
@@ -1355,8 +1360,16 @@ function togglePlay() {
     updateViz();
     updateLivePanel();
     renderSparklines();
+    // Start background music
+    if (typeof startBackgroundMusic === 'function') {
+      startBackgroundMusic();
+    }
     // Always (re)schedule so the loop is definitely running for this play session
     raf = requestAnimationFrame(loop);
+  } else if (!state.playing) {
+    if (typeof stopBackgroundMusic === 'function') {
+      stopBackgroundMusic();
+    }
   }
 }
 
@@ -1367,6 +1380,12 @@ function resetSim() {
   const pbtn = document.getElementById('playBtn');
   if (pbtn) pbtn.textContent = '▶ Play';
   state.playing = false;
+  if (typeof stopBackgroundMusic === 'function') {
+    stopBackgroundMusic();
+  }
+  if (typeof stopEngineSound === 'function') {
+    stopEngineSound();
+  }
   renderSparklines();
   highlightPreset('1776');
 }
@@ -1514,103 +1533,135 @@ document.addEventListener('keydown', function(e) {
   }
 });
 
-// ==================== STEAM ENGINE SOUNDS (using Howler) ====================
+// ==================== AUDIO WITH HOWLER.JS ====================
 
-let startupSound = new Howl({
-    src: ['Acccelerating At Startup.mp3'],
+// Background music - "Bleu" by Komiku (place in audio/ folder, same as ncase.me/trust)
+let bgMusic = new Howl({
+  src: ['audio/Bleu.mp3'],
+  loop: true,
+  volume: 0.25,
+  autoplay: false
+});
+
+// Engine sounds - place the Pixabay MP3s in audio/ folder
+let engineSounds = {
+  collapsing: new Howl({
+    src: ['audio/film-special-effects-steam-powered-engine-release-451357.mp3'],
     loop: true,
-    volume: 0.45,
-    autoplay: false
-});
-
-let cruisingSound = new Howl({
-    src: ['Cruizing At High Speed.mp3'],
+    volume: 0.55
+  }),
+  growing: new Howl({
+    src: ['audio/technology-steam-engine-speeding-up-28760.mp3'],
     loop: true,
-    volume: 0.4,
-    autoplay: false
-});
+    volume: 0.5
+  }),
+  chugging: new Howl({
+    src: ['audio/film-special-effects-steam-engine-37399.mp3'],
+    loop: true,
+    volume: 0.5
+  })
+};
 
-let collapseSound = new Howl({
-    src: ['Civilization Collapse.mp3'],
-    loop: false,
-    volume: 0.6,
-    autoplay: false
-});
+let currentEngine = null;
 
-let currentSound = null;
+// Helper to switch engine sound based on sim state
+// Call this from simulationStep() or the main loop
+function updateEngineSound() {
+  if (!state.playing) {
+    stopEngineSound();
+    return;
+  }
 
-function playEngineSound(regime) {
-    if (currentSound) {
-        currentSound.stop();
-    }
-    if (regime === 'startup') {
-        currentSound = startupSound;
-        startupSound.play();
-    } else if (regime === 'cruising') {
-        currentSound = cruisingSound;
-        cruisingSound.play();
-    } else if (regime === 'collapse') {
-        currentSound = collapseSound;
-        collapseSound.play();
-    }
-}
+  let regime = 'chugging'; // default
 
-function stopAllEngineSounds() {
-    if (startupSound) startupSound.stop();
-    if (cruisingSound) cruisingSound.stop();
-    if (collapseSound) collapseSound.stop();
-    currentSound = null;
-}
+  if (state.collapsed) {
+    regime = 'collapsing';
+  } else if (state.S_accum > 1.8 || state.Teff < 0.45) {
+    regime = 'collapsing';
+  } else if (state.workOutput > 0.75 && state.heatPumpStrength < 0.6) {
+    regime = 'chugging';
+  } else if (state.workOutput > 0.35) {
+    regime = 'growing';
+  }
 
-// Determine regime and play appropriate looping sound (or collapse once)
-let lastRegime = null;
-function updateEngineSounds() {
-    if (!state.playing) {
-        stopAllEngineSounds();
-        lastRegime = null;
-        return;
-    }
-
-    let regime;
-    if (state.collapsed) {
-        regime = 'collapse';
+  if (currentEngine !== regime) {
+    stopEngineSound();
+    if (regime === 'collapsing') {
+      if (engineSounds.collapsing) {
+        engineSounds.collapsing.loop(false);
+        engineSounds.collapsing.play();
+      }
     } else {
-        // Accelerating / startup when low entropy, low heat pump, high work potential
-        const isAccelerating = (state.S_accum < 1.0) && (state.heatPumpStrength < 0.8) && (state.workOutput > 0.5);
-        regime = isAccelerating ? 'startup' : 'cruising';
+      const sound = engineSounds[regime];
+      if (sound) {
+        sound.loop(true);
+        sound.play();
+      }
     }
-
-    if (regime !== lastRegime) {
-        playEngineSound(regime);
-        lastRegime = regime;
-    }
+    currentEngine = regime;
+  }
 }
 
-// Call this from the main loop (e.g. after simulationStep or in loop)
-function updateSounds() {
-    updateEngineSounds();
+function stopEngineSound() {
+  Object.keys(engineSounds).forEach(key => {
+    const s = engineSounds[key];
+    if (s) s.stop();
+  });
+  currentEngine = null;
 }
 
-// Also stop sounds on pause/reset etc.
-const originalTogglePlay = togglePlay;
-togglePlay = function() {
-    const wasPlaying = state.playing;
-    originalTogglePlay.apply(this, arguments);
-    if (!state.playing) {
-        stopAllEngineSounds();
-        lastRegime = null;
-    }
-};
+// Start bg music when simulation starts playing
+function startBackgroundMusic() {
+  if (bgMusic && !bgMusic.playing()) {
+    bgMusic.play();
+  }
+}
 
-// Ensure collapse sound plays once when collapse triggers
-const originalTriggerCollapse = triggerCollapse;
-triggerCollapse = function() {
-    originalTriggerCollapse.apply(this, arguments);
-    if (state.collapsed) {
-        stopAllEngineSounds();
-        collapseSound.play();
-    }
-};
+function stopBackgroundMusic() {
+  if (bgMusic) bgMusic.stop();
+}
+
+// Button click thunk for .presets buttons (crisp satisfying sound)
+function playPresetClick() {
+  // Use Web Audio for short crisp thunk (self-contained, similar to ncase.me/trust)
+  const ctx = new (window.AudioContext || window.webkitAudioContext)();
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  const filter = ctx.createBiquadFilter();
+
+  osc.type = 'square';
+  osc.frequency.value = 1200;
+
+  filter.type = 'lowpass';
+  filter.frequency.value = 1500;
+
+  gain.gain.value = 0.25;
+
+  osc.connect(filter);
+  filter.connect(gain);
+  gain.connect(ctx.destination);
+
+  const t = ctx.currentTime;
+  osc.start(t);
+  gain.gain.setValueAtTime(0.25, t);
+  gain.gain.exponentialRampToValueAtTime(0.001, t + 0.08);
+  osc.stop(t + 0.1);
+}
+
+// Attach to all preset buttons
+function addPresetButtonSounds() {
+  const buttons = document.querySelectorAll('.presets button');
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      playPresetClick();
+    });
+  });
+}
+
+// Call once after page loads
+setTimeout(() => {
+  addPresetButtonSounds();
+}, 800);
 
 </script>
 

@@ -559,22 +559,14 @@ function applyPreset(name) {
   highlightPreset(name);
   document.getElementById('status').textContent = '';
 
-  // Only tiny random noise on starting state (as required). No special per-preset rules.
-  state.TH += Math.random()*0.08 - 0.04;
-  state.S_accum += Math.random()*0.06;
+  // Tiny random noise on *current* state (keeps things emergent).
+  // FIX: Never reset the sim on preset click anymore.
+  state.TH = Math.max(0.6, Math.min(1.4, state.TH + (Math.random() * 0.08 - 0.04)));
+  state.S_accum = Math.max(0, state.S_accum + (Math.random() * 0.06 - 0.02));
 
-  if (!state.playing) {
-    // Only do a full reset + history clear if we are currently stopped.
-    // This keeps the simulation running when user clicks a new preset while playing.
-    resetToBaseline();
-  } else {
-    // Live preset switch while running: just update the policy levers.
-    // The simulation continues with the new slider values from the next tick onward.
-    // No history clear, no year reset, playing state unchanged.
-    updateFromSliders();
-  }
+  // Always just update parameters live — simulation keeps running.
+  updateFromSliders();
 
-  // Re-apply updates so the tiny noise + new levers are immediately reflected.
   updateViz();
   updateLivePanel();
   renderSparklines();
